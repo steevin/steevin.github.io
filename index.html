@@ -27,32 +27,77 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Navegación Base */
         nav {
-            background: var(--glass-effect);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            gap: 10px;
+            padding: 0.8rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 0.5px solid #333;
+            border-bottom: 1px solid #333;
         }
 
-        nav ul { display: flex; list-style: none; gap: 10px; margin: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
-        nav a { 
-            text-decoration: none; 
-            color: var(--text-muted); 
-            font-size: 0.75rem;
+        /* Logo Estilizado */
+        .brand {
+            display: flex;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
             white-space: nowrap;
+        }
+
+        .bracket { color: #565656; }
+        .line { color: #007aff; margin: 0 2px; }
+        .name { color: #ffffff; text-transform: lowercase; } /* SQL standard */
+        .cursor { color: #007aff; font-weight: bold; animation: blink 1.2s infinite; }
+
+        /* Menú de navegación */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #a1a1a6;
+            font-size: 0.9rem;
             transition: color 0.3s;
         }
-        
-        nav a:hover { color: var(--accent-color); }
+
+        nav a:hover { color: #007aff; }
+
+        /* FIX PARA MÓVIL (iPhone) */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column; /* Apila logo arriba y menú abajo */
+                padding: 0.5rem;
+                gap: 10px;
+            }
+
+            nav ul {
+                gap: 12px;
+                justify-content: center;
+                width: 100%;
+            }
+
+            nav a {
+                font-size: 0.75rem; /* Letra más pequeña para que no se encime */
+            }
+
+            .brand {
+                font-size: 1rem;
+            }
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
 
         .hero {
             height: 85vh;
@@ -155,53 +200,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 1rem;
-            letter-spacing: -0.5px;
-            white-space: nowrap; /* Evita que se rompa en móvil */
-        }
-
-        .bracket { 
-            color: #565656; 
-            font-weight: 300; 
-        }
-
-        .line {
-            color: #007aff; /* Azul para resaltar la sintaxis */
-            margin: 0 2px;
-            font-weight: 400;
-        }
-
-        .name { 
-            color: #ffffff; 
-            font-weight: 500; 
-            margin-right: 2px;
-            text-transform: lowercase; /* Mantiene tu estándar SQL */
-        }
-
-        .cursor { 
-            color: #007aff; 
-            font-weight: 700; 
-            animation: blink 1.2s infinite; 
-        }
-
-        /* Ajuste específico para que quepa en el iPhone junto al menú */
-        @media (max-width: 480px) {
-            .brand {
-                font-size: 1rem; /* Un poco más pequeño solo en celular */
-                gap: 0;
-            }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -216,8 +214,8 @@
         </div>
         <ul>
             <li><a href="#inicio" data-key="nav_home">Inicio</a></li>
-            <li><a href="#servicios" data-key="nav_services">Soluciones</a></li>
-            <li><a href="#habilidades">Tech Stack</a></li>
+            <li><a href="#servicios" data-key="nav_services">Servicios</a></li>
+            <li><a href="#habilidades" data-key="nav_tech">Tech Stack</a></li>
             <li><a href="#contacto" data-key="nav_contact">Contacto</a></li>
         </ul>
     </nav>
