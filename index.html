@@ -158,12 +158,54 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            cursor: default;
+            user-select: none;
+        }
+
+        /* Los símbolos < y > en un tono gris azulado técnico */
+        .bracket {
+            color: #565656;
+            font-weight: 300;
+        }
+
+        /* Tu nombre en blanco puro y minúsculas */
+        .name {
+            color: #ffffff;
+            font-weight: 500;
+            margin: 0 2px;
+            text-transform: lowercase; /* Mantiene tu estándar de SQL */
+        }
+
+        /* El cursor con tu azul de acento y un ligero parpadeo */
+        .cursor {
+            color: #007aff;
+            font-weight: 700;
+            margin-right: 2px;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">STEEVIN</div>
+        <div class="brand">
+            <span class="bracket">&lt;</span>
+            <span class="name">steevin</span>
+            <span class="cursor">_</span>
+            <span class="bracket">&gt;</span>
+        </div>
         <ul>
             <li><a href="#inicio" data-key="nav_home">Inicio</a></li>
             <li><a href="#servicios" data-key="nav_services">Soluciones</a></li>
