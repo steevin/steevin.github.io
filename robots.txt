@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Indica a Google dónde está el mapa de tu sitio
+Sitemap: https://steevin.com/sitemap.xml
