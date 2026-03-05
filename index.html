@@ -148,14 +148,12 @@
             font-size: 0.8rem;
         }
         
-        /* Estado inicial de los elementos (ocultos) */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Estado cuando se hacen visibles */
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
@@ -296,12 +294,10 @@
         };
 
         function applyLanguage(lang) {
-            // Traducir textos
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if (translations[lang][key]) el.innerText = translations[lang][key];
             });
-            // Traducir placeholders
             document.querySelectorAll('[data-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-placeholder');
                 if (translations[lang][key]) el.placeholder = translations[lang][key];
@@ -324,10 +320,8 @@
             }
         }
 
-        // Escuchar el evento de scroll
         window.addEventListener("scroll", reveal);
 
-        // Ejecutar una vez al cargar por si ya están visibles
         reveal();
     </script>
 </body>
