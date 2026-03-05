@@ -28,32 +28,38 @@
         }
 
         nav {
-            background: var(--glass-effect);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 1.2rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 0.5px solid #333;
+            padding: 10px 15px; /* Reducimos el padding lateral */
+            gap: 10px;
         }
 
-        .logo { 
-            font-size: 1.2rem; 
-            font-weight: 600; 
-            letter-spacing: 1px;
-            color: var(--text-main); 
+        .brand {
+            flex-shrink: 0; /* Evita que el logo se aplaste */
+            font-size: 1rem; /* Tamaño más pequeño para móviles */
         }
 
-        nav ul { display: flex; list-style: none; gap: 30px; margin: 0; }
-        nav a { 
-            text-decoration: none; 
-            color: var(--text-muted); 
-            font-size: 0.9rem;
-            transition: color 0.3s;
+        nav ul {
+            display: flex;
+            gap: 10px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow-x: auto; /* Permite deslizar si hay muchos links */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        nav a {
+            font-size: 0.75rem; /* Letra más pequeña para los links */
+            white-space: nowrap; /* Evita que el texto salte de línea */
+        }
+
+        /* Media Query específica para pantallas muy pequeñas */
+        @media (max-width: 380px) {
+            .brand .name {
+                display: none; /* Oculta el nombre y deja solo el icono si el espacio es crítico */
+            }
         }
         nav a:hover { color: var(--accent-color); }
 
