@@ -28,39 +28,30 @@
         }
 
         nav {
+            background: var(--glass-effect);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px; /* Reducimos el padding lateral */
+            padding: 10px 15px;
             gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 0.5px solid #333;
         }
 
-        .brand {
-            flex-shrink: 0; /* Evita que el logo se aplaste */
-            font-size: 1rem; /* Tamaño más pequeño para móviles */
-        }
+        nav ul { display: flex; list-style: none; gap: 10px; margin: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-        nav ul {
-            display: flex;
-            gap: 10px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            overflow-x: auto; /* Permite deslizar si hay muchos links */
-            -webkit-overflow-scrolling: touch;
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-size: 0.75rem;
+            white-space: nowrap;
+            transition: color 0.3s;
         }
-
-        nav a {
-            font-size: 0.75rem; /* Letra más pequeña para los links */
-            white-space: nowrap; /* Evita que el texto salte de línea */
-        }
-
-        /* Media Query específica para pantallas muy pequeñas */
-        @media (max-width: 380px) {
-            .brand .name {
-                display: none; /* Oculta el nombre y deja solo el icono si el espacio es crítico */
-            }
-        }
+        
         nav a:hover { color: var(--accent-color); }
 
         .hero {
@@ -168,8 +159,9 @@
         .brand {
             display: flex;
             align-items: center;
+            flex-shrink: 0;
             font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 1.2rem;
+            font-size: 1rem;
             letter-spacing: -0.5px;
             white-space: nowrap; /* Evita que se rompa en móvil */
         }
