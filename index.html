@@ -163,38 +163,41 @@
             display: flex;
             align-items: center;
             font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             letter-spacing: -0.5px;
-            cursor: default;
-            user-select: none;
+            white-space: nowrap; /* Evita que se rompa en móvil */
         }
 
-        /* Los símbolos < y > en un tono gris azulado técnico */
-        .bracket {
-            color: #565656;
-            font-weight: 300;
+        .bracket { 
+            color: #565656; 
+            font-weight: 300; 
         }
 
-        /* Tu nombre en blanco puro y minúsculas */
-        .name {
-            color: #ffffff;
-            font-weight: 500;
+        .line {
+            color: #007aff; /* Azul para resaltar la sintaxis */
             margin: 0 2px;
-            text-transform: lowercase; /* Mantiene tu estándar de SQL */
+            font-weight: 400;
         }
 
-        /* El cursor con tu azul de acento y un ligero parpadeo */
-        .cursor {
-            color: #007aff;
-            font-weight: 700;
+        .name { 
+            color: #ffffff; 
+            font-weight: 500; 
             margin-right: 2px;
-            animation: blink 1.2s infinite;
+            text-transform: lowercase; /* Mantiene tu estándar SQL */
         }
 
-         .line {
-            color: #007aff;
-            font-weight: 700;
-            margin-right: 2px;
+        .cursor { 
+            color: #007aff; 
+            font-weight: 700; 
+            animation: blink 1.2s infinite; 
+        }
+
+        /* Ajuste específico para que quepa en el iPhone junto al menú */
+        @media (max-width: 480px) {
+            .brand {
+                font-size: 1rem; /* Un poco más pequeño solo en celular */
+                gap: 0;
+            }
         }
 
         @keyframes blink {
