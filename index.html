@@ -7,106 +7,122 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2d3436;
-            --accent-color: #0984e3;
-            --text-light: #636e72;
-            --bg-light: #f9f9f9;
+            /* Paleta Titanio Pro */
+            --primary-bg: #121212;      /* Negro Espacial / Titanio Negro */
+            --secondary-bg: #1c1c1e;    /* Gris Oxford profundo */
+            --accent-color: #007aff;    /* Azul iOS */
+            --text-main: #f5f5f7;       /* Blanco Apple */
+            --text-muted: #a1a1a6;     /* Gris Titanio Natural */
+            --glass-effect: rgba(28, 28, 30, 0.8);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            color: var(--primary-color);
-            background-color: var(--bg-light);
+            color: var(--text-main);
+            background-color: var(--primary-bg);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Navegación */
+        /* Navegación con efecto de cristal (Blur) */
         nav {
-            background: #fff;
-            padding: 1rem 5%;
+            background: var(--glass-effect);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.2rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             z-index: 1000;
+            border-bottom: 0.5px solid #333;
         }
 
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent-color); }
-        nav ul { display: flex; list-style: none; gap: 20px; }
-        nav a { text-decoration: none; color: var(--primary-color); font-weight: 500; }
+        .logo { 
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            letter-spacing: 1px;
+            color: var(--text-main); 
+        }
 
-        /* Hero Section */
+        nav ul { display: flex; list-style: none; gap: 30px; margin: 0; }
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-muted); 
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: var(--accent-color); }
+
+        /* Hero Section - Estilo Consultor */
         .hero {
-            height: 60vh;
+            height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
-            color: white;
+            background: radial-gradient(circle at center, #1c1c1e 0%, #121212 100%);
             padding: 0 20px;
         }
 
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
-        .hero p { font-size: 1.2rem; color: #dfe6e9; }
-
-        /* Secciones Generales */
-        section { padding: 80px 10%; }
-        h2 { text-align: center; margin-bottom: 40px; position: relative; }
-        h2::after {
-            content: '';
-            width: 50px;
-            height: 3px;
-            background: var(--accent-color);
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+        .hero h1 { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            margin-bottom: 0.5rem; 
+            font-weight: 700;
+            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Grid de Portafolio */
+        .hero p { 
+            font-size: 1.2rem; 
+            color: var(--text-muted); 
+            max-width: 600px;
+        }
+
+        /* Portafolio Cards */
+        section { padding: 100px 10%; }
+        
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
 
         .project-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            background: var(--secondary-bg);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .project-card:hover { transform: translateY(-5px); }
-        .project-info { padding: 20px; }
-        .tags { font-size: 0.8rem; color: var(--accent-color); font-weight: bold; }
-
-        /* Contacto */
-        .contact-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
+        .project-card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .contact-method {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 200px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .tags { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            color: var(--accent-color); 
+            margin-bottom: 15px; 
+            display: block;
         }
 
-        .contact-method i { font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
-
-        footer { text-align: center; padding: 40px; background: #2d3436; color: white; }
+        /* Footer */
+        footer { 
+            padding: 60px; 
+            text-align: center; 
+            border-top: 0.5px solid #333;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -121,7 +137,7 @@
     </nav>
 
     <section id="inicio" class="hero">
-        <h1>Hola, soy Steevin</h1>
+        <h1>Steevin</h1>
         <p>Desarrollador Full Stack | Ruby on Rails & Oracle</p>
     </section>
 
