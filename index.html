@@ -147,6 +147,19 @@
             color: var(--text-muted);
             font-size: 0.8rem;
         }
+        
+        /* Estado inicial de los elementos (ocultos) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estado cuando se hacen visibles */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -186,6 +199,38 @@
         </div>
     </section>
 
+    <section id="habilidades" style="padding: 80px 10%; background: var(--secondary-bg); border-bottom: 0.5px solid #333;">
+        <h2 data-key="skills_header" style="margin-bottom: 50px; text-align: center;">Tech Stack</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 30px; justify-items: center; align-items: start;">
+            
+            <div class="reveal" style="text-align: center; width: 110px;">
+                <i class="fas fa-gem" style="font-size: 2.5rem; color: #CC0000; margin-bottom: 12px; display: block;"></i>
+                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Ruby on Rails</p>
+            </div>
+
+            <div class="reveal" style="text-align: center; width: 110px;">
+                <i class="fas fa-database" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; display: block;"></i>
+                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Oracle SQL</p>
+            </div>
+
+            <div class="reveal" style="text-align: center; width: 110px;">
+                <i class="fas fa-microchip" style="font-size: 2.5rem; color: #a1a1a6; margin-bottom: 12px; display: block;"></i>
+                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">AI Models</p>
+            </div>
+
+            <div class="reveal" style="text-align: center; width: 110px;">
+                <i class="fas fa-network-wired" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px; display: block;"></i>
+                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">API RESTful</p>
+            </div>
+
+            <div class="reveal" style="text-align: center; width: 110px;">
+                <i class="fab fa-apple" style="font-size: 2.5rem; color: var(--text-main); margin-bottom: 12px; display: block;"></i>
+                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Swift</p>
+            </div>
+
+        </div>
+    </section>
+
     <section id="contacto">
         <h2 data-key="contact_header">Contacto</h2>
         <div style="max-width: 500px; margin: 0 auto;">
@@ -213,6 +258,7 @@
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Analista y Desarrollador de Software',
                 'services_header': 'Soluciones Técnicas',
+                'skills_header': 'Especialidades Técnicas',
                 's1_title': 'Arquitectura Backend',
                 's1_desc': 'Desarrollo de sistemas robustos y escalables con enfoque en rendimiento y seguridad.',
                 's2_title': 'Optimización de Datos',
@@ -233,6 +279,7 @@
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Software Analyst and Developer',
                 'services_header': 'Technical Solutions',
+                'skills_header': 'Technical Expertise',
                 's1_title': 'Backend Architecture',
                 's1_desc': 'Developing robust and scalable systems with a focus on performance and security.',
                 's2_title': 'Data Optimization',
@@ -264,6 +311,24 @@
 
         const userLang = navigator.language.startsWith('en') ? 'en' : 'es';
         applyLanguage(userLang);
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Distancia para activar la animación
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        // Escuchar el evento de scroll
+        window.addEventListener("scroll", reveal);
+
+        // Ejecutar una vez al cargar por si ya están visibles
+        reveal();
     </script>
 </body>
 </html>
