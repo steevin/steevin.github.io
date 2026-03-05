@@ -169,16 +169,25 @@
     </section>
 
     <section id="contacto">
-        <h2>Contacto</h2>
-        <div class="contact-container">
-            <div class="contact-method">
-                <i class="fas fa-envelope"></i>
-                <p>contact@steevin.com</p>
-            </div>
-            <div class="contact-method">
-                <i class="fab fa-github"></i>
-                <p>github.com/steevin</p>
-            </div>
+        <h2>Contacto Profesional</h2>
+        <div style="max-width: 600px; margin: 0 auto;">
+            <form action="https://formspree.io/f/TU_ID_AQUÍ" method="POST" id="contact-form">
+                <div style="display: grid; gap: 15px;">
+                    <input type="text" name="name" placeholder="Tu Nombre" required 
+                        style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;">
+                    
+                    <input type="email" name="_replyto" placeholder="Tu Correo Electrónico" required 
+                        style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;">
+                    
+                    <textarea name="message" rows="5" placeholder="¿En qué puedo ayudarte?" required 
+                            style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;"></textarea>
+                    
+                    <button type="submit" 
+                            style="padding: 15px; border-radius: 8px; border: none; background: var(--accent-color); color: white; font-weight: bold; cursor: pointer; transition: opacity 0.3s;">
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 
