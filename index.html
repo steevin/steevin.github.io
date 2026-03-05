@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steevin | Developer</title>
+    <title>Steevin | Software Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta Titanio Pro */
-            --primary-bg: #121212;      /* Negro Espacial / Titanio Negro */
-            --secondary-bg: #1c1c1e;    /* Gris Oxford profundo */
-            --accent-color: #007aff;    /* Azul iOS */
-            --text-main: #f5f5f7;       /* Blanco Apple */
-            --text-muted: #a1a1a6;     /* Gris Titanio Natural */
+            --primary-bg: #121212;
+            --secondary-bg: #1c1c1e;
+            --accent-color: #007aff;
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
             --glass-effect: rgba(28, 28, 30, 0.8);
         }
 
@@ -25,7 +24,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navegación con efecto de cristal (Blur) */
         nav {
             background: var(--glass-effect);
             backdrop-filter: blur(20px);
@@ -56,7 +54,6 @@
         }
         nav a:hover { color: var(--accent-color); }
 
-        /* Hero Section - Estilo Consultor */
         .hero {
             height: 85vh;
             display: flex;
@@ -83,8 +80,8 @@
             max-width: 600px;
         }
 
-        /* Portafolio Cards */
         section { padding: 100px 10%; }
+        h2 { text-align: center; margin-bottom: 50px; font-weight: 600; }
         
         .portfolio-grid {
             display: grid;
@@ -96,7 +93,7 @@
             background: var(--secondary-bg);
             border: 1px solid #333;
             border-radius: 16px;
-            padding: 30px;
+            padding: 35px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -113,9 +110,33 @@
             color: var(--accent-color); 
             margin-bottom: 15px; 
             display: block;
+            font-weight: bold;
         }
 
-        /* Footer */
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #1c1c1e;
+            color: white;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        button {
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+
+        button:hover { opacity: 0.9; transform: scale(1.02); }
+
         footer { 
             padding: 60px; 
             text-align: center; 
@@ -130,70 +151,116 @@
     <nav>
         <div class="logo">STEEVIN</div>
         <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#inicio" data-key="nav_home">Inicio</a></li>
+            <li><a href="#servicios" data-key="nav_services">Servicios</a></li>
+            <li><a href="#contacto" data-key="nav_contact">Contacto</a></li>
         </ul>
     </nav>
 
     <section id="inicio" class="hero">
-        <h1>Steevin</h1>
-        <p>Desarrollador Full Stack | Ruby on Rails & Oracle</p>
+        <h1 data-key="hero_title">Daniel Steevin</h1>
+        <p data-key="hero_subtitle">Analista y Desarrollador de Software</p>
     </section>
 
     <section id="servicios">
-        <h2>Servicios</h2>
+        <h2 data-key="services_header">Soluciones</h2>
         <div class="portfolio-grid">
             <div class="project-card">
-                <div class="project-info">
-                    <span class="tags">Ruby on Rails</span>
-                    <h3>E-commerce App</h3>
-                    <p>Desarrollo de aplicaciones robustas utilizando el framework de Rails.</p>
-                </div>
+                <span class="tags">Ruby on Rails</span>
+                <h3 data-key="s1_title">Backend Architecture</h3>
+                <p data-key="s1_desc">Desarrollo de sistemas robustos y escalables con enfoque en rendimiento y seguridad.</p>
             </div>
             <div class="project-card">
-                <div class="project-info">
-                    <span class="tags">Oracle SQL • PL/SQL</span>
-                    <h3>Database Optimization</h3>
-                    <p>Especialista en gestión y optimización de bases de datos Oracle.</p>
-                </div>
+                <span class="tags">Oracle SQL • PL/SQL</span>
+                <h3 data-key="s2_title">Database Optimization</h3>
+                <p data-key="s2_desc">Arquitectura y optimización de bases de datos críticas para entornos corporativos.</p>
             </div>
             <div class="project-card">
-                <div class="project-info">
-                    <span class="tags">Swift • IOS Development</span>
-                    <h3>IOS Ecosystem & Apps</h3>
-                    <p>Configuración y optimización de servicios integrados para el ecosistema Apple.</p>
-                </div>
+                <span class="tags">Swift • IOS</span>
+                <h3 data-key="s3_title">IOS Ecosystem</h3>
+                <p data-key="s3_desc">Integración de servicios avanzados y optimización para dispositivos de alto rendimiento.</p>
             </div>
         </div>
     </section>
 
     <section id="contacto">
-        <h2 style="text-align: center;">Contacto</h2>
-        <div style="max-width: 600px; margin: 0 auto;">
-            <form action="https://formspree.io/f/mzdjpbgy" method="POST" id="contact-form">
-                <div style="display: grid; gap: 15px;">
-                    <input type="text" name="name" placeholder="Tu Nombre" required 
-                        style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;">
-                    
-                    <input type="email" name="_replyto" placeholder="Tu Correo Electrónico" required 
-                        style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;">
-                    
-                    <textarea name="message" rows="5" placeholder="¿En qué puedo ayudarte?" required 
-                            style="padding: 15px; border-radius: 8px; border: 1px solid #333; background: #1c1c1e; color: white;"></textarea>
-                    
-                    <button type="submit" 
-                            style="padding: 15px; border-radius: 8px; border: none; background: var(--accent-color); color: white; font-weight: bold; cursor: pointer; transition: opacity 0.3s;">
-                        Enviar Mensaje
-                    </button>
+        <h2 data-key="contact_header">Contacto</h2>
+        <div style="max-width: 500px; margin: 0 auto;">
+            <form action="https://formspree.io/f/mzdjpbgy" method="POST">
+                <div style="display: grid; gap: 20px;">
+                    <input type="text" name="name" data-placeholder="p_name" placeholder="Nombre" required>
+                    <input type="email" name="email" data-placeholder="p_email" placeholder="Correo Electrónico" required>
+                    <textarea name="message" rows="5" data-placeholder="p_msg" placeholder="¿Cómo puedo ayudarte?" required></textarea>
+                    <button type="submit" data-key="btn_send">Enviar Propuesta</button>
                 </div>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Steevin - Desarrollado con pasión.</p>
+        <p data-key="footer">&copy; 2026 | Steevin</p>
     </footer>
 
+    <script>
+        const translations = {
+            'es': {
+                'nav_home': 'Inicio',
+                'nav_services': 'Servicios',
+                'nav_contact': 'Contacto',
+                'hero_title': 'Steevin',
+                'hero_subtitle': 'Analista y Desarrollador de Software',
+                'services_header': 'Soluciones Técnicas',
+                's1_title': 'Arquitectura Backend',
+                's1_desc': 'Desarrollo de sistemas robustos y escalables con enfoque en rendimiento y seguridad.',
+                's2_title': 'Optimización de Datos',
+                's2_desc': 'Arquitectura y optimización de bases de datos críticas para entornos corporativos.',
+                's3_title': 'Ecosistema IOS',
+                's3_desc': 'Integración de servicios avanzados y optimización para dispositivos de alto rendimiento.',
+                'contact_header': 'Contacto Profesional',
+                'p_name': 'Nombre',
+                'p_email': 'Correo Electrónico',
+                'p_msg': '¿Cómo puedo ayudarte?',
+                'btn_send': 'Enviar Mensaje',
+                'footer': '© 2026 | Steevin'
+            },
+            'en': {
+                'nav_home': 'Home',
+                'nav_services': 'Services',
+                'nav_contact': 'Contact',
+                'hero_title': 'Steevin',
+                'hero_subtitle': 'Software Analyst and Developer',
+                'services_header': 'Technical Solutions',
+                's1_title': 'Backend Architecture',
+                's1_desc': 'Developing robust and scalable systems with a focus on performance and security.',
+                's2_title': 'Data Optimization',
+                's2_desc': 'Architecture and optimization of critical databases for corporate environments.',
+                's3_title': 'IOS Ecosystem',
+                's3_desc': 'Advanced service integration and optimization for high-performance devices.',
+                'contact_header': 'Professional Contact',
+                'p_name': 'Full Name',
+                'p_email': 'Email Address',
+                'p_msg': 'How can I help you?',
+                'btn_send': 'Send Message',
+                'footer': '© 2026 | Steevin'
+            }
+        };
+
+        function applyLanguage(lang) {
+            // Traducir textos
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+            // Traducir placeholders
+            document.querySelectorAll('[data-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-placeholder');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+        }
+
+        const userLang = navigator.language.startsWith('en') ? 'en' : 'es';
+        applyLanguage(userLang);
+    </script>
 </body>
 </html>
