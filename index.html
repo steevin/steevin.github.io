@@ -221,6 +221,7 @@
             <li><a href="#inicio" data-key="nav_home">Inicio</a></li>
             <li><a href="#servicios" data-key="nav_services">Servicios</a></li>
             <li><a href="#habilidades" data-key="nav_tech">Tech Stack</a></li>
+            <li><a href="#proyectos" data-key="nav_projects">Proyectos</a></li>
             <li><a href="#contacto" data-key="nav_contact">Contacto</a></li>
         </ul>
     </nav>
@@ -283,6 +284,28 @@
         </div>
     </section>
 
+    <section id="proyectos" style="background: var(--secondary-bg); border-bottom: 0.5px solid #333;">
+        <h2 data-key="projects_header">Proyectos</h2>
+        <div class="portfolio-grid" style="max-width: 1100px; margin: 0 auto;">
+            <div class="project-card reveal">
+                <div class="project-screenshot" style="width: 100%; aspect-ratio: 16/10; border-radius: 12px; background: #0d0d0f; border: 1px solid #2a2a2c; margin-bottom: 20px; overflow: hidden;">
+                    <img src="assets/projects/polaris.png" alt="Polaris" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#3a3a3c;\'><i class=\'fas fa-image\' style=\'font-size:2rem;\'></i></div>';">
+                </div>
+                <span class="tags">Web SaaS · ERP · CRM</span>
+                <h3>Polaris</h3>
+                <p data-key="p1_desc">ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.</p>
+            </div>
+            <div class="project-card reveal">
+                <div class="project-screenshot" style="width: 100%; aspect-ratio: 16/10; border-radius: 12px; background: #0d0d0f; border: 1px solid #2a2a2c; margin-bottom: 20px; overflow: hidden;">
+                    <img src="assets/projects/vinance.png" alt="Vinance" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#3a3a3c;\'><i class=\'fas fa-mobile-screen\' style=\'font-size:2rem;\'></i></div>';">
+                </div>
+                <span class="tags">iOS · Swift · Finanzas</span>
+                <h3>Vinance</h3>
+                <p data-key="p2_desc">App iOS de finanzas personales con recomendaciones por IA: balance, movimientos, presupuestos, metas, créditos y suscripciones en una sola vista.</p>
+            </div>
+        </div>
+    </section>
+
     <section id="contacto">
         <h2 data-key="contact_header">Contacto</h2>
         <div style="max-width: 500px; margin: 0 auto;">
@@ -306,7 +329,12 @@
             'es': {
                 'nav_home': 'Inicio',
                 'nav_services': 'Servicios',
+                'nav_tech': 'Tech Stack',
+                'nav_projects': 'Proyectos',
                 'nav_contact': 'Contacto',
+                'projects_header': 'Proyectos',
+                'p1_desc': 'ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.',
+                'p2_desc': 'App iOS de finanzas personales con recomendaciones por IA: balance, movimientos, presupuestos, metas, créditos y suscripciones en una sola vista.',
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Analista y Desarrollador de Software',
                 'services_header': 'Soluciones Técnicas',
@@ -327,7 +355,12 @@
             'en': {
                 'nav_home': 'Home',
                 'nav_services': 'Services',
+                'nav_tech': 'Tech Stack',
+                'nav_projects': 'Projects',
                 'nav_contact': 'Contact',
+                'projects_header': 'Projects',
+                'p1_desc': 'Modular ERP made in Colombia: CRM, DIAN e-invoicing, sales, logistics (COD), help desk, treasury and e-learning. Paid in COP, 14-day free trial, no card.',
+                'p2_desc': 'iOS personal finance app with AI insights: balance, transactions, budgets, goals, credits and subscriptions in a single view.',
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Software Analyst and Developer',
                 'services_header': 'Technical Solutions',
