@@ -12,94 +12,107 @@
     <meta name="description" content="Analista y Desarrollador de Software especializado en soluciones Full Stack con Ruby on Rails, optimización de bases de datos Oracle y ecosistema iOS.">
     <meta name="keywords" content="Daniel Steevin, Steevin, Software Analyst, Developer, Ruby on Rails, Oracle, iOS, Developer, Medellín">
     <link rel="canonical" href="https://steevin.com/">
+    
+    <!-- Google Fonts: Inter for sans-serif, Fira Code for monospace -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-bg: #121212;
-            --secondary-bg: #1c1c1e;
-            --accent-color: #007aff;
-            --text-main: #f5f5f7;
-            --text-muted: #a1a1a6;
-            --glass-effect: rgba(28, 28, 30, 0.8);
+            /* Developer Dark Mode Palette */
+            --primary-bg: #0d1117;     /* Deep GitHub dark */
+            --secondary-bg: #161b22;   /* Slate gray card background */
+            --border-color: #30363d;   /* Subtle borders */
+            --accent-color: #00e5ff;   /* Neon Cyan */
+            --accent-hover: rgba(0, 229, 255, 0.15);
+            --text-main: #c9d1d9;      /* Clear light gray */
+            --text-muted: #8b949e;     /* Muted secondary text */
+            --text-bright: #ffffff;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
             margin: 0;
             color: var(--text-main);
             background-color: var(--primary-bg);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Navegación Base */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-bright);
+        }
+
+        /* Base Navigation */
         nav {
-            background: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.8rem 5%;
+            padding: 1rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* Logo Estilizado */
+        /* Stylized Brand */
         .brand {
             display: flex;
             align-items: center;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 1.1rem;
             white-space: nowrap;
         }
 
-        .bracket { color: #565656; }
-        .line { color: #007aff; margin: 0 2px; }
-        .name { color: #ffffff; text-transform: lowercase; } /* SQL standard */
-        .cursor { color: #007aff; font-weight: bold; animation: blink 1.2s infinite; }
+        .bracket { color: var(--text-muted); }
+        .line { color: var(--accent-color); margin: 0 4px; }
+        .name { color: var(--text-bright); text-transform: lowercase; font-weight: 500; }
+        .cursor { color: var(--accent-color); font-weight: bold; animation: blink 1.2s infinite; margin-left: 2px;}
 
-        /* Menú de navegación */
+        /* Navigation Menu */
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 25px;
             margin: 0;
             padding: 0;
         }
 
         nav a {
             text-decoration: none;
-            color: #a1a1a6;
+            color: var(--text-muted);
             font-size: 0.9rem;
-            transition: color 0.3s;
+            font-family: 'Fira Code', monospace;
+            transition: color 0.3s, text-shadow 0.3s;
         }
 
-        nav a:hover { color: #007aff; }
+        nav a:hover { 
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
 
-        /* FIX PARA MÓVIL (iPhone) */
+        /* Mobile Fix */
         @media (max-width: 768px) {
             nav {
-                flex-direction: column; /* Apila logo arriba y menú abajo */
-                padding: 0.5rem;
-                gap: 10px;
+                flex-direction: column; 
+                padding: 0.8rem;
+                gap: 15px;
             }
 
             nav ul {
-                gap: 12px;
+                gap: 15px;
                 justify-content: center;
+                flex-wrap: wrap;
                 width: 100%;
             }
 
-            nav a {
-                font-size: 0.75rem; /* Letra más pequeña para que no se encime */
-            }
-
-            .brand {
-                font-size: 1rem;
-            }
+            nav a { font-size: 0.8rem; }
         }
 
         @keyframes blink { 50% { opacity: 0; } }
@@ -111,47 +124,75 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at center, #1c1c1e 0%, #121212 100%);
+            background: radial-gradient(circle at top, var(--secondary-bg) 0%, var(--primary-bg) 100%);
             padding: 0 20px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .hero h1 { 
             font-size: clamp(2.5rem, 8vw, 4.5rem); 
             margin-bottom: 0.5rem; 
             font-weight: 700;
-            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         .hero p { 
             font-size: 1.2rem; 
             color: var(--text-muted); 
             max-width: 600px;
+            font-family: 'Fira Code', monospace;
         }
 
-        section { padding: 100px 10%; }
-        h2 { text-align: center; margin-bottom: 50px; font-weight: 600; }
+        section { padding: 100px 10%; border-bottom: 1px solid var(--border-color); }
+        
+        h2 { 
+            text-align: center; 
+            margin-bottom: 60px; 
+            font-weight: 600; 
+            font-size: 2rem;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        h2::before {
+            content: "// ";
+            color: var(--accent-color);
+        }
         
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
         .project-card {
             background: var(--secondary-bg);
-            border: 1px solid #333;
-            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             padding: 35px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover { 
-            transform: translateY(-10px); 
-            border-color: var(--accent-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-5px); 
+            border-color: var(--text-muted);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+        
+        .project-card:hover::before { opacity: 1; }
 
         .tags { 
             font-size: 0.75rem; 
@@ -160,45 +201,124 @@
             color: var(--accent-color); 
             margin-bottom: 15px; 
             display: block;
-            font-weight: bold;
+            font-weight: 500;
+            font-family: 'Fira Code', monospace;
         }
 
+        /* Forms */
         input, textarea {
             width: 100%;
             padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            background: #1c1c1e;
-            color: white;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--primary-bg);
+            color: var(--text-bright);
             box-sizing: border-box;
-            font-family: inherit;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 1px var(--accent-color);
         }
 
         button {
-            padding: 18px;
-            border-radius: 12px;
-            border: none;
-            background: var(--accent-color);
-            color: white;
+            padding: 16px 24px;
+            border-radius: 6px;
+            border: 1px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
             font-weight: 600;
+            font-family: 'Fira Code', monospace;
             cursor: pointer;
-            transition: transform 0.2s, opacity 0.3s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
         }
 
-        button:hover { opacity: 0.9; transform: scale(1.02); }
+        button:hover { 
+            background: var(--accent-hover); 
+            box-shadow: 0 0 15px var(--accent-hover);
+        }
 
-        footer { 
-            padding: 60px; 
-            text-align: center; 
-            border-top: 0.5px solid #333;
-            color: var(--text-muted);
-            font-size: 0.8rem;
+        /* Tech Stack Icons */
+        .tech-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+            gap: 40px; 
+            justify-items: center; 
+            align-items: start;
+        }
+
+        .tech-item {
+            text-align: center;
+            width: 110px;
+            cursor: default;
         }
         
+        .tech-icon {
+            font-size: 2.5rem; 
+            color: var(--text-muted); 
+            margin-bottom: 15px; 
+            display: block;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .tech-item:hover .tech-icon {
+            color: var(--accent-color);
+            transform: scale(1.1);
+            text-shadow: 0 0 15px var(--accent-hover);
+        }
+
+        .tech-label {
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            margin: 0;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-main);
+        }
+
+        /* Project Screenshots */
+        .project-screenshot {
+            width: 100%; 
+            aspect-ratio: 16/10; 
+            border-radius: 6px; 
+            background: var(--primary-bg); 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 25px; 
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .project-screenshot img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-screenshot img {
+            transform: scale(1.05);
+        }
+
+        footer { 
+            padding: 40px; 
+            text-align: center; 
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        /* Reveal Animation */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal.active {
@@ -232,72 +352,72 @@
     </section>
 
     <section id="servicios">
-        <h2 data-key="services_header">Soluciones</h2>
+        <h2 data-key="services_header">Soluciones Técnicas</h2>
         <div class="portfolio-grid">
-            <div class="project-card">
+            <div class="project-card reveal">
                 <span class="tags">Ruby on Rails</span>
                 <h3 data-key="s1_title">Backend Architecture</h3>
                 <p data-key="s1_desc">Desarrollo de sistemas robustos y escalables con enfoque en rendimiento y seguridad.</p>
             </div>
-            <div class="project-card">
+            <div class="project-card reveal">
                 <span class="tags">Oracle SQL • PL/SQL</span>
                 <h3 data-key="s2_title">Database Optimization</h3>
                 <p data-key="s2_desc">Arquitectura y optimización de bases de datos críticas para entornos corporativos.</p>
             </div>
-            <div class="project-card">
-                <span class="tags">Swift • IOS</span>
-                <h3 data-key="s3_title">IOS Ecosystem</h3>
+            <div class="project-card reveal">
+                <span class="tags">Swift • iOS</span>
+                <h3 data-key="s3_title">iOS Ecosystem</h3>
                 <p data-key="s3_desc">Integración de servicios avanzados y optimización para dispositivos de alto rendimiento.</p>
             </div>
         </div>
     </section>
 
-    <section id="habilidades" style="padding: 80px 10%; background: var(--secondary-bg); border-bottom: 0.5px solid #333;">
-        <h2 data-key="skills_header" style="margin-bottom: 50px; text-align: center;">Tech Stack</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 30px; justify-items: center; align-items: start;">
+    <section id="habilidades" style="background: var(--secondary-bg);">
+        <h2 data-key="skills_header">Tech Stack</h2>
+        <div class="tech-grid">
             
-            <div class="reveal" style="text-align: center; width: 110px;">
-                <i class="fas fa-gem" style="font-size: 2.5rem; color: #CC0000; margin-bottom: 12px; display: block;"></i>
-                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Ruby on Rails</p>
+            <div class="reveal tech-item">
+                <i class="fas fa-gem tech-icon"></i>
+                <p class="tech-label">Ruby on Rails</p>
             </div>
 
-            <div class="reveal" style="text-align: center; width: 110px;">
-                <i class="fas fa-database" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 12px; display: block;"></i>
-                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Oracle SQL</p>
+            <div class="reveal tech-item">
+                <i class="fas fa-database tech-icon"></i>
+                <p class="tech-label">Oracle SQL</p>
             </div>
 
-            <div class="reveal" style="text-align: center; width: 110px;">
-                <i class="fas fa-microchip" style="font-size: 2.5rem; color: #a1a1a6; margin-bottom: 12px; display: block;"></i>
-                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">AI Models</p>
+            <div class="reveal tech-item">
+                <i class="fas fa-microchip tech-icon"></i>
+                <p class="tech-label">AI Models</p>
             </div>
 
-            <div class="reveal" style="text-align: center; width: 110px;">
-                <i class="fas fa-network-wired" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px; display: block;"></i>
-                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">API RESTful</p>
+            <div class="reveal tech-item">
+                <i class="fas fa-network-wired tech-icon"></i>
+                <p class="tech-label">API RESTful</p>
             </div>
 
-            <div class="reveal" style="text-align: center; width: 110px;">
-                <i class="fab fa-apple" style="font-size: 2.5rem; color: var(--text-main); margin-bottom: 12px; display: block;"></i>
-                <p style="font-size: 0.85rem; font-weight: 600; margin: 0;">Swift</p>
+            <div class="reveal tech-item">
+                <i class="fab fa-apple tech-icon"></i>
+                <p class="tech-label">Swift</p>
             </div>
 
         </div>
     </section>
 
-    <section id="proyectos" style="background: var(--secondary-bg); border-bottom: 0.5px solid #333;">
+    <section id="proyectos">
         <h2 data-key="projects_header">Proyectos</h2>
         <div class="portfolio-grid" style="max-width: 1100px; margin: 0 auto;">
             <div class="project-card reveal">
-                <div class="project-screenshot" style="width: 100%; aspect-ratio: 16/10; border-radius: 12px; background: #0d0d0f; border: 1px solid #2a2a2c; margin-bottom: 20px; overflow: hidden;">
-                    <img src="assets/projects/polaris.png" alt="Polaris" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#3a3a3c;\'><i class=\'fas fa-image\' style=\'font-size:2rem;\'></i></div>';">
+                <div class="project-screenshot">
+                    <img src="assets/projects/polaris.png" alt="Polaris" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);\'><i class=\'fas fa-image\' style=\'font-size:2rem;\'></i></div>';">
                 </div>
                 <span class="tags">Web SaaS · ERP · CRM</span>
                 <h3>Polaris</h3>
                 <p data-key="p1_desc">ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.</p>
             </div>
             <div class="project-card reveal">
-                <div class="project-screenshot" style="width: 100%; aspect-ratio: 16/10; border-radius: 12px; background: #0d0d0f; border: 1px solid #2a2a2c; margin-bottom: 20px; overflow: hidden;">
-                    <img src="assets/projects/vinance.png" alt="Vinance" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:#3a3a3c;\'><i class=\'fas fa-mobile-screen\' style=\'font-size:2rem;\'></i></div>';">
+                <div class="project-screenshot">
+                    <img src="assets/projects/vinance.png" alt="Vinance" style="object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);\'><i class=\'fas fa-mobile-screen\' style=\'font-size:2rem;\'></i></div>';">
                 </div>
                 <span class="tags">iOS · Swift · Finanzas</span>
                 <h3>Vinance</h3>
@@ -306,9 +426,9 @@
         </div>
     </section>
 
-    <section id="contacto">
+    <section id="contacto" style="background: var(--secondary-bg);">
         <h2 data-key="contact_header">Contacto</h2>
-        <div style="max-width: 500px; margin: 0 auto;">
+        <div style="max-width: 500px; margin: 0 auto;" class="reveal">
             <form action="https://formspree.io/f/mzdjpbgy" method="POST">
                 <div style="display: grid; gap: 20px;">
                     <input type="text" name="name" data-placeholder="p_name" placeholder="Nombre" required>
@@ -338,12 +458,12 @@
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Analista y Desarrollador de Software',
                 'services_header': 'Soluciones Técnicas',
-                'skills_header': 'Especialidades Técnicas',
+                'skills_header': 'Tech Stack',
                 's1_title': 'Arquitectura Backend',
                 's1_desc': 'Desarrollo de sistemas robustos y escalables con enfoque en rendimiento y seguridad.',
                 's2_title': 'Optimización de Datos',
                 's2_desc': 'Arquitectura y optimización de bases de datos críticas para entornos corporativos.',
-                's3_title': 'Ecosistema IOS',
+                's3_title': 'Ecosistema iOS',
                 's3_desc': 'Integración de servicios avanzados y optimización para dispositivos de alto rendimiento.',
                 'contact_header': 'Contacto',
                 'p_name': 'Nombre',
@@ -364,7 +484,7 @@
                 'hero_title': 'Daniel Steevin',
                 'hero_subtitle': 'Software Analyst and Developer',
                 'services_header': 'Technical Solutions',
-                'skills_header': 'Technical Expertise',
+                'skills_header': 'Tech Stack',
                 's1_title': 'Backend Architecture',
                 's1_desc': 'Developing robust and scalable systems with a focus on performance and security.',
                 's2_title': 'Data Optimization',
@@ -400,7 +520,7 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100; // Distancia para activar la animación
+                var elementVisible = 100;
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
@@ -408,7 +528,6 @@
         }
 
         window.addEventListener("scroll", reveal);
-
         reveal();
     </script>
 </body>
