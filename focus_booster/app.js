@@ -505,10 +505,8 @@ function nextStroopQuestion() {
     const wordDisplay = document.getElementById('stroop-word');
     wordDisplay.textContent = stroopColors[nameIdx].name;
 
-    // Remover colores de clase previos
-    stroopColors.forEach(c => wordDisplay.classList.remove(c.textClass));
-    // Agregar color de clase de tinta actual
-    wordDisplay.classList.add(stroopColors[inkIdx].textClass);
+    // Resetear clases completamente para evitar residuos de partidas anteriores (ej: text-rose-500 de endStroop)
+    wordDisplay.className = `text-5xl font-black tracking-widest uppercase transition-all duration-100 select-none ${stroopColors[inkIdx].textClass}`;
 
     currentTargetColorKey = stroopColors[inkIdx].key;
 }
