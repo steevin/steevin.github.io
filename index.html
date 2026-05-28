@@ -97,6 +97,22 @@
             text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
         }
 
+        nav a.nav-focus-btn {
+            border: 1px solid var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 6px;
+            color: var(--accent-color);
+            background: transparent;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        nav a.nav-focus-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            text-shadow: none;
+        }
+
         /* Mobile Fix */
         @media (max-width: 768px) {
             nav {
@@ -343,6 +359,7 @@
             <li><a href="#habilidades" data-key="nav_tech">Tech Stack</a></li>
             <li><a href="#proyectos" data-key="nav_projects">Proyectos</a></li>
             <li><a href="#contacto" data-key="nav_contact">Contacto</a></li>
+            <li><a href="focus_booster.html" class="nav-focus-btn" data-key="nav_focus">Gimnasio Cerebral</a></li>
         </ul>
     </nav>
 
@@ -452,6 +469,7 @@
                 'nav_tech': 'Tech Stack',
                 'nav_projects': 'Proyectos',
                 'nav_contact': 'Contacto',
+                'nav_focus': 'Gimnasio Cerebral',
                 'projects_header': 'Proyectos',
                 'p1_desc': 'ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.',
                 'p2_desc': 'App iOS de finanzas personales con recomendaciones por IA: balance, movimientos, presupuestos, metas, créditos y suscripciones en una sola vista.',
@@ -478,6 +496,7 @@
                 'nav_tech': 'Tech Stack',
                 'nav_projects': 'Projects',
                 'nav_contact': 'Contact',
+                'nav_focus': 'Mind Gym',
                 'projects_header': 'Projects',
                 'p1_desc': 'Modular ERP made in Colombia: CRM, DIAN e-invoicing, sales, logistics (COD), help desk, treasury and e-learning. Paid in COP, 14-day free trial, no card.',
                 'p2_desc': 'iOS personal finance app with AI insights: balance, transactions, budgets, goals, credits and subscriptions in a single view.',
