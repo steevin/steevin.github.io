@@ -1,0 +1,44 @@
+<!-- PESTAÑA 3: DESAFÍO STROOP -->
+<section id="pane-stroop-challenge" class="tab-pane hidden space-y-4">
+    <div class="flex items-center justify-between mb-2">
+        <div>
+            <span class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest">Actividad 02</span>
+            <h2 class="text-xl font-extrabold text-slate-100">Inhibición Stroop (Atención Selectiva)</h2>
+        </div>
+        <div class="flex gap-4">
+            <div class="bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800 text-center">
+                <p class="text-[9px] text-slate-400 uppercase">Tiempo</p>
+                <p class="text-sm font-extrabold text-amber-400" id="stroop-timer">30s</p>
+            </div>
+            <div class="bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800 text-center">
+                <p class="text-[9px] text-slate-400 uppercase">Puntos</p>
+                <p class="text-sm font-extrabold text-emerald-400" id="stroop-score">0</p>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-xs text-slate-400 max-w-xl">
+        ¡No leas la palabra! Responde pulsando el botón que corresponde al <strong>color de la tinta</strong> con la que está escrita. Entrena el control inhibitorio y la flexibilidad cognitiva.
+    </p>
+
+    <!-- Área interactiva del juego Stroop -->
+    <div class="bg-slate-950/40 border border-slate-800/80 rounded-2xl p-8 flex flex-col justify-center items-center min-h-[220px] relative">
+        <!-- Palabra Estímulo -->
+        <div id="stroop-word-container" class="mb-8">
+            <span id="stroop-word" class="text-5xl font-black tracking-widest uppercase transition-all duration-100 select-none text-slate-500">PRESIONA INICIAR</span>
+        </div>
+
+        <!-- Botones de Selección de Color -->
+        <div id="stroop-controls" class="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-md hidden">
+            <button onclick="stroopAnswer('red')" class="py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs transition-transform active:scale-95 shadow-md">ROJO</button>
+            <button onclick="stroopAnswer('blue')" class="py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs transition-transform active:scale-95 shadow-md">AZUL</button>
+            <button onclick="stroopAnswer('green')" class="py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs transition-transform active:scale-95 shadow-md">VERDE</button>
+            <button onclick="stroopAnswer('yellow')" class="py-3 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-extrabold text-xs transition-transform active:scale-95 shadow-md">AMARILLO</button>
+        </div>
+
+        <!-- Botón de Inicio Central -->
+        <button id="stroop-start-btn" onclick="startStroop()" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 text-white font-bold text-xs shadow-lg shadow-indigo-500/20">
+            Iniciar Prueba Stroop
+        </button>
+    </div>
+</section>
