@@ -1072,6 +1072,35 @@
                 }
             });
 
+            // Si la pestaña destino NO es calm-chamber, detener el audio binaural y el ruido marrón
+            // (El Sincronizador Neuro-Acústico vive en calm-chamber, por eso se excluye esa pestaña)
+            if (targetTabId !== 'calm-chamber') {
+                // Detener audio binaural si está activo
+                if (isAudioPlaying) {
+                    if (leftOsc) { try { leftOsc.stop(); leftOsc.disconnect(); } catch(e) {} }
+                    if (rightOsc) { try { rightOsc.stop(); rightOsc.disconnect(); } catch(e) {} }
+                    isAudioPlaying = false;
+
+                    const audioBtn = document.getElementById('audio-btn');
+                    const audioBtnText = document.getElementById('audio-btn-text');
+                    const playIcon = document.getElementById('play-icon');
+                    if (audioBtn) audioBtn.className = "w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 flex justify-center items-center gap-2";
+                    if (audioBtnText) audioBtnText.textContent = "Iniciar Binaural";
+                    if (playIcon) playIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />`;
+                }
+
+                // Detener ruido marrón si está activo
+                if (isBrownNoisePlaying) {
+                    if (brownNoiseNode) { try { brownNoiseNode.stop(); brownNoiseNode.disconnect(); } catch(e) {} }
+                    isBrownNoisePlaying = false;
+
+                    const brownBtn = document.getElementById('brown-noise-btn');
+                    const brownStatus = document.getElementById('brown-noise-status');
+                    if (brownBtn) brownBtn.className = "w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-semibold border border-slate-800 text-slate-300 transition-all flex items-center justify-center gap-2";
+                    if (brownStatus) brownStatus.textContent = "Apagado";
+                }
+            }
+
             // Mostrar pestaña seleccionada
             const selectedPane = document.getElementById(`pane-${targetTabId}`);
             selectedPane.classList.remove('hidden');
