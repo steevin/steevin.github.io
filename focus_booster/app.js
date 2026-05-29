@@ -397,29 +397,28 @@ function cellClicked(idx) {
     if (!gameActive) return;
 
     const cell = document.getElementsByClassName('grid-cell')[idx];
-    // Quitar fondo oscuro y agregar feedback vibrante al toque
+
+    // Marcar la celda seleccionada con color visible y permanente
     cell.classList.remove('bg-slate-800/80', 'border-slate-700/60');
     cell.classList.add(
-        'bg-emerald-400', 'scale-[1.06]',
-        'shadow-[0_0_28px_8px_rgba(52,211,153,0.7)]',
-        'border-emerald-300', 'brightness-110'
+        'bg-emerald-500', 'scale-[1.04]',
+        'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]',
+        'border-emerald-400'
     );
-    playSoftNote(300 + (idx * 40), 0.1);
-
-    setTimeout(() => {
-        cell.classList.remove(
-            'bg-emerald-400', 'scale-[1.06]',
-            'shadow-[0_0_28px_8px_rgba(52,211,153,0.7)]',
-            'border-emerald-300', 'brightness-110'
-        );
-        cell.classList.add('bg-slate-800/80', 'border-slate-700/60');
-    }, 200);
+    playSoftNote(300 + (idx * 40), 0.12);
 
     playerSequence.push(idx);
     const currentMoveIndex = playerSequence.length - 1;
 
     if (playerSequence[currentMoveIndex] !== gameSequence[currentMoveIndex]) {
-        gameOver();
+        // Marcar el error en rojo antes del game over
+        cell.classList.remove(
+            'bg-emerald-500', 'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]', 'border-emerald-400'
+        );
+        cell.classList.add(
+            'bg-red-500', 'shadow-[0_0_20px_6px_rgba(239,68,68,0.7)]', 'border-red-400'
+        );
+        setTimeout(() => gameOver(), 400);
         return;
     }
 
@@ -436,9 +435,16 @@ function cellClicked(idx) {
         const btn = document.getElementById('game-btn');
         btn.textContent = "¡Perfecto! Siguiente nivel...";
 
+        // Flash de éxito en todos los cuadros seleccionados antes de limpiar
+        const cells = document.getElementsByClassName('grid-cell');
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].classList.remove('bg-emerald-500', 'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]', 'border-emerald-400');
+            cells[i].classList.add('bg-indigo-400', 'shadow-[0_0_16px_4px_rgba(129,140,248,0.5)]', 'border-indigo-300');
+        }
         setTimeout(() => {
+            resetAllCells();
             generateNextSequence();
-        }, 900);
+        }, 700);
     }
 }
 
@@ -449,15 +455,23 @@ function disableAllCells(disabled) {
     }
 }
 
+function resetAllCells() {
+    const cells = document.getElementsByClassName('grid-cell');
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].className = 'grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer';
+    }
+}
+
 function gameOver() {
     gameActive = false;
     disableAllCells(true);
 
     const grid = document.getElementById('grid-container');
-    grid.classList.add('ring-4', 'ring-red-500/50');
+    grid.classList.add('ring-4', 'ring-red-500/60');
     setTimeout(() => {
-        grid.classList.remove('ring-4', 'ring-red-500/50');
-    }, 500);
+        grid.classList.remove('ring-4', 'ring-red-500/60');
+        resetAllCells();
+    }, 700);
 
     const btn = document.getElementById('game-btn');
     btn.disabled = false;
