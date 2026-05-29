@@ -374,27 +374,46 @@ function playSequence() {
 
 function flashCell(idx) {
     const cell = document.getElementsByClassName('grid-cell')[idx];
-    cell.classList.remove('bg-slate-950/60', 'border-slate-800');
-    cell.classList.add('bg-indigo-500', 'scale-[1.03]', 'shadow-lg', 'shadow-indigo-500/50', 'border-indigo-300');
+    cell.classList.remove('bg-slate-800/80', 'border-slate-700/60');
+    cell.classList.add(
+        'bg-indigo-500', 'scale-[1.06]',
+        'shadow-[0_0_28px_8px_rgba(99,102,241,0.75)]',
+        'border-indigo-300', 'brightness-125'
+    );
 
     playSoftNote(200 + (idx * 50), 0.25);
 
     setTimeout(() => {
-        cell.classList.add('bg-slate-950/60', 'border-slate-800');
-        cell.classList.remove('bg-indigo-500', 'scale-[1.03]', 'shadow-lg', 'shadow-indigo-500/50', 'border-indigo-300');
-    }, 300);
+        cell.classList.remove(
+            'bg-indigo-500', 'scale-[1.06]',
+            'shadow-[0_0_28px_8px_rgba(99,102,241,0.75)]',
+            'border-indigo-300', 'brightness-125'
+        );
+        cell.classList.add('bg-slate-800/80', 'border-slate-700/60');
+    }, 380);
 }
 
 function cellClicked(idx) {
     if (!gameActive) return;
 
     const cell = document.getElementsByClassName('grid-cell')[idx];
-    cell.classList.add('bg-emerald-500/80');
+    // Quitar fondo oscuro y agregar feedback vibrante al toque
+    cell.classList.remove('bg-slate-800/80', 'border-slate-700/60');
+    cell.classList.add(
+        'bg-emerald-400', 'scale-[1.06]',
+        'shadow-[0_0_28px_8px_rgba(52,211,153,0.7)]',
+        'border-emerald-300', 'brightness-110'
+    );
     playSoftNote(300 + (idx * 40), 0.1);
 
     setTimeout(() => {
-        cell.classList.remove('bg-emerald-500/80');
-    }, 150);
+        cell.classList.remove(
+            'bg-emerald-400', 'scale-[1.06]',
+            'shadow-[0_0_28px_8px_rgba(52,211,153,0.7)]',
+            'border-emerald-300', 'brightness-110'
+        );
+        cell.classList.add('bg-slate-800/80', 'border-slate-700/60');
+    }, 200);
 
     playerSequence.push(idx);
     const currentMoveIndex = playerSequence.length - 1;
