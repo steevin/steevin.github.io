@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Daniel Steevin">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neuron-cli | Steevin</title>
+    <meta name="description" content="neuron-cli — Gestor de notas local-first para la terminal. Compatible con Obsidian, TUI, sincronización Git y servidor MCP para agentes de IA.">
+    <meta name="keywords" content="neuron-cli, CLI, TUI, Go, Obsidian, notes, terminal, MCP, AI, Daniel Steevin">
+    <link rel="canonical" href="https://steevin.com/neuron-cli">
+
+    <!-- Google Fonts: Inter + Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --border-color: #30363d;
+            --accent-color: #00e5ff;
+            --accent-hover: rgba(0, 229, 255, 0.15);
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --text-bright: #ffffff;
+            --green: #3fb950;
+            --purple: #bc8cff;
+            --orange: #f78166;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-main);
+            background-color: var(--primary-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 { color: var(--text-bright); }
+
+        /* ── Navigation ── */
+        nav {
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .bracket { color: var(--text-muted); }
+        .line    { color: var(--accent-color); margin: 0 4px; }
+        .name    { color: var(--text-bright); text-transform: lowercase; font-weight: 500; }
+        .cursor  { color: var(--accent-color); font-weight: bold; animation: blink 1.2s infinite; margin-left: 2px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+
+        nav a.nav-focus-btn {
+            border: 1px solid var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 6px;
+            color: var(--accent-color);
+            background: transparent;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        nav a.nav-focus-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            text-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; padding: 0.8rem; gap: 15px; }
+            nav ul { gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; }
+            nav a { font-size: 0.8rem; }
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(0,229,255,0.07) 0%, var(--primary-bg) 65%);
+            padding: 60px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 39px,
+                rgba(0,229,255,0.03) 39px,
+                rgba(0,229,255,0.03) 40px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 79px,
+                rgba(0,229,255,0.03) 79px,
+                rgba(0,229,255,0.03) 80px
+            );
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,229,255,0.08);
+            border: 1px solid rgba(0,229,255,0.25);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 9vw, 5rem);
+            margin: 0 0 0.4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .hero h1 span { color: var(--accent-color); }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            font-family: 'Fira Code', monospace;
+            margin: 0.5rem 0 2.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: rgba(0,229,255,0.85);
+            box-shadow: 0 0 24px rgba(0,229,255,0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 16px rgba(0,229,255,0.2);
+            transform: translateY(-1px);
+        }
+
+        /* ── Install Strip ── */
+        .install-strip {
+            background: var(--secondary-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+        }
+
+        .install-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .install-tab {
+            padding: 12px 24px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .install-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+            background: rgba(0,229,255,0.05);
+        }
+
+        .install-tab:hover:not(.active) { color: var(--text-main); }
+
+        .install-body { padding: 20px 5%; }
+
+        .code-block {
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px 24px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block .comment { color: var(--text-muted); }
+        .code-block .cmd     { color: var(--accent-color); }
+        .code-block .str     { color: var(--green); }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover { color: var(--accent-color); border-color: var(--accent-color); }
+
+        .install-panel { display: none; }
+        .install-panel.active { display: block; }
+
+        /* ── Sections ── */
+        section { padding: 90px 10%; border-bottom: 1px solid var(--border-color); }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 600;
+            font-size: 2rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        h2::before { content: "// "; color: var(--accent-color); }
+
+        /* ── Feature Grid ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .feature-card h3 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* ── Commands Section ── */
+        .commands-table {
+            max-width: 820px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .cmd-row {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.2s;
+        }
+
+        .cmd-row:last-child { border-bottom: none; }
+        .cmd-row:hover { background: rgba(0,229,255,0.04); }
+
+        .cmd-row.header {
+            background: var(--secondary-bg);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .cmd-cell {
+            padding: 16px 24px;
+            font-size: 0.9rem;
+        }
+
+        .cmd-cell:first-child {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-color);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .cmd-cell.desc { color: var(--text-muted); }
+
+        /* ── Stack Badges ── */
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .stack-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            transition: all 0.25s;
+        }
+
+        .stack-badge:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: 0 0 12px rgba(0,229,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .stack-badge i { font-size: 1rem; color: var(--accent-color); }
+
+        /* ── Screenshot ── */
+        .screenshot-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+        }
+
+        .screenshot-bar {
+            background: var(--secondary-bg);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red    { background: #ff5f57; }
+        .dot-yellow { background: #febc2e; }
+        .dot-green  { background: #28c840; }
+
+        .screenshot-bar .path {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+
+        .screenshot-body {
+            background: #010409;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .screenshot-body img {
+            width: 100%;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .screenshot-wrapper:hover .screenshot-body img { transform: scale(1.01); }
+
+        /* ── CTA ── */
+        .cta-section {
+            text-align: center;
+            padding: 100px 10%;
+            background: radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, var(--primary-bg) 70%);
+        }
+
+        .cta-section h2 { margin-bottom: 16px; }
+        .cta-section h2::before { content: ""; }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 40px;
+            font-size: 1rem;
+        }
+
+        .cta-section .hero-actions { justify-content: center; }
+
+        /* ── Footer ── */
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--accent-color); }
+
+        /* ── Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ── Terminal Typing Demo ── */
+        .terminal-demo {
+            max-width: 680px;
+            margin: 0 auto 48px;
+            background: #010409;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .terminal-demo .bar {
+            background: var(--secondary-bg);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-demo .bar span {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: 8px;
+        }
+
+        .terminal-demo pre {
+            margin: 0;
+            padding: 24px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            overflow-x: auto;
+        }
+
+        .t-prompt { color: var(--green); }
+        .t-cmd    { color: var(--accent-color); }
+        .t-arg    { color: var(--purple); }
+        .t-flag   { color: var(--orange); }
+        .t-out    { color: var(--text-muted); }
+        .t-ok     { color: var(--green); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand">
+            <span class="bracket">&lt;</span>
+            <span class="line">/</span>
+            <span class="name">steevin</span>
+            <span class="cursor">_</span>
+            <span class="bracket">&gt;</span>
+        </a>
+        <ul>
+            <li><a href="/#inicio" data-key="nav_home">Inicio</a></li>
+            <li><a href="/#servicios" data-key="nav_services">Servicios</a></li>
+            <li><a href="/#habilidades" data-key="nav_tech">Tech Stack</a></li>
+            <li><a href="/#proyectos" data-key="nav_projects">Proyectos</a></li>
+            <li><a href="/#contacto" data-key="nav_contact">Contacto</a></li>
+            <li><a href="/focus_booster.html" class="nav-focus-btn" data-key="nav_focus">Gimnasio Cerebral</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section class="hero" id="inicio">
+        <div class="hero-badge">
+            <i class="fas fa-terminal"></i>
+            <span>Go · CLI · TUI · MCP</span>
+        </div>
+        <h1><span>neuron</span>-cli</h1>
+        <p class="hero-subtitle" data-key="hero_sub">A terminal knowledge manager that doesn't get in your way.</p>
+        <div class="hero-actions">
+            <a id="hero-github-btn" href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-github"></i>
+                <span data-key="hero_github">Ver en GitHub</span>
+            </a>
+            <a href="#instalar" class="btn btn-secondary">
+                <i class="fas fa-download"></i>
+                <span data-key="hero_install">Instalación rápida</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ── INSTALL STRIP ── -->
+    <div class="install-strip" id="instalar">
+        <div style="padding: 0 5%">
+            <div class="install-tabs">
+                <button class="install-tab active" onclick="switchTab(this,'homebrew')" id="tab-homebrew">Homebrew</button>
+                <button class="install-tab" onclick="switchTab(this,'go')" id="tab-go">Go Install</button>
+                <button class="install-tab" onclick="switchTab(this,'source')" id="tab-source">Source</button>
+            </div>
+        </div>
+        <div class="install-body">
+            <div class="install-panel active" id="panel-homebrew">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'brew install steevin/tap/neuron')">copy</button>
+                    <span class="comment"># Homebrew (macOS / Linux)</span><br>
+                    <span class="cmd">brew</span> install <span class="str">steevin/tap/neuron</span>
+                </div>
+            </div>
+            <div class="install-panel" id="panel-go">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'go install github.com/steevin/neuron-cli@latest')">copy</button>
+                    <span class="comment"># Go install</span><br>
+                    <span class="cmd">go</span> install <span class="str">github.com/steevin/neuron-cli@latest</span>
+                </div>
+            </div>
+            <div class="install-panel" id="panel-source">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'git clone https://github.com/steevin/neuron-cli && cd neuron-cli && make build')">copy</button>
+                    <span class="comment"># Build from source</span><br>
+                    <span class="cmd">git</span> clone <span class="str">https://github.com/steevin/neuron-cli</span><br>
+                    <span class="cmd">cd</span> neuron-cli <span class="cmd">&amp;&amp;</span> <span class="cmd">make</span> build
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── ABOUT ── -->
+    <section id="acerca" style="padding: 90px 10%;">
+        <h2 data-key="about_header">Acerca del proyecto</h2>
+        <div class="terminal-demo reveal">
+            <div class="bar">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span>~ neuron</span>
+            </div>
+            <pre>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span>                         <span class="t-out"># abre la TUI</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">init</span>                    <span class="t-out"># asistente de configuración</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">add</span> <span class="t-flag">"standup notes"</span> <span class="t-arg">--tag</span> work
+<span class="t-ok">✓</span> <span class="t-out">Nota creada: standup notes.md</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">search</span> <span class="t-flag">kubernetes</span>     <span class="t-out"># búsqueda fuzzy en tu vault</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">daily</span>                   <span class="t-out"># abre/crea la nota del día</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">sync</span>                    <span class="t-out"># commit + push con Git</span></pre>
+        </div>
+        <div style="max-width:720px; margin: 0 auto; text-align:center;">
+            <p class="reveal" style="font-size:1.05rem; color:var(--text-main); line-height:1.9;" data-key="about_desc">
+                <strong style="color:var(--accent-color)">neuron</strong> es un gestor de notas <em>local-first</em>, compatible con Obsidian, diseñado para vivir en tu terminal.
+                Mantiene tu vault de Markdown exactamente donde está — sin migraciones, sin nube, sin suscripciones.
+                Solo acceso rápido, guiado por teclado, a tus notas desde cualquier shell.
+            </p>
+        </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section id="caracteristicas" style="background: var(--secondary-bg);">
+        <h2 data-key="feat_header">Características</h2>
+        <div class="feature-grid">
+
+            <div class="feature-card reveal">
+                <i class="fas fa-terminal feature-icon"></i>
+                <h3 data-key="f1_title">TUI Interactiva</h3>
+                <p data-key="f1_desc">Navega tu vault completo con una Terminal User Interface fluida. Presiona <code style="color:var(--accent-color)">/</code> para abrir la paleta de comandos fuzzy, o <code style="color:var(--accent-color)">?</code> para ver todos los atajos de teclado.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-bolt feature-icon"></i>
+                <h3 data-key="f2_title">Prompts Inteligentes</h3>
+                <p data-key="f2_desc">¿Olvidaste pasar un argumento? neuron te lo pide de forma interactiva con una UI hermosa gracias a <code style="color:var(--accent-color)">huh</code>. Nunca más mires un error de ayuda genérico.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-code-branch feature-icon"></i>
+                <h3 data-key="f3_title">Sincronización Git</h3>
+                <p data-key="f3_desc">Un solo comando <code style="color:var(--accent-color)">neuron sync</code> hace commit y push de tu vault. Historial de versiones completo sin salir de la terminal.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-robot feature-icon"></i>
+                <h3 data-key="f4_title">Servidor MCP</h3>
+                <p data-key="f4_desc">Expone tu vault como un <strong>Model Context Protocol server</strong>, permitiendo que agentes de IA como Claude o Gemini lean y escriban en tus notas de forma segura.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-calendar-day feature-icon"></i>
+                <h3 data-key="f5_title">Notas Diarias</h3>
+                <p data-key="f5_desc"><code style="color:var(--accent-color)">neuron daily</code> crea o abre la nota del día al instante, con la plantilla que definas. Perfecto para journaling o standups.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-palette feature-icon"></i>
+                <h3 data-key="f6_title">Output Colorizado</h3>
+                <p data-key="f6_desc">Salidas limpias y coloridas con <code style="color:var(--accent-color)">lipgloss</code> y spinners animados con <code style="color:var(--accent-color)">bubbles</code>. La terminal, pero con estilo.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── COMMANDS ── -->
+    <section id="comandos">
+        <h2 data-key="cmd_header">Comandos</h2>
+        <div class="commands-table reveal">
+            <div class="cmd-row header">
+                <div class="cmd-cell">Comando</div>
+                <div class="cmd-cell">Descripción</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron</div>
+                <div class="cmd-cell desc" data-key="c1">Abre la TUI principal (modo por defecto)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron init</div>
+                <div class="cmd-cell desc" data-key="c2">Asistente interactivo de configuración inicial</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron add [título]</div>
+                <div class="cmd-cell desc" data-key="c3">Crea una nota nueva; te pide el título si falta</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron edit [nota]</div>
+                <div class="cmd-cell desc" data-key="c4">Abre la nota en <code style="color:var(--accent-color)">$EDITOR</code></div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron search [query]</div>
+                <div class="cmd-cell desc" data-key="c5">Búsqueda fuzzy en todo el vault</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron daily</div>
+                <div class="cmd-cell desc" data-key="c6">Crea o abre la nota diaria de hoy</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron sync</div>
+                <div class="cmd-cell desc" data-key="c7">Commit y push del vault a Git</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron mcp</div>
+                <div class="cmd-cell desc" data-key="c8">Inicia el servidor MCP para agentes de IA</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SCREENSHOT ── -->
+    <section id="preview" style="background: var(--secondary-bg);">
+        <h2 data-key="preview_header">Vista previa</h2>
+        <div class="screenshot-wrapper reveal">
+            <div class="screenshot-bar">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span class="path">~/vault — neuron</span>
+            </div>
+            <div class="screenshot-body">
+                <img
+                    src="assets/projects/neuron-cli.png"
+                    alt="neuron-cli TUI screenshot"
+                    onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:260px;gap:12px;\'><i class=\'fas fa-terminal\' style=\'font-size:2.5rem;color:var(--accent-color);\'></i><span style=\'font-family:Fira Code,monospace;color:var(--text-muted);\'> neuron-cli TUI</span></div>';"
+                >
+            </div>
+        </div>
+    </section>
+
+    <!-- ── TECH STACK ── -->
+    <section id="stack">
+        <h2 data-key="stack_header">Tech Stack</h2>
+        <div class="stack-grid reveal">
+            <div class="stack-badge"><i class="fas fa-code"></i> Go</div>
+            <div class="stack-badge"><i class="fas fa-terminal"></i> Bubble Tea (TUI)</div>
+            <div class="stack-badge"><i class="fas fa-palette"></i> Lip Gloss</div>
+            <div class="stack-badge"><i class="fas fa-spinner"></i> Bubbles</div>
+            <div class="stack-badge"><i class="fas fa-comment-dots"></i> Huh</div>
+            <div class="stack-badge"><i class="fab fa-git-alt"></i> Git Sync</div>
+            <div class="stack-badge"><i class="fas fa-robot"></i> MCP Server</div>
+            <div class="stack-badge"><i class="fas fa-file-code"></i> Obsidian Vault</div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section" id="contribuir">
+        <h2 data-key="cta_header" style="font-family:'Fira Code',monospace;">¿Listo para probarlo?</h2>
+        <p data-key="cta_sub">Instala neuron en segundos y lleva tu knowledge base a la terminal.</p>
+        <div class="hero-actions">
+            <a id="cta-github-btn" href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-github"></i>
+                <span data-key="cta_github">Abrir en GitHub</span>
+            </a>
+            <a href="#instalar" class="btn btn-secondary">
+                <i class="fas fa-download"></i>
+                <span data-key="cta_install">Instalar ahora</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p data-key="footer">© 2026 | <a href="/">Steevin</a> &nbsp;·&nbsp; <a href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer">neuron-cli en GitHub</a></p>
+    </footer>
+
+    <script>
+        /* ── i18n ── */
+        const t = {
+            es: {
+                nav_home: 'Inicio', nav_services: 'Servicios', nav_tech: 'Tech Stack',
+                nav_projects: 'Proyectos', nav_contact: 'Contacto', nav_focus: 'Gimnasio Cerebral',
+                hero_sub: 'A terminal knowledge manager that doesn\'t get in your way.',
+                hero_github: 'Ver en GitHub', hero_install: 'Instalación rápida',
+                about_header: 'Acerca del proyecto',
+                about_desc: '<strong style="color:var(--accent-color)">neuron</strong> es un gestor de notas <em>local-first</em>, compatible con Obsidian, diseñado para vivir en tu terminal. Mantiene tu vault de Markdown exactamente donde está — sin migraciones, sin nube, sin suscripciones. Solo acceso rápido, guiado por teclado, a tus notas desde cualquier shell.',
+                feat_header: 'Características',
+                f1_title: 'TUI Interactiva', f1_desc: 'Navega tu vault completo con una Terminal User Interface fluida. Presiona / para la paleta fuzzy o ? para ver los atajos.',
+                f2_title: 'Prompts Inteligentes', f2_desc: 'neuron te pide cualquier argumento faltante de forma interactiva con huh. Sin errores de ayuda genéricos.',
+                f3_title: 'Sincronización Git', f3_desc: 'neuron sync hace commit y push de tu vault en un solo comando.',
+                f4_title: 'Servidor MCP', f4_desc: 'Expone tu vault como un Model Context Protocol server para agentes de IA como Claude o Gemini.',
+                f5_title: 'Notas Diarias', f5_desc: 'neuron daily crea o abre la nota del día al instante con tu plantilla preferida.',
+                f6_title: 'Output Colorizado', f6_desc: 'Salidas limpias y coloridas con lipgloss y spinners animados con bubbles.',
+                cmd_header: 'Comandos',
+                c1: 'Abre la TUI principal (modo por defecto)',
+                c2: 'Asistente interactivo de configuración inicial',
+                c3: 'Crea una nota nueva; te pide el título si falta',
+                c4: 'Abre la nota en $EDITOR',
+                c5: 'Búsqueda fuzzy en todo el vault',
+                c6: 'Crea o abre la nota diaria de hoy',
+                c7: 'Commit y push del vault a Git',
+                c8: 'Inicia el servidor MCP para agentes de IA',
+                preview_header: 'Vista previa',
+                stack_header: 'Tech Stack',
+                cta_header: '¿Listo para probarlo?',
+                cta_sub: 'Instala neuron en segundos y lleva tu knowledge base a la terminal.',
+                cta_github: 'Abrir en GitHub', cta_install: 'Instalar ahora',
+                footer: '© 2026 | Steevin'
+            },
+            en: {
+                nav_home: 'Home', nav_services: 'Services', nav_tech: 'Tech Stack',
+                nav_projects: 'Projects', nav_contact: 'Contact', nav_focus: 'Mind Gym',
+                hero_sub: 'A terminal knowledge manager that doesn\'t get in your way.',
+                hero_github: 'View on GitHub', hero_install: 'Quick install',
+                about_header: 'About',
+                about_desc: '<strong style="color:var(--accent-color)">neuron</strong> is a <em>local-first</em>, Obsidian-compatible note manager for the terminal. It keeps your Markdown vault exactly where it is — no migration, no cloud, no subscription. Just fast, keyboard-driven access to your notes from anywhere in a shell.',
+                feat_header: 'Features',
+                f1_title: 'Interactive TUI', f1_desc: 'Navigate your full vault with a fluid Terminal UI. Press / for the fuzzy command palette or ? for all keybindings.',
+                f2_title: 'Smart Prompts', f2_desc: 'Missing an argument? neuron will ask you interactively using huh. No more generic help errors.',
+                f3_title: 'Git Sync', f3_desc: 'neuron sync commits and pushes your vault in a single command.',
+                f4_title: 'MCP Server', f4_desc: 'Exposes your vault as a Model Context Protocol server for AI agents like Claude or Gemini.',
+                f5_title: 'Daily Notes', f5_desc: 'neuron daily creates or opens today\'s note instantly with your preferred template.',
+                f6_title: 'Colorized Output', f6_desc: 'Clean, colorful output via lipgloss and animated spinners via bubbles.',
+                cmd_header: 'Commands',
+                c1: 'Open the main TUI (default mode)',
+                c2: 'Interactive setup wizard (first run)',
+                c3: 'Create a new note; prompts for title if missing',
+                c4: 'Open the note in $EDITOR',
+                c5: 'Fuzzy search across the whole vault',
+                c6: 'Create or open today\'s daily note',
+                c7: 'Commit and push vault to Git',
+                c8: 'Start the MCP server for AI agents',
+                preview_header: 'Preview',
+                stack_header: 'Tech Stack',
+                cta_header: 'Ready to try it?',
+                cta_sub: 'Install neuron in seconds and bring your knowledge base to the terminal.',
+                cta_github: 'Open on GitHub', cta_install: 'Install now',
+                footer: '© 2026 | Steevin'
+            }
+        };
+
+        const lang = navigator.language.startsWith('en') ? 'en' : 'es';
+
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (t[lang][key]) el.innerHTML = t[lang][key];
+        });
+
+        document.documentElement.lang = lang;
+
+        /* ── Install tabs ── */
+        function switchTab(btn, panel) {
+            document.querySelectorAll('.install-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('panel-' + panel).classList.add('active');
+        }
+
+        /* ── Copy button ── */
+        function copyCode(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = 'copied!';
+                btn.style.color = 'var(--green)';
+                setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1800);
+            });
+        }
+
+        /* ── Scroll reveal ── */
+        function reveal() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>
