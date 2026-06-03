@@ -734,6 +734,42 @@
                 <p data-key="f6_desc">Salidas limpias y coloridas con <code style="color:var(--accent-color)">lipgloss</code> y spinners animados con <code style="color:var(--accent-color)">bubbles</code>. La terminal, pero con estilo.</p>
             </div>
 
+            <div class="feature-card reveal">
+                <i class="fas fa-folder-tree feature-icon"></i>
+                <h3 data-key="f7_title">Metodología PARA</h3>
+                <p data-key="f7_desc">Entiende la estructura Projects, Areas, Resources, Archive. Incluye un selector interactivo de carpetas.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-search feature-icon"></i>
+                <h3 data-key="f8_title">Búsqueda Dual</h3>
+                <p data-key="f8_desc">Búsqueda de texto completo (BM25) incorporada, y búsqueda semántica mediante embeddings con Ollama.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-paste feature-icon"></i>
+                <h3 data-key="f9_title">Flujo de Pegapapeles</h3>
+                <p data-key="f9_desc">ctrl+v sobre una nota pega el contenido directamente. Soporta bracketed paste para títulos y cuerpo.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-project-diagram feature-icon"></i>
+                <h3 data-key="f10_title">Wikilinks y Grafo</h3>
+                <p data-key="f10_desc">Soporte completo para [[wikilinks]] y #tags. Presiona g para ver un resumen de tu grafo de conocimiento.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-file-signature feature-icon"></i>
+                <h3 data-key="f11_title">Sistema de Plantillas</h3>
+                <p data-key="f11_desc">Crea plantillas para tus notas y úsalas bajo demanda con --template, o automáticamente para notas diarias.</p>
+            </div>
+
+            <div class="feature-card reveal">
+                <i class="fas fa-paint-brush feature-icon"></i>
+                <h3 data-key="f12_title">Temas y Splash Screen</h3>
+                <p data-key="f12_desc">Pantalla de inicio con estadísticas. Cambia en vivo entre modo oscuro (Tokyo Night) y claro (GitHub).</p>
+            </div>
+
         </div>
     </section>
 
@@ -776,6 +812,124 @@
             <div class="cmd-row">
                 <div class="cmd-cell">neuron mcp</div>
                 <div class="cmd-cell desc" data-key="c8">Inicia el servidor MCP para agentes de IA</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron move [nota] [carpeta]</div>
+                <div class="cmd-cell desc" data-key="c9">Mueve la nota a una carpeta PARA</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron stats</div>
+                <div class="cmd-cell desc" data-key="c10">Muestra las estadísticas del vault</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">neuron config set theme dark</div>
+                <div class="cmd-cell desc" data-key="c11">Cambia el tema de color</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PALETA DE COMANDOS ── -->
+    <section id="paleta" style="background: var(--secondary-bg);">
+        <h2 data-key="palette_header">Paleta de Comandos</h2>
+        <div class="commands-table reveal">
+            <div class="cmd-row header">
+                <div class="cmd-cell">Comando</div>
+                <div class="cmd-cell">Descripción</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/add &lt;title&gt;</div>
+                <div class="cmd-cell desc" data-key="p1">Crea una nueva nota</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/today</div>
+                <div class="cmd-cell desc" data-key="p2">Abre o crea la nota diaria de hoy</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/edit</div>
+                <div class="cmd-cell desc" data-key="p3">Abre la nota seleccionada en $EDITOR</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/move &lt;folder&gt;</div>
+                <div class="cmd-cell desc" data-key="p4">Mueve la nota seleccionada a una carpeta PARA</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/rm</div>
+                <div class="cmd-cell desc" data-key="p5">Elimina la nota seleccionada</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/sync</div>
+                <div class="cmd-cell desc" data-key="p6">Git push (con pull opcional)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/stats</div>
+                <div class="cmd-cell desc" data-key="p7">Muestra las estadísticas del vault</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/open</div>
+                <div class="cmd-cell desc" data-key="p8">Muestra el vault en Finder / Explorador</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/theme dark|light</div>
+                <div class="cmd-cell desc" data-key="p9">Cambia el tema de la TUI en vivo</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/quit</div>
+                <div class="cmd-cell desc" data-key="p10">Sale de neuron</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── ATAJOS TUI ── -->
+    <section id="atajos">
+        <h2 data-key="keys_header">Atajos TUI</h2>
+        <div class="commands-table reveal">
+            <div class="cmd-row header">
+                <div class="cmd-cell">Tecla</div>
+                <div class="cmd-cell">Acción</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">j / k o ↑ / ↓</div>
+                <div class="cmd-cell desc" data-key="k1">Navegar por la lista de notas</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">Enter</div>
+                <div class="cmd-cell desc" data-key="k2">Seleccionar / confirmar</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">Tab / Shift+Tab</div>
+                <div class="cmd-cell desc" data-key="k3">Cambiar el foco entre paneles (barra lateral ↔ vista previa)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">n</div>
+                <div class="cmd-cell desc" data-key="k4">Nueva nota (abre el selector de carpetas PARA)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">e</div>
+                <div class="cmd-cell desc" data-key="k5">Editar la nota seleccionada en $EDITOR</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">ctrl+v</div>
+                <div class="cmd-cell desc" data-key="k6">Pegar el portapapeles en la nota seleccionada</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">/</div>
+                <div class="cmd-cell desc" data-key="k7">Paleta de comandos (búsqueda fuzzy)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">s</div>
+                <div class="cmd-cell desc" data-key="k8">Sincronización con Git</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">g</div>
+                <div class="cmd-cell desc" data-key="k9">Resumen del grafo de conocimiento</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">?</div>
+                <div class="cmd-cell desc" data-key="k10">Ver atajos (ayuda)</div>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-cell">q</div>
+                <div class="cmd-cell desc" data-key="k11">Salir</div>
             </div>
         </div>
     </section>
@@ -852,6 +1006,12 @@
                 f4_title: 'Servidor MCP', f4_desc: 'Expone tu vault como un Model Context Protocol server para agentes de IA como Claude o Gemini.',
                 f5_title: 'Notas Diarias', f5_desc: 'neuron daily crea o abre la nota del día al instante con tu plantilla preferida.',
                 f6_title: 'Output Colorizado', f6_desc: 'Salidas limpias y coloridas con lipgloss y spinners animados con bubbles.',
+                f7_title: 'Metodología PARA', f7_desc: 'Entiende la estructura Projects, Areas, Resources, Archive. Incluye un selector interactivo de carpetas.',
+                f8_title: 'Búsqueda Dual', f8_desc: 'Búsqueda de texto completo (BM25) incorporada, y búsqueda semántica mediante embeddings con Ollama.',
+                f9_title: 'Flujo de Pegapapeles', f9_desc: 'ctrl+v sobre una nota pega el contenido directamente. Soporta bracketed paste para títulos y cuerpo.',
+                f10_title: 'Wikilinks y Grafo', f10_desc: 'Soporte completo para [[wikilinks]] y #tags. Presiona g para ver un resumen de tu grafo de conocimiento.',
+                f11_title: 'Sistema de Plantillas', f11_desc: 'Crea plantillas para tus notas y úsalas bajo demanda con --template, o automáticamente para notas diarias.',
+                f12_title: 'Temas y Splash Screen', f12_desc: 'Pantalla de inicio con estadísticas. Cambia en vivo entre modo oscuro (Tokyo Night) y claro (GitHub).',
                 cmd_header: 'Comandos',
                 c1: 'Abre la TUI principal (modo por defecto)',
                 c2: 'Asistente interactivo de configuración inicial',
@@ -861,6 +1021,32 @@
                 c6: 'Crea o abre la nota diaria de hoy',
                 c7: 'Commit y push del vault a Git',
                 c8: 'Inicia el servidor MCP para agentes de IA',
+                c9: 'Mueve la nota a una carpeta PARA',
+                c10: 'Muestra las estadísticas del vault',
+                c11: 'Cambia el tema de color',
+                palette_header: 'Paleta de Comandos',
+                p1: 'Crea una nueva nota (activa el selector de carpetas)',
+                p2: 'Abre o crea la nota diaria de hoy',
+                p3: 'Abre la nota seleccionada en $EDITOR',
+                p4: 'Mueve la nota seleccionada a una carpeta PARA',
+                p5: 'Elimina la nota seleccionada',
+                p6: 'Git push (con pull opcional)',
+                p7: 'Muestra las estadísticas del vault',
+                p8: 'Muestra el vault en Finder / Explorador',
+                p9: 'Cambia el tema de la TUI en vivo',
+                p10: 'Sale de neuron',
+                keys_header: 'Atajos TUI',
+                k1: 'Navegar por la lista de notas',
+                k2: 'Seleccionar / confirmar',
+                k3: 'Cambiar el foco entre paneles (barra lateral ↔ vista previa)',
+                k4: 'Nueva nota (abre el selector de carpetas PARA)',
+                k5: 'Editar la nota seleccionada en $EDITOR',
+                k6: 'Pegar el portapapeles en la nota seleccionada',
+                k7: 'Paleta de comandos (búsqueda fuzzy)',
+                k8: 'Sincronización con Git',
+                k9: 'Resumen del grafo de conocimiento',
+                k10: 'Ver atajos (ayuda)',
+                k11: 'Salir',
                 preview_header: 'Vista previa',
                 stack_header: 'Tech Stack',
                 cta_header: '¿Listo para probarlo?',
@@ -882,6 +1068,12 @@
                 f4_title: 'MCP Server', f4_desc: 'Exposes your vault as a Model Context Protocol server for AI agents like Claude or Gemini.',
                 f5_title: 'Daily Notes', f5_desc: 'neuron daily creates or opens today\'s note instantly with your preferred template.',
                 f6_title: 'Colorized Output', f6_desc: 'Clean, colorful output via lipgloss and animated spinners via bubbles.',
+                f7_title: 'PARA Methodology', f7_desc: 'Understands Projects, Areas, Resources, Archive. Includes interactive folder picker on creation.',
+                f8_title: 'Dual Search Engine', f8_desc: 'Built-in BM25 full-text search, plus semantic AI search with Ollama embeddings.',
+                f9_title: 'Clipboard Workflow', f9_desc: 'ctrl+v appends clipboard directly to a note. Supports bracketed paste for title + body in one go.',
+                f10_title: 'Wikilinks & Graph', f10_desc: 'Full [[wikilink]] and #tag extraction. Press g to instantly view your knowledge graph summary.',
+                f11_title: 'Template System', f11_desc: 'Create note templates and render them on demand with --template, or automatically for daily notes.',
+                f12_title: 'Theming & Splash', f12_desc: 'Premium splash screen with stats. Switch live between dark (Tokyo Night) and light (GitHub) themes.',
                 cmd_header: 'Commands',
                 c1: 'Open the main TUI (default mode)',
                 c2: 'Interactive setup wizard (first run)',
@@ -891,6 +1083,32 @@
                 c6: 'Create or open today\'s daily note',
                 c7: 'Commit and push vault to Git',
                 c8: 'Start the MCP server for AI agents',
+                c9: 'Move note to a PARA folder',
+                c10: 'Show vault statistics',
+                c11: 'Change color theme',
+                palette_header: 'Command Palette',
+                p1: 'Create a new note (triggers folder picker)',
+                p2: 'Open or create today\'s daily note',
+                p3: 'Open the selected note in $EDITOR',
+                p4: 'Move the selected note to a PARA folder',
+                p5: 'Delete the selected note',
+                p6: 'Git push (with optional pull)',
+                p7: 'Show vault statistics',
+                p8: 'Reveal vault in Finder / Explorer',
+                p9: 'Switch the TUI colour scheme live',
+                p10: 'Exit neuron',
+                keys_header: 'TUI Keybindings',
+                k1: 'Navigate note list',
+                k2: 'Select / confirm',
+                k3: 'Switch pane focus (sidebar ↔ preview)',
+                k4: 'New note (triggers PARA folder picker)',
+                k5: 'Edit selected note in $EDITOR',
+                k6: 'Paste clipboard into selected note',
+                k7: 'Command palette (fuzzy search)',
+                k8: 'Git sync',
+                k9: 'Knowledge graph summary',
+                k10: 'Help overlay (all keybindings)',
+                k11: 'Quit',
                 preview_header: 'Preview',
                 stack_header: 'Tech Stack',
                 cta_header: 'Ready to try it?',
