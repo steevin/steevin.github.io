@@ -164,26 +164,14 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .hero-logo-container {
-            max-width: 400px; /* Adjust based on image aspect ratio */
-            margin: 0 auto 1rem auto;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-logo {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
-            animation: float 6s ease-in-out infinite;
-            mix-blend-mode: screen; /* Failsafe to drop dark backgrounds over our dark theme */
-        }
-
         .hero h1 { 
-            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            font-size: clamp(3.5rem, 10vw, 6rem); 
             margin-bottom: 0.5rem; 
-            font-weight: 700;
-            letter-spacing: -1px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--text-bright);
+            text-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+            animation: float 6s ease-in-out infinite;
         }
 
         .hero p { 
@@ -399,11 +387,7 @@
     </nav>
 
     <section id="inicio" class="hero">
-        <div class="hero-logo-container reveal">
-            <img src="assets/logo.png" alt="Steevin Logo" class="hero-logo">
-        </div>
-        <!-- Keep h1 for SEO and screen readers -->
-        <h1 data-key="hero_title" class="sr-only">Daniel Steevin</h1>
+        <h1 data-key="hero_title">Steevin</h1>
         <p data-key="hero_subtitle">Analista y Desarrollador de Software</p>
     </section>
 
@@ -529,7 +513,7 @@
                 'p3_desc': 'Gestor de notas local-first compatible con Obsidian para la terminal. Acceso rápido a tu vault con TUI, búsqueda, notas diarias, sincronización Git y servidor MCP para agentes de IA.',
                 'p3_page': 'Ver proyecto',
                 'p3_link': 'Ver en GitHub',
-                'hero_title': 'Daniel Steevin',
+                'hero_title': 'Steevin',
                 'hero_subtitle': 'Analista y Desarrollador de Software',
                 'services_header': 'Soluciones Técnicas',
                 'skills_header': 'Tech Stack',
@@ -559,7 +543,7 @@
                 'p3_desc': 'Local-first, Obsidian-compatible note manager for the terminal. Fast keyboard-driven access to your vault with TUI, search, daily notes, Git sync and MCP server for AI agents.',
                 'p3_page': 'View project',
                 'p3_link': 'View on GitHub',
-                'hero_title': 'Daniel Steevin',
+                'hero_title': 'Steevin',
                 'hero_subtitle': 'Software Analyst and Developer',
                 'services_header': 'Technical Solutions',
                 'skills_header': 'Tech Stack',
