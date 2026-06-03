@@ -133,6 +133,25 @@
 
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* Logo Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         .hero {
             height: 85vh;
             display: flex;
@@ -143,6 +162,21 @@
             background: radial-gradient(circle at top, var(--secondary-bg) 0%, var(--primary-bg) 100%);
             padding: 0 20px;
             border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-logo-container {
+            max-width: 400px; /* Adjust based on image aspect ratio */
+            margin: 0 auto 1rem auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-logo {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
+            animation: float 6s ease-in-out infinite;
+            mix-blend-mode: screen; /* Failsafe to drop dark backgrounds over our dark theme */
         }
 
         .hero h1 { 
@@ -157,6 +191,7 @@
             color: var(--text-muted); 
             max-width: 600px;
             font-family: 'Fira Code', monospace;
+            margin-top: 1rem;
         }
 
         section { padding: 100px 10%; border-bottom: 1px solid var(--border-color); }
@@ -364,7 +399,11 @@
     </nav>
 
     <section id="inicio" class="hero">
-        <h1 data-key="hero_title">Daniel Steevin</h1>
+        <div class="hero-logo-container reveal">
+            <img src="assets/logo.png" alt="Steevin Logo" class="hero-logo">
+        </div>
+        <!-- Keep h1 for SEO and screen readers -->
+        <h1 data-key="hero_title" class="sr-only">Daniel Steevin</h1>
         <p data-key="hero_subtitle">Analista y Desarrollador de Software</p>
     </section>
 
