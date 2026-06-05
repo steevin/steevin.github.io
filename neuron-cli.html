@@ -588,10 +588,279 @@
         .t-flag   { color: var(--orange); }
         .t-out    { color: var(--text-muted); }
         .t-ok     { color: var(--green); }
+
+        /* ── Language Switcher Button ── */
+        .lang-toggle-btn {
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            color: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        .lang-toggle-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+            border-color: var(--accent-color);
+        }
+        .lang-toggle-btn i {
+            font-size: 0.85rem;
+        }
+
+        /* ── Philosophy Section ── */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .phil-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .phil-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .phil-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+            box-shadow: 0 12px 32px rgba(0,229,255,0.08);
+        }
+        .phil-card:hover::before { opacity: 1; }
+        .phil-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--accent-color);
+        }
+        .phil-card h3 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+        .phil-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* ── Quick Start Split Container ── */
+        .quickstart-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+            .quickstart-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+        .qs-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .qs-step {
+            display: flex;
+            gap: 16px;
+        }
+        .qs-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 8px rgba(0, 229, 255, 0.15);
+        }
+        .qs-content h3 {
+            margin: 0 0 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.05rem;
+            color: var(--text-bright);
+        }
+        .qs-content p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .qs-content p em {
+            color: var(--accent-color);
+            font-style: normal;
+        }
+
+        /* ── Interactive Hub (Tabs) ── */
+        .hub-container {
+            max-width: 860px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--secondary-bg);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+        .hub-tabs {
+            display: flex;
+            background: #0d1117;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        .hub-tab {
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+            width: auto;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .hub-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+            background: rgba(0, 229, 255, 0.04);
+            font-weight: 600;
+        }
+        .hub-tab:hover:not(.active) {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.02);
+        }
+        .hub-panel {
+            display: none;
+            padding: 0;
+        }
+        .hub-panel.active {
+            display: block;
+        }
+        .hub-panel .commands-table {
+            border: none;
+            border-radius: 0;
+            max-width: 100%;
+        }
+
+        /* ── MCP AI Configuration Box ── */
+        .mcp-container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .mcp-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .mcp-code-wrapper {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        /* ── Vault Format PARA tree ── */
+        .vault-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+        @media (max-width: 768px) {
+            .vault-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .vault-pane {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tree-view {
+            background: #010409;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            height: 100%;
+        }
+        .tree-folder { color: var(--accent-color); font-weight: 500; }
+        .tree-file { color: var(--text-muted); }
+
+        /* ── PayPal Support Button ── */
+        .paypal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0070ba;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 112, 186, 0.25);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .paypal-btn:hover {
+            background: #005ea6;
+            box-shadow: 0 6px 20px rgba(0, 112, 186, 0.4);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+        .paypal-btn i {
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
-
     <nav>
         <a href="/" class="brand">
             <span class="bracket">&lt;</span>
@@ -601,12 +870,13 @@
             <span class="bracket">&gt;</span>
         </a>
         <ul>
-            <li><a href="/#inicio" data-key="nav_home">Inicio</a></li>
-            <li><a href="/#servicios" data-key="nav_services">Servicios</a></li>
-            <li><a href="/#habilidades" data-key="nav_tech">Tech Stack</a></li>
-            <li><a href="/#proyectos" data-key="nav_projects">Proyectos</a></li>
-            <li><a href="/#contacto" data-key="nav_contact">Contacto</a></li>
-            <li><a href="/focus_booster.html" class="nav-focus-btn" data-key="nav_focus">Gimnasio Cerebral</a></li>
+            <li><a href="/" data-key="nav_back">Volver al Portafolio</a></li>
+            <li><a href="#inicio" data-key="nav_home">Inicio</a></li>
+            <li><a href="#filosofia" data-key="nav_philosophy">Filosofía</a></li>
+            <li><a href="#caracteristicas" data-key="nav_features">Características</a></li>
+            <li><a href="#comandos" data-key="nav_commands">Comandos</a></li>
+            <li><a href="#mcp" data-key="nav_mcp">MCP / IA</a></li>
+            <li><button class="lang-toggle-btn" id="lang-toggle" onclick="toggleLanguage()"><i class="fas fa-globe"></i> <span>EN</span></button></li>
         </ul>
     </nav>
 
@@ -617,7 +887,7 @@
             <span>Go · CLI · TUI · MCP</span>
         </div>
         <h1><span>neuron</span>-cli</h1>
-        <p class="hero-subtitle" data-key="hero_sub">A terminal knowledge manager that doesn't get in your way.</p>
+        <p class="hero-subtitle" data-key="hero_slogan">Tus notas son texto plano. ¿Por qué gestionarlas tiene que sentirse tan pesado?</p>
         <div class="hero-actions">
             <a id="hero-github-btn" href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
                 <i class="fab fa-github"></i>
@@ -630,108 +900,136 @@
         </div>
     </section>
 
-    <!-- ── INSTALL STRIP ── -->
-    <div class="install-strip" id="instalar">
-        <div style="padding: 0 5%">
-            <div class="install-tabs">
-                <button class="install-tab active" onclick="switchTab(this,'homebrew')" id="tab-homebrew">Homebrew</button>
-                <button class="install-tab" onclick="switchTab(this,'go')" id="tab-go">Go Install</button>
-                <button class="install-tab" onclick="switchTab(this,'source')" id="tab-source">Source</button>
-            </div>
-        </div>
-        <div class="install-body">
-            <div class="install-panel active" id="panel-homebrew">
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode(this, 'brew install steevin/tap/neuron')">copy</button>
-                    <span class="comment"># Homebrew (macOS / Linux)</span><br>
-                    <span class="cmd">brew</span> install <span class="str">steevin/tap/neuron</span>
+    <!-- ── QUICK START & DEMO ── -->
+    <section id="quickstart" style="padding: 90px 10%;">
+        <h2 data-key="qs_header">Inicio Rápido</h2>
+        <div class="quickstart-container">
+            <div class="qs-steps reveal">
+                <div class="qs-step">
+                    <div class="qs-num">1</div>
+                    <div class="qs-content">
+                        <h3 data-key="qs1_title">Instala Neuron</h3>
+                        <p data-key="qs1_desc">Consigue Neuron a través de Homebrew, o mediante descarga directa en segundos.</p>
+                    </div>
+                </div>
+                <div class="qs-step">
+                    <div class="qs-num">2</div>
+                    <div class="qs-content">
+                        <h3 data-key="qs2_title">Inicializa tu Bóveda</h3>
+                        <p data-key="qs2_desc">Apunta Neuron a un directorio existente de Obsidian, o crea una bóveda desde cero.</p>
+                    </div>
+                </div>
+                <div class="qs-step">
+                    <div class="qs-num">3</div>
+                    <div class="qs-content">
+                        <h3 data-key="qs3_title">Inicia la TUI</h3>
+                        <p data-key="qs3_desc">Navega, crea y organiza notas. Presiona <em>?</em> dentro de la TUI para ver los atajos.</p>
+                    </div>
                 </div>
             </div>
-            <div class="install-panel" id="panel-go">
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode(this, 'go install github.com/steevin/neuron-cli@latest')">copy</button>
-                    <span class="comment"># Go install</span><br>
-                    <span class="cmd">go</span> install <span class="str">github.com/steevin/neuron-cli@latest</span>
+            
+            <div class="terminal-demo reveal">
+                <div class="bar">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span>~ neuron</span>
                 </div>
-            </div>
-            <div class="install-panel" id="panel-source">
-                <div class="code-block">
-                    <button class="copy-btn" onclick="copyCode(this, 'git clone https://github.com/steevin/neuron-cli && cd neuron-cli && make build')">copy</button>
-                    <span class="comment"># Build from source</span><br>
-                    <span class="cmd">git</span> clone <span class="str">https://github.com/steevin/neuron-cli</span><br>
-                    <span class="cmd">cd</span> neuron-cli <span class="cmd">&amp;&amp;</span> <span class="cmd">make</span> build
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── ABOUT ── -->
-    <section id="acerca" style="padding: 90px 10%;">
-        <h2 data-key="about_header">Acerca del proyecto</h2>
-        <div class="terminal-demo reveal">
-            <div class="bar">
-                <div class="dot dot-red"></div>
-                <div class="dot dot-yellow"></div>
-                <div class="dot dot-green"></div>
-                <span>~ neuron</span>
-            </div>
-            <pre>
-<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span>                         <span class="t-out"># abre la TUI</span>
-<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">init</span>                    <span class="t-out"># asistente de configuración</span>
+                <pre>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span>                         <span class="t-out" data-key="demo_c1"># abre la TUI</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">init</span>                    <span class="t-out" data-key="demo_c2"># asistente de configuración</span>
 <span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">add</span> <span class="t-flag">"standup notes"</span> <span class="t-arg">--tag</span> work
-<span class="t-ok">✓</span> <span class="t-out">Nota creada: standup notes.md</span>
-<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">search</span> <span class="t-flag">kubernetes</span>     <span class="t-out"># búsqueda fuzzy en tu vault</span>
-<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">daily</span>                   <span class="t-out"># abre/crea la nota del día</span>
-<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">sync</span>                    <span class="t-out"># commit + push con Git</span></pre>
+<span class="t-ok">✓</span> <span class="t-out" data-key="demo_c3">Nota creada: standup notes.md</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">list</span> <span class="t-flag">-q</span> <span class="t-flag">"kubernetes"</span>  <span class="t-out" data-key="demo_c4"># búsqueda fuzzy en tu vault</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">today</span>                   <span class="t-out" data-key="demo_c5"># abre/crea la nota del día</span>
+<span class="t-prompt">❯</span> <span class="t-cmd">neuron</span> <span class="t-arg">sync</span>                    <span class="t-out" data-key="demo_c6"># commit + push con Git</span></pre>
+            </div>
         </div>
-        <div style="max-width:720px; margin: 0 auto; text-align:center;">
-            <p class="reveal" style="font-size:1.05rem; color:var(--text-main); line-height:1.9;" data-key="about_desc">
-                <strong style="color:var(--accent-color)">neuron</strong> es un gestor de notas <em>local-first</em>, compatible con Obsidian, diseñado para vivir en tu terminal.
-                Mantiene tu vault de Markdown exactamente donde está — sin migraciones, sin nube, sin suscripciones.
-                Solo acceso rápido, guiado por teclado, a tus notas desde cualquier shell.
-            </p>
+    </section>
+
+    <!-- ── PHILOSOPHY & WHY NEURON ── -->
+    <section id="filosofia" style="background: var(--secondary-bg); padding: 90px 10%;">
+        <h2 data-key="philosophy_header">Filosofía del Proyecto</h2>
+        
+        <div class="philosophy-grid">
+            <!-- Card 1 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-keyboard phil-icon"></i>
+                <h3 data-key="phil1_title">El teclado manda</h3>
+                <p data-key="phil1_desc">Tus manos nunca deberían dejar la fila inicial. Cada acción —desde buscar notas hasta mover carpetas y extraer bloques de código— está a un atajo de distancia.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-user-shield phil-icon"></i>
+                <h3 data-key="phil2_title">Privacidad por defecto</h3>
+                <p data-key="phil2_desc">Tus pensamientos son tuyos. Neuron funciona 100% offline. No realiza tracking, no sube tus notas a la nube y no requiere crear una cuenta.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-file-alt phil-icon"></i>
+                <h3 data-key="phil3_title">Libertad de formato</h3>
+                <p data-key="phil3_desc">Creemos en Markdown plano con frontmatter YAML estándar. Si decides dejar de usar Neuron mañana, tus notas siguen siendo archivos de texto legibles.</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-lock-open phil-icon"></i>
+                <h3 data-key="phil4_title">Cero bloqueo de datos</h3>
+                <p data-key="phil4_desc">Trabaja directamente con tu directorio local. Puedes abrir tus notas en Obsidian, VS Code o Vim en cualquier momento sin importación o exportación previa.</p>
+            </div>
+            <!-- Card 5 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-shipping-fast phil-icon"></i>
+                <h3 data-key="phil5_title">Velocidad sin fricciones</h3>
+                <p data-key="phil5_desc">Abre, busca, crea y organiza notas en milisegundos usando una aplicación nativa escrita en Go y optimizada para el máximo rendimiento.</p>
+            </div>
+            <!-- Card 6 -->
+            <div class="phil-card reveal">
+                <i class="fas fa-brain phil-icon"></i>
+                <h3 data-key="phil6_title">Listo para IA</h3>
+                <p data-key="phil6_desc">Realiza búsquedas semánticas conceptuales integrando Ollama, o expón toda tu base de conocimientos a agentes inteligentes mediante el protocolo MCP.</p>
+            </div>
         </div>
     </section>
 
     <!-- ── FEATURES ── -->
-    <section id="caracteristicas" style="background: var(--secondary-bg);">
-        <h2 data-key="feat_header">Características</h2>
+    <section id="caracteristicas">
+        <h2 data-key="feat_header">Características principales</h2>
         <div class="feature-grid">
 
             <div class="feature-card reveal">
                 <i class="fas fa-terminal feature-icon"></i>
                 <h3 data-key="f1_title">TUI Interactiva</h3>
-                <p data-key="f1_desc">Navega tu vault completo con una Terminal User Interface fluida. Presiona <code style="color:var(--accent-color)">/</code> para abrir la paleta de comandos fuzzy, o <code style="color:var(--accent-color)">?</code> para ver todos los atajos de teclado.</p>
+                <p data-key="f1_desc">Navega tu vault completo con una Terminal User Interface fluida. Presiona / para la paleta fuzzy o ? para ver los atajos.</p>
             </div>
 
             <div class="feature-card reveal">
                 <i class="fas fa-bolt feature-icon"></i>
                 <h3 data-key="f2_title">Prompts Inteligentes</h3>
-                <p data-key="f2_desc">¿Olvidaste pasar un argumento? neuron te lo pide de forma interactiva con una UI hermosa gracias a <code style="color:var(--accent-color)">huh</code>. Nunca más mires un error de ayuda genérico.</p>
+                <p data-key="f2_desc">neuron te pide cualquier argumento faltante de forma interactiva con huh. Sin errores de ayuda genéricos.</p>
             </div>
 
             <div class="feature-card reveal">
                 <i class="fas fa-code-branch feature-icon"></i>
                 <h3 data-key="f3_title">Sincronización Git</h3>
-                <p data-key="f3_desc">Un solo comando <code style="color:var(--accent-color)">neuron sync</code> hace commit y push de tu vault. Historial de versiones completo sin salir de la terminal.</p>
+                <p data-key="f3_desc">neuron sync hace commit y push de tu vault en un solo comando.</p>
             </div>
 
             <div class="feature-card reveal">
                 <i class="fas fa-robot feature-icon"></i>
                 <h3 data-key="f4_title">Servidor MCP</h3>
-                <p data-key="f4_desc">Expone tu vault como un <strong>Model Context Protocol server</strong>, permitiendo que agentes de IA como Claude o Gemini lean y escriban en tus notas de forma segura.</p>
+                <p data-key="f4_desc">Expone tu vault como un Model Context Protocol server para agentes de IA como Claude o Gemini.</p>
             </div>
 
             <div class="feature-card reveal">
                 <i class="fas fa-calendar-day feature-icon"></i>
                 <h3 data-key="f5_title">Notas Diarias</h3>
-                <p data-key="f5_desc"><code style="color:var(--accent-color)">neuron daily</code> crea o abre la nota del día al instante, con la plantilla que definas. Perfecto para journaling o standups.</p>
+                <p data-key="f5_desc">neuron daily crea o abre la nota del día al instante con tu plantilla preferida.</p>
             </div>
 
             <div class="feature-card reveal">
                 <i class="fas fa-palette feature-icon"></i>
                 <h3 data-key="f6_title">Output Colorizado</h3>
-                <p data-key="f6_desc">Salidas limpias y coloridas con <code style="color:var(--accent-color)">lipgloss</code> y spinners animados con <code style="color:var(--accent-color)">bubbles</code>. La terminal, pero con estilo.</p>
+                <p data-key="f6_desc">Salidas limpias y coloridas con lipgloss y spinners animados con bubbles.</p>
             </div>
 
             <div class="feature-card reveal">
@@ -773,170 +1071,360 @@
         </div>
     </section>
 
-    <!-- ── COMMANDS ── -->
-    <section id="comandos">
-        <h2 data-key="cmd_header">Comandos</h2>
-        <div class="commands-table reveal">
-            <div class="cmd-row header">
-                <div class="cmd-cell">Comando</div>
-                <div class="cmd-cell">Descripción</div>
+    <!-- ── INSTALL STRIP ── -->
+    <div class="install-strip" id="instalar">
+        <div style="padding: 0 5%">
+            <div class="install-tabs">
+                <button class="install-tab active" onclick="switchTab(this,'homebrew')" id="tab-homebrew">Homebrew</button>
+                <button class="install-tab" onclick="switchTab(this,'curl')" id="tab-curl">Curl Binary</button>
+                <button class="install-tab" onclick="switchTab(this,'go')" id="tab-go">Go Install</button>
+                <button class="install-tab" onclick="switchTab(this,'source')" id="tab-source">Source</button>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron</div>
-                <div class="cmd-cell desc" data-key="c1">Abre la TUI principal (modo por defecto)</div>
+        </div>
+        <div class="install-body">
+            <div class="install-panel active" id="panel-homebrew">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'brew install steevin/tap/neuron')">copy</button>
+                    <span class="comment"># Homebrew (macOS / Linux)</span><br>
+                    <span class="cmd">brew</span> install <span class="str">steevin/tap/neuron</span>
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron init</div>
-                <div class="cmd-cell desc" data-key="c2">Asistente interactivo de configuración inicial</div>
+            <div class="install-panel" id="panel-curl">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'curl -sSfL https://github.com/steevin/neuron-cli/releases/latest/download/neuron_$(uname -s)_$(uname -m).tar.gz | tar -xz -C /usr/local/bin neuron')">copy</button>
+                    <span class="comment"># Instalar binario precompilado mediante Curl</span><br>
+                    <span class="cmd">curl</span> -sSfL <span class="str">https://github.com/steevin/neuron-cli/releases/latest/download/neuron_$(uname -s)_$(uname -m).tar.gz</span> | tar -xz -C <span class="str">/usr/local/bin</span> neuron
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron add [título]</div>
-                <div class="cmd-cell desc" data-key="c3">Crea una nota nueva; te pide el título si falta</div>
+            <div class="install-panel" id="panel-go">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'go install github.com/steevin/neuron-cli@latest')">copy</button>
+                    <span class="comment"># Instalar usando Go (requiere entorno de desarrollo de Go)</span><br>
+                    <span class="cmd">go</span> install <span class="str">github.com/steevin/neuron-cli@latest</span>
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron edit [nota]</div>
-                <div class="cmd-cell desc" data-key="c4">Abre la nota en <code style="color:var(--accent-color)">$EDITOR</code></div>
+            <div class="install-panel" id="panel-source">
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this, 'git clone https://github.com/steevin/neuron-cli && cd neuron-cli && make build')">copy</button>
+                    <span class="comment"># Compilar directamente desde el código fuente</span><br>
+                    <span class="cmd">git</span> clone <span class="str">https://github.com/steevin/neuron-cli</span><br>
+                    <span class="cmd">cd</span> neuron-cli <span class="cmd">&amp;&amp;</span> <span class="cmd">make</span> build
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron search [query]</div>
-                <div class="cmd-cell desc" data-key="c5">Búsqueda fuzzy en todo el vault</div>
+        </div>
+        <div style="padding: 10px 5% 30px; text-align: center; border-top: 1px dashed var(--border-color);">
+            <span style="font-family:'Fira Code',monospace; font-size:0.82rem; color:var(--text-muted);" id="upgrade-instructions-text">
+                <i class="fas fa-sync-alt" style="margin-right: 5px; color: var(--accent-color);"></i>
+                <span data-key="update_notes">Para actualizar, ejecuta: <code>brew upgrade steevin/tap/neuron</code> o vuelve a descargar mediante Curl.</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- ── COMMANDS & KEYBINDINGS INTERACTIVE HUB ── -->
+    <section id="comandos" style="background: var(--secondary-bg); padding: 90px 10%;">
+        <h2 data-key="hub_header">Comandos y Atajos</h2>
+        
+        <div class="hub-container reveal">
+            <div class="hub-tabs">
+                <button class="hub-tab active" onclick="switchHubTab(this, 'hub-cli')" data-key="tab_cli">Uso de la CLI</button>
+                <button class="hub-tab" onclick="switchHubTab(this, 'hub-palette')" data-key="tab_palette">Paleta de Comandos</button>
+                <button class="hub-tab" onclick="switchHubTab(this, 'hub-keys')" data-key="tab_keys">Atajos de Teclado</button>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron daily</div>
-                <div class="cmd-cell desc" data-key="c6">Crea o abre la nota diaria de hoy</div>
+            
+            <!-- CLI Panel -->
+            <div class="hub-panel active" id="hub-cli">
+                <div class="commands-table">
+                    <div class="cmd-row header">
+                        <div class="cmd-cell" data-key="hdr_command">Comando</div>
+                        <div class="cmd-cell" data-key="hdr_desc">Descripción</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron</div>
+                        <div class="cmd-cell desc" data-key="cli_1">Abre la TUI interactiva (comportamiento por defecto).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron init</div>
+                        <div class="cmd-cell desc" data-key="cli_2">Inicia el asistente interactivo para configurar tu bóveda.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron add</div>
+                        <div class="cmd-cell desc" data-key="cli_3">Solicita un título de nota y activa el selector de carpetas PARA.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron add "standup" --tag work</div>
+                        <div class="cmd-cell desc" data-key="cli_4">Crea una nota con una etiqueta inicial y abre el selector.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron add "1. Projects/API"</div>
+                        <div class="cmd-cell desc" data-key="cli_5">Crea la nota en una ruta explícita saltándose el selector interactivo.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron add "Config" --file nginx.conf --code</div>
+                        <div class="cmd-cell desc" data-key="cli_6">Crea una nota directamente importando un archivo externo como código.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">cat s.py | neuron add "Script" --code python</div>
+                        <div class="cmd-cell desc" data-key="cli_7">Crea una nota importando código desde una tubería o pipeline (pipe).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron edit "standup notes"</div>
+                        <div class="cmd-cell desc" data-key="cli_8">Abre la nota seleccionada directamente en tu $EDITOR predeterminado.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron today</div>
+                        <div class="cmd-cell desc" data-key="cli_9">Abre o crea automáticamente la nota diaria de hoy.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron list -q "kubernetes"</div>
+                        <div class="cmd-cell desc" data-key="cli_10">Realiza búsquedas fuzzy clásicas o búsquedas conceptuales (IA).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron move "standup" projects</div>
+                        <div class="cmd-cell desc" data-key="cli_11">Mueve la nota directamente a tu carpeta de Proyectos.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron attach "notes" ./img.png</div>
+                        <div class="cmd-cell desc" data-key="cli_12">Copia y adjunta un archivo local a la carpeta de assets y añade el link.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron links "notes"</div>
+                        <div class="cmd-cell desc" data-key="cli_13">Busca, extrae y abre los enlaces de la nota en el navegador.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron sync --pull</div>
+                        <div class="cmd-cell desc" data-key="cli_14">Sincroniza tu bóveda realizando un Git pull y Git push en un paso.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron stats</div>
+                        <div class="cmd-cell desc" data-key="cli_15">Muestra estadísticas globales de la bóveda (total de notas, etiquetas, enlaces).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron config set editor nvim</div>
+                        <div class="cmd-cell desc" data-key="cli_16">Establece tu editor de terminal predeterminado de manera permanente.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron config set theme dark</div>
+                        <div class="cmd-cell desc" data-key="cli_17">Configura el tema permanente para la interfaz visual de la TUI.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">neuron mcp</div>
+                        <div class="cmd-cell desc" data-key="cli_18">Inicia el servidor local de Model Context Protocol.</div>
+                    </div>
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron sync</div>
-                <div class="cmd-cell desc" data-key="c7">Commit y push del vault a Git</div>
+            
+            <!-- Palette Panel -->
+            <div class="hub-panel" id="hub-palette">
+                <div class="commands-table">
+                    <div class="cmd-row header">
+                        <div class="cmd-cell" data-key="hdr_palette_cmd">Comando TUI</div>
+                        <div class="cmd-cell" data-key="hdr_desc">Descripción</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/add &lt;title&gt;</div>
+                        <div class="cmd-cell desc" data-key="pal_1">Crea una nueva nota (con selector de carpetas).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/today</div>
+                        <div class="cmd-cell desc" data-key="pal_2">Abre o crea la nota diaria de hoy.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/edit, /e</div>
+                        <div class="cmd-cell desc" data-key="pal_3">Abre la nota seleccionada en $EDITOR.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/copy, /c</div>
+                        <div class="cmd-cell desc" data-key="pal_4">Copia la nota actual al portapapeles.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/attach &lt;ruta_o_url&gt;</div>
+                        <div class="cmd-cell desc" data-key="pal_5">Descarga o copia imagen a assets/ y crea el link Markdown en la nota.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/links, /l</div>
+                        <div class="cmd-cell desc" data-key="pal_6">Abre el primer enlace de la nota en el navegador.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/move &lt;folder&gt;</div>
+                        <div class="cmd-cell desc" data-key="pal_7">Mueve la nota seleccionada a una carpeta PARA.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/rm</div>
+                        <div class="cmd-cell desc" data-key="pal_8">Elimina la nota seleccionada permanentemente.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/sync, /s</div>
+                        <div class="cmd-cell desc" data-key="pal_9">Git push (con pull opcional).</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/stats</div>
+                        <div class="cmd-cell desc" data-key="pal_10">Muestra las estadísticas de la bóveda.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/open, /o</div>
+                        <div class="cmd-cell desc" data-key="pal_11">Revela tu bóveda física en el Finder / Explorador de archivos.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/theme dark|light</div>
+                        <div class="cmd-cell desc" data-key="pal_12">Cambia el tema de color en vivo en la terminal.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/quit</div>
+                        <div class="cmd-cell desc" data-key="pal_13">Sale de la TUI de Neuron.</div>
+                    </div>
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron mcp</div>
-                <div class="cmd-cell desc" data-key="c8">Inicia el servidor MCP para agentes de IA</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron move [nota] [carpeta]</div>
-                <div class="cmd-cell desc" data-key="c9">Mueve la nota a una carpeta PARA</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron stats</div>
-                <div class="cmd-cell desc" data-key="c10">Muestra las estadísticas del vault</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">neuron config set theme dark</div>
-                <div class="cmd-cell desc" data-key="c11">Cambia el tema de color</div>
+            
+            <!-- Keys Panel -->
+            <div class="hub-panel" id="hub-keys">
+                <div class="commands-table">
+                    <!-- Standard Keys -->
+                    <div class="cmd-row header">
+                        <div class="cmd-cell" data-key="hdr_key_nav">Teclas Generales</div>
+                        <div class="cmd-cell" data-key="hdr_action">Acción</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">j / k o ↑ / ↓</div>
+                        <div class="cmd-cell desc" data-key="key_1">Mueve la selección hacia arriba o hacia abajo en la lista.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Enter</div>
+                        <div class="cmd-cell desc" data-key="key_2">Selecciona la nota activa o confirma una acción.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Tab / Shift+Tab</div>
+                        <div class="cmd-cell desc" data-key="key_3">Alterna el foco entre el panel de navegación y la vista previa de la nota.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">n</div>
+                        <div class="cmd-cell desc" data-key="key_4">Crea una nota nueva abriendo el selector de carpetas PARA.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">e</div>
+                        <div class="cmd-cell desc" data-key="key_5">Abre el archivo seleccionado en tu editor de código preferido.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">ctrl+v</div>
+                        <div class="cmd-cell desc" data-key="key_6">Pega instantáneamente el contenido de tu portapapeles al final del archivo.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">c / y</div>
+                        <div class="cmd-cell desc" data-key="key_7">Copia o extrae los bloques de código contenidos en la nota actual.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">/</div>
+                        <div class="cmd-cell desc" data-key="key_8">Abre la paleta de comandos interactivos.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">s</div>
+                        <div class="cmd-cell desc" data-key="key_9">Sincroniza los cambios con tu repositorio Git.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">ctrl+g</div>
+                        <div class="cmd-cell desc" data-key="key_10">Muestra estadísticas del grafo de conexiones del conocimiento.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">?</div>
+                        <div class="cmd-cell desc" data-key="key_11">Despliega un overlay de ayuda con todos los atajos de teclado.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">q</div>
+                        <div class="cmd-cell desc" data-key="key_12">Termina la ejecución de la TUI.</div>
+                    </div>
+                    
+                    <!-- Save to Folder Keys -->
+                    <div class="cmd-row header">
+                        <div class="cmd-cell" data-key="hdr_key_save">Durante Selección de Carpeta</div>
+                        <div class="cmd-cell" data-key="hdr_action">Acción</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">← → / h l / ↑ ↓ / j k</div>
+                        <div class="cmd-cell desc" data-key="keysf_1">Navega a través de las carpetas disponibles visualizadas en chips.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Enter</div>
+                        <div class="cmd-cell desc" data-key="keysf_2">Confirma la ubicación de destino para la nota.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Esc</div>
+                        <div class="cmd-cell desc" data-key="keysf_3">Cancela el proceso y regresa a la vista principal.</div>
+                    </div>
+                    
+                    <!-- Copy Code Keys -->
+                    <div class="cmd-row header">
+                        <div class="cmd-cell" data-key="hdr_key_copy">Durante Modo Copiar Código</div>
+                        <div class="cmd-cell" data-key="hdr_action">Acción</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">← → / h l / ↑ ↓ / j k</div>
+                        <div class="cmd-cell desc" data-key="keysc_1">Navega entre los diferentes bloques de código contenidos en la nota.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Enter</div>
+                        <div class="cmd-cell desc" data-key="keysc_2">Copia el bloque de código seleccionado directamente al portapapeles.</div>
+                    </div>
+                    <div class="cmd-row">
+                        <div class="cmd-cell">Esc</div>
+                        <div class="cmd-cell desc" data-key="keysc_3">Sale del modo de selección de bloques de código.</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ── PALETA DE COMANDOS ── -->
-    <section id="paleta" style="background: var(--secondary-bg);">
-        <h2 data-key="palette_header">Paleta de Comandos</h2>
-        <div class="commands-table reveal">
-            <div class="cmd-row header">
-                <div class="cmd-cell">Comando</div>
-                <div class="cmd-cell">Descripción</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/add &lt;title&gt;</div>
-                <div class="cmd-cell desc" data-key="p1">Crea una nueva nota</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/today</div>
-                <div class="cmd-cell desc" data-key="p2">Abre o crea la nota diaria de hoy</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/edit</div>
-                <div class="cmd-cell desc" data-key="p3">Abre la nota seleccionada en $EDITOR</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/move &lt;folder&gt;</div>
-                <div class="cmd-cell desc" data-key="p4">Mueve la nota seleccionada a una carpeta PARA</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/rm</div>
-                <div class="cmd-cell desc" data-key="p5">Elimina la nota seleccionada</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/sync</div>
-                <div class="cmd-cell desc" data-key="p6">Git push (con pull opcional)</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/stats</div>
-                <div class="cmd-cell desc" data-key="p7">Muestra las estadísticas del vault</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/open</div>
-                <div class="cmd-cell desc" data-key="p8">Muestra el vault en Finder / Explorador</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/theme dark|light</div>
-                <div class="cmd-cell desc" data-key="p9">Cambia el tema de la TUI en vivo</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/quit</div>
-                <div class="cmd-cell desc" data-key="p10">Sale de neuron</div>
+    <!-- ── MCP SECTION ── -->
+    <section id="mcp" style="padding: 90px 10%;">
+        <h2 data-key="mcp_header">Integración con Agentes de IA (MCP)</h2>
+        <div class="mcp-container reveal">
+            <p class="mcp-desc" data-key="mcp_desc">
+                Neuron expone tu bóveda de notas locales a través del <strong>Model Context Protocol (MCP)</strong>. Puedes configurarlo en clientes compatibles (Claude Desktop, Cursor, Antigravity) para permitir a las inteligencias artificiales leer, crear, resumir u organizar tus notas en tiempo real sin salir de tu ventana de chat.
+            </p>
+            <div class="mcp-code-wrapper">
+                <div class="code-block" style="padding-top: 35px;">
+                    <button class="copy-btn" onclick="copyCode(this, '{\n  &quot;mcpServers&quot;: {\n    &quot;neuron&quot;: { &quot;command&quot;: &quot;neuron&quot;, &quot;args&quot;: [&quot;mcp&quot;] }\n  }\n}')" style="top: 8px; right: 8px;">copy</button>
+                    <pre style="margin:0; font-family:'Fira Code', monospace; font-size:0.85rem;"><span style="color: var(--purple);">{</span>
+  <span style="color: var(--orange);">&quot;mcpServers&quot;</span>: <span style="color: var(--purple);">{</span>
+    <span style="color: var(--accent-color);">&quot;neuron&quot;</span>: <span style="color: var(--accent-color);">{</span> <span style="color: var(--orange);">&quot;command&quot;</span>: <span style="color: var(--green);">&quot;neuron&quot;</span>, <span style="color: var(--orange);">&quot;args&quot;</span>: <span style="color: var(--purple);">[</span><span style="color: var(--green);">&quot;mcp&quot;</span><span style="color: var(--purple);">]</span> <span style="color: var(--accent-color);">}</span>
+  <span style="color: var(--purple);">}</span>
+<span style="color: var(--purple);">}</span></pre>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ── ATAJOS TUI ── -->
-    <section id="atajos">
-        <h2 data-key="keys_header">Atajos TUI</h2>
-        <div class="commands-table reveal">
-            <div class="cmd-row header">
-                <div class="cmd-cell">Tecla</div>
-                <div class="cmd-cell">Acción</div>
+    <!-- ── VAULT FORMAT & PARA SECTION ── -->
+    <section id="formato" style="background: var(--secondary-bg); padding: 90px 10%;">
+        <h2 data-key="format_header">Formato de la Bóveda</h2>
+        <div class="vault-grid reveal">
+            <div class="vault-pane">
+                <h3 data-key="fmt_frontmatter_hdr" style="font-family:'Fira Code',monospace; font-size:1rem; margin:0 0 15px; font-weight:600;"><i class="fas fa-file-code" style="color:var(--accent-color); margin-right:8px;"></i>Markdown compatible</h3>
+                <div class="code-block" style="flex-grow:1;">
+                    <pre style="margin:0; font-family:'Fira Code', monospace; font-size:0.82rem; line-height: 1.6;"><span style="color: var(--text-muted);">---</span>
+<span style="color: var(--accent-color);">title:</span> <span style="color: var(--green);">Mi Nota</span>
+<span style="color: var(--accent-color);">tags:</span> <span style="color: var(--purple);">[ideas, proyecto]</span>
+<span style="color: var(--accent-color);">created:</span> <span style="color: var(--orange);">2025-05-30T09:00:00Z</span>
+<span style="color: var(--text-muted);">---</span>
+
+Contenido con <span style="color: var(--accent-color);">[[wikilinks]]</span> e <span style="color: var(--orange);">#inline-tags</span>.</pre>
+                </div>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">j / k o ↑ / ↓</div>
-                <div class="cmd-cell desc" data-key="k1">Navegar por la lista de notas</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">Enter</div>
-                <div class="cmd-cell desc" data-key="k2">Seleccionar / confirmar</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">Tab / Shift+Tab</div>
-                <div class="cmd-cell desc" data-key="k3">Cambiar el foco entre paneles (barra lateral ↔ vista previa)</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">n</div>
-                <div class="cmd-cell desc" data-key="k4">Nueva nota (abre el selector de carpetas PARA)</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">e</div>
-                <div class="cmd-cell desc" data-key="k5">Editar la nota seleccionada en $EDITOR</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">ctrl+v</div>
-                <div class="cmd-cell desc" data-key="k6">Pegar el portapapeles en la nota seleccionada</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">/</div>
-                <div class="cmd-cell desc" data-key="k7">Paleta de comandos (búsqueda fuzzy)</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">s</div>
-                <div class="cmd-cell desc" data-key="k8">Sincronización con Git</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">g</div>
-                <div class="cmd-cell desc" data-key="k9">Resumen del grafo de conocimiento</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">?</div>
-                <div class="cmd-cell desc" data-key="k10">Ver atajos (ayuda)</div>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-cell">q</div>
-                <div class="cmd-cell desc" data-key="k11">Salir</div>
+            
+            <div class="vault-pane">
+                <h3 data-key="fmt_para_hdr" style="font-family:'Fira Code',monospace; font-size:1rem; margin:0 0 15px; font-weight:600;"><i class="fas fa-folder-tree" style="color:var(--accent-color); margin-right:8px;"></i>Metodología PARA</h3>
+                <div class="tree-view">
+                    <div><span class="tree-folder">vault/</span></div>
+                    <div>├── <span class="tree-folder">1. Projects/</span> <span class="tree-file">(notas de proyectos activos)</span></div>
+                    <div>├── <span class="tree-folder">2. Areas/</span> <span class="tree-file">(responsabilidades a largo plazo)</span></div>
+                    <div>├── <span class="tree-folder">3. Resources/</span> <span class="tree-file">(temas de interés / recursos)</span></div>
+                    <div>└── <span class="tree-folder">4. Archive/</span> <span class="tree-file">(elementos inactivos)</span></div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ── SCREENSHOT ── -->
-    <section id="preview" style="background: var(--secondary-bg);">
-        <h2 data-key="preview_header">Vista previa</h2>
+    <section id="preview">
+        <h2 data-key="preview_header">Vista Previa</h2>
         <div class="screenshot-wrapper reveal">
             <div class="screenshot-bar">
                 <div class="dot dot-red"></div>
@@ -955,7 +1443,7 @@
     </section>
 
     <!-- ── TECH STACK ── -->
-    <section id="stack">
+    <section id="stack" style="background: var(--secondary-bg);">
         <h2 data-key="stack_header">Tech Stack</h2>
         <div class="stack-grid reveal">
             <div class="stack-badge"><i class="fas fa-code"></i> Go</div>
@@ -969,163 +1457,410 @@
         </div>
     </section>
 
-    <!-- ── CTA ── -->
+    <!-- ── SUPPORT & LICENSE ── -->
     <section class="cta-section" id="contribuir">
-        <h2 data-key="cta_header" style="font-family:'Fira Code',monospace;">¿Listo para probarlo?</h2>
-        <p data-key="cta_sub">Instala neuron en segundos y lleva tu knowledge base a la terminal.</p>
-        <div class="hero-actions">
-            <a id="cta-github-btn" href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <h2 data-key="support_header" style="font-family:'Fira Code',monospace;">Apoyo al Proyecto</h2>
+        <p data-key="support_desc" style="max-width:650px; margin:0 auto 24px;">Crear y mantener herramientas de código abierto requiere tiempo y dedicación. Si Neuron hace que tu día a día en la terminal sea un poco mejor, considera invitarme a un café o apoyar el desarrollo del proyecto.</p>
+        
+        <div style="display:flex; justify-content:center; gap: 20px; flex-wrap:wrap; margin-bottom: 50px;">
+            <a href="https://paypal.me/steevin" target="_blank" rel="noopener noreferrer" class="paypal-btn">
+                <i class="fab fa-paypal"></i>
+                <span data-key="support_btn">Apoyar el proyecto ➔</span>
+            </a>
+            <a href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top:20px; padding:12px 24px;">
                 <i class="fab fa-github"></i>
-                <span data-key="cta_github">Abrir en GitHub</span>
+                <span data-key="support_star">Dar una ⭐ en GitHub</span>
             </a>
-            <a href="#instalar" class="btn btn-secondary">
-                <i class="fas fa-download"></i>
-                <span data-key="cta_install">Instalar ahora</span>
-            </a>
+        </div>
+        
+        <div style="max-width:700px; margin: 0 auto; text-align: left; padding: 24px; border: 1px solid var(--border-color); border-radius:10px; background: rgba(0,0,0,0.15);" class="reveal">
+            <h3 style="font-family:'Fira Code',monospace; font-size:1rem; margin-top:0;" data-key="license_title">Licencia GNU GPL v3</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;" data-key="license_1">Neuron CLI es software libre y está licenciado bajo la <strong>GNU GPL v3</strong>.</p>
+            <ul style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:0; padding-left:20px;">
+                <li data-key="license_2"><strong>Manténlo abierto:</strong> Si modificas y distribuyes este código, tu versión también debe ser de código abierto bajo GPL v3.</li>
+                <li data-key="license_3"><strong>Da crédito:</strong> Por favor, conserva los avisos de copyright originales y la autoría de Daniel Steevin.</li>
+                <li data-key="license_4"><strong>Muestra algo de cariño:</strong> Si utilizas partes de este proyecto en una bifurcación pública, añade una nota en el README que enlace de vuelta a Neuron CLI.</li>
+            </ul>
         </div>
     </section>
 
     <footer>
-        <p data-key="footer">© 2026 | <a href="/">Steevin</a> &nbsp;·&nbsp; <a href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer">neuron-cli en GitHub</a></p>
+        <p data-key="footer">© 2026 | <a href="/">Steevin</a> &nbsp;·&nbsp; <a href="https://github.com/steevin/neuron-cli" target="_blank" rel="noopener noreferrer" data-key="footer_repo">neuron-cli en GitHub</a></p>
     </footer>
 
     <script>
-        /* ── i18n ── */
+        /* ── i18n Dictionary ── */
         const t = {
             es: {
-                nav_home: 'Inicio', nav_services: 'Servicios', nav_tech: 'Tech Stack',
-                nav_projects: 'Proyectos', nav_contact: 'Contacto', nav_focus: 'Gimnasio Cerebral',
-                hero_sub: 'A terminal knowledge manager that doesn\'t get in your way.',
-                hero_github: 'Ver en GitHub', hero_install: 'Instalación rápida',
-                about_header: 'Acerca del proyecto',
-                about_desc: '<strong style="color:var(--accent-color)">neuron</strong> es un gestor de notas <em>local-first</em>, compatible con Obsidian, diseñado para vivir en tu terminal. Mantiene tu vault de Markdown exactamente donde está — sin migraciones, sin nube, sin suscripciones. Solo acceso rápido, guiado por teclado, a tus notas desde cualquier shell.',
-                feat_header: 'Características',
-                f1_title: 'TUI Interactiva', f1_desc: 'Navega tu vault completo con una Terminal User Interface fluida. Presiona / para la paleta fuzzy o ? para ver los atajos.',
-                f2_title: 'Prompts Inteligentes', f2_desc: 'neuron te pide cualquier argumento faltante de forma interactiva con huh. Sin errores de ayuda genéricos.',
-                f3_title: 'Sincronización Git', f3_desc: 'neuron sync hace commit y push de tu vault en un solo comando.',
-                f4_title: 'Servidor MCP', f4_desc: 'Expone tu vault como un Model Context Protocol server para agentes de IA como Claude o Gemini.',
-                f5_title: 'Notas Diarias', f5_desc: 'neuron daily crea o abre la nota del día al instante con tu plantilla preferida.',
-                f6_title: 'Output Colorizado', f6_desc: 'Salidas limpias y coloridas con lipgloss y spinners animados con bubbles.',
-                f7_title: 'Metodología PARA', f7_desc: 'Entiende la estructura Projects, Areas, Resources, Archive. Incluye un selector interactivo de carpetas.',
-                f8_title: 'Búsqueda Dual', f8_desc: 'Búsqueda de texto completo (BM25) incorporada, y búsqueda semántica mediante embeddings con Ollama.',
-                f9_title: 'Flujo de Pegapapeles', f9_desc: 'ctrl+v sobre una nota pega el contenido directamente. Soporta bracketed paste para títulos y cuerpo.',
-                f10_title: 'Wikilinks y Grafo', f10_desc: 'Soporte completo para [[wikilinks]] y #tags. Presiona g para ver un resumen de tu grafo de conocimiento.',
-                f11_title: 'Sistema de Plantillas', f11_desc: 'Crea plantillas para tus notas y úsalas bajo demanda con --template, o automáticamente para notas diarias.',
-                f12_title: 'Temas y Splash Screen', f12_desc: 'Pantalla de inicio con estadísticas. Cambia en vivo entre modo oscuro (Tokyo Night) y claro (GitHub).',
-                cmd_header: 'Comandos',
-                c1: 'Abre la TUI principal (modo por defecto)',
-                c2: 'Asistente interactivo de configuración inicial',
-                c3: 'Crea una nota nueva; te pide el título si falta',
-                c4: 'Abre la nota en $EDITOR',
-                c5: 'Búsqueda fuzzy en todo el vault',
-                c6: 'Crea o abre la nota diaria de hoy',
-                c7: 'Commit y push del vault a Git',
-                c8: 'Inicia el servidor MCP para agentes de IA',
-                c9: 'Mueve la nota a una carpeta PARA',
-                c10: 'Muestra las estadísticas del vault',
-                c11: 'Cambia el tema de color',
-                palette_header: 'Paleta de Comandos',
-                p1: 'Crea una nueva nota (activa el selector de carpetas)',
-                p2: 'Abre o crea la nota diaria de hoy',
-                p3: 'Abre la nota seleccionada en $EDITOR',
-                p4: 'Mueve la nota seleccionada a una carpeta PARA',
-                p5: 'Elimina la nota seleccionada',
-                p6: 'Git push (con pull opcional)',
-                p7: 'Muestra las estadísticas del vault',
-                p8: 'Muestra el vault en Finder / Explorador',
-                p9: 'Cambia el tema de la TUI en vivo',
-                p10: 'Sale de neuron',
-                keys_header: 'Atajos TUI',
-                k1: 'Navegar por la lista de notas',
-                k2: 'Seleccionar / confirmar',
-                k3: 'Cambiar el foco entre paneles (barra lateral ↔ vista previa)',
-                k4: 'Nueva nota (abre el selector de carpetas PARA)',
-                k5: 'Editar la nota seleccionada en $EDITOR',
-                k6: 'Pegar el portapapeles en la nota seleccionada',
-                k7: 'Paleta de comandos (búsqueda fuzzy)',
-                k8: 'Sincronización con Git',
-                k9: 'Resumen del grafo de conocimiento',
-                k10: 'Ver atajos (ayuda)',
-                k11: 'Salir',
-                preview_header: 'Vista previa',
+                nav_back: 'Volver al Portafolio',
+                nav_home: 'Inicio',
+                nav_philosophy: 'Filosofía',
+                nav_features: 'Características',
+                nav_commands: 'Comandos',
+                nav_mcp: 'MCP / IA',
+                
+                hero_slogan: 'Tus notas son texto plano. ¿Por qué gestionarlas tiene que sentirse tan pesado?',
+                hero_github: 'Ver en GitHub',
+                hero_install: 'Instalación rápida',
+                
+                qs_header: 'Inicio Rápido',
+                qs1_title: 'Instala Neuron',
+                qs1_desc: 'Consigue Neuron a través de Homebrew, o mediante descarga directa en segundos.',
+                qs2_title: 'Inicializa tu Bóveda',
+                qs2_desc: 'Apunta Neuron a un directorio existente de Obsidian, o crea una bóveda desde cero.',
+                qs3_title: 'Inicia la TUI',
+                qs3_desc: 'Navega, crea y organiza notas. Presiona <em>?</em> dentro de la TUI para ver los atajos.',
+                
+                demo_c1: '# abre la TUI',
+                demo_c2: '# asistente de configuración',
+                demo_c3: 'Nota creada: standup notes.md',
+                demo_c4: '# búsqueda fuzzy en tu vault',
+                demo_c5: '# abre/crea la nota del día',
+                demo_c6: '# commit + push con Git',
+                
+                philosophy_header: 'Filosofía del Proyecto',
+                phil1_title: 'El teclado manda',
+                phil1_desc: 'Tus manos nunca deberían dejar la fila inicial. Cada acción —desde buscar notas hasta mover carpetas y extraer bloques de código— está a un atajo de distancia.',
+                phil2_title: 'Privacidad por defecto',
+                phil2_desc: 'Tus pensamientos son tuyos. Neuron funciona 100% offline. No realiza tracking, no sube tus notas a la nube y no requiere crear una cuenta.',
+                phil3_title: 'Libertad de formato',
+                phil3_desc: 'Creemos en Markdown plano con frontmatter YAML estándar. Si decides dejar de usar Neuron mañana, tus notas siguen siendo archivos de texto legibles.',
+                phil4_title: 'Cero bloqueo de datos',
+                phil4_desc: 'Trabaja directamente con tu directorio local. Puedes abrir tus notas en Obsidian, VS Code o Vim en cualquier momento sin importación o exportación previa.',
+                phil5_title: 'Velocidad sin fricciones',
+                phil5_desc: 'Abre, busca, crea y organiza notas en milisegundos usando una aplicación nativa escrita en Go y optimizada para el máximo rendimiento.',
+                phil6_title: 'Listo para IA',
+                phil6_desc: 'Realiza búsquedas semánticas conceptuales integrando Ollama, o expón toda tu base de conocimientos a agentes inteligentes mediante el protocolo MCP.',
+                
+                feat_header: 'Características principales',
+                f1_title: 'TUI Interactiva',
+                f1_desc: 'Navega tu vault completo con una Terminal User Interface fluida. Presiona / para la paleta fuzzy o ? para ver los atajos.',
+                f2_title: 'Prompts Inteligentes',
+                f2_desc: 'neuron te pide cualquier argumento faltante de forma interactiva con huh. Sin errores de ayuda genéricos.',
+                f3_title: 'Sincronización Git',
+                f3_desc: 'neuron sync hace commit y push de tu vault en un solo comando.',
+                f4_title: 'Servidor MCP',
+                f4_desc: 'Expone tu vault como un Model Context Protocol server para agentes de IA como Claude o Gemini.',
+                f5_title: 'Notas Diarias',
+                f5_desc: 'neuron daily crea o abre la nota del día al instante con tu plantilla preferida.',
+                f6_title: 'Output Colorizado',
+                f6_desc: 'Salidas limpias y coloridas con lipgloss y spinners animados con bubbles.',
+                f7_title: 'Metodología PARA',
+                f7_desc: 'Entiende la estructura Projects, Areas, Resources, Archive. Incluye un selector interactivo de carpetas.',
+                f8_title: 'Búsqueda Dual',
+                f8_desc: 'Búsqueda de texto completo (BM25) incorporada, y búsqueda semántica mediante embeddings con Ollama.',
+                f9_title: 'Flujo de Pegapapeles',
+                f9_desc: 'ctrl+v sobre una nota pega el contenido directamente. Soporta bracketed paste para títulos y cuerpo.',
+                f10_title: 'Wikilinks y Grafo',
+                f10_desc: 'Soporte completo para [[wikilinks]] y #tags. Presiona g para ver un resumen de tu grafo de conocimiento.',
+                f11_title: 'Sistema de Plantillas',
+                f11_desc: 'Crea plantillas para tus notas y úsalas bajo demanda con --template, o automáticamente para notas diarias.',
+                f12_title: 'Temas y Splash Screen',
+                f12_desc: 'Pantalla de inicio con estadísticas. Cambia en vivo entre modo oscuro (Tokyo Night) y claro (GitHub).',
+                
+                update_notes: 'Para actualizar, ejecuta: <code>brew upgrade steevin/tap/neuron</code> o vuelve a descargar mediante Curl.',
+                
+                hub_header: 'Comandos y Atajos',
+                tab_cli: 'Uso de la CLI',
+                tab_palette: 'Paleta de Comandos',
+                tab_keys: 'Atajos de Teclado',
+                
+                hdr_command: 'Comando',
+                hdr_desc: 'Descripción',
+                hdr_palette_cmd: 'Comando TUI',
+                hdr_key_nav: 'Teclas Generales',
+                hdr_action: 'Acción',
+                hdr_key_save: 'Durante Selección de Carpeta',
+                hdr_key_copy: 'Durante Modo Copiar Código',
+                
+                cli_1: 'Abre la TUI interactiva (comportamiento por defecto).',
+                cli_2: 'Inicia el asistente interactivo para configurar tu bóveda.',
+                cli_3: 'Solicita un título de nota y activa el selector de carpetas PARA.',
+                cli_4: 'Crea una nota con una etiqueta inicial y abre el selector.',
+                cli_5: 'Crea la nota en una ruta explícita saltándose el selector interactivo.',
+                cli_6: 'Crea una nota directamente importando un archivo externo como código.',
+                cli_7: 'Crea una nota importando código desde una tubería o pipeline (pipe).',
+                cli_8: 'Abre la nota seleccionada directamente en tu $EDITOR predeterminado.',
+                cli_9: 'Abre o crea automáticamente la nota diaria de hoy.',
+                cli_10: 'Realiza búsquedas fuzzy clásicas o búsquedas conceptuales (IA).',
+                cli_11: 'Mueve la nota directamente a tu carpeta de Proyectos.',
+                cli_12: 'Copia y adjunta un archivo local a la carpeta de assets y añade el link.',
+                cli_13: 'Busca, extrae y abre los enlaces de la nota en el navegador.',
+                cli_14: 'Sincroniza tu bóveda realizando un Git pull y Git push en un paso.',
+                cli_15: 'Muestra estadísticas globales de la bóveda (total de notas, etiquetas, enlaces).',
+                cli_16: 'Establece tu editor de terminal predeterminado de manera permanente.',
+                cli_17: 'Configura el tema permanente para la interfaz visual de la TUI.',
+                cli_18: 'Inicia el servidor local de Model Context Protocol.',
+                
+                pal_1: 'Crea una nueva nota (con selector de carpetas).',
+                pal_2: 'Abre o crea la nota diaria de hoy.',
+                pal_3: 'Abre la nota seleccionada en $EDITOR.',
+                pal_4: 'Copia la nota actual al portapapeles.',
+                pal_5: 'Descarga o copia imagen a assets/ y crea el link Markdown en la nota.',
+                pal_6: 'Abre el primer enlace de la nota en el navegador.',
+                pal_7: 'Mueve la nota seleccionada a una carpeta PARA.',
+                pal_8: 'Elimina la nota seleccionada permanentemente.',
+                pal_9: 'Git push (con pull opcional).',
+                pal_10: 'Muestra las estadísticas de la bóveda.',
+                pal_11: 'Revela tu bóveda física en el Finder / Explorador de archivos.',
+                pal_12: 'Cambia el tema de color en vivo en la terminal.',
+                pal_13: 'Sale de la TUI de Neuron.',
+                
+                key_1: 'Mueve la selección hacia arriba o hacia abajo en la lista.',
+                key_2: 'Selecciona la nota activa o confirma una acción.',
+                key_3: 'Alterna el foco entre el panel de navegación y la vista previa de la nota.',
+                key_4: 'Crea una nota nueva abriendo el selector de carpetas PARA.',
+                key_5: 'Abre el archivo seleccionado en tu editor de código preferido.',
+                key_6: 'Pega instantáneamente el contenido de tu portapapeles al final del archivo.',
+                key_7: 'Copia o extrae los bloques de código contenidos en la nota actual.',
+                key_8: 'Abre la paleta de comandos interactivos.',
+                key_9: 'Sincroniza los cambios con tu repositorio Git.',
+                key_10: 'Muestra estadísticas del grafo de conexiones del conocimiento.',
+                key_11: 'Despliega un overlay de ayuda con todos los atajos de teclado.',
+                key_12: 'Termina la ejecución de la TUI.',
+                
+                keysf_1: 'Navega a través de las carpetas disponibles visualizadas en chips.',
+                keysf_2: 'Confirma la ubicación de destino para la nota.',
+                keysf_3: 'Cancela el proceso y regresa a la vista principal.',
+                
+                keysc_1: 'Navega entre los diferentes bloques de código contenidos en la nota.',
+                keysc_2: 'Copia el bloque de código seleccionado directamente al portapapeles.',
+                keysc_3: 'Sale del modo de selección de bloques de código.',
+                
+                mcp_header: 'Integración con Agentes de IA (MCP)',
+                mcp_desc: 'Neuron expone tu bóveda de notas locales a través del <strong>Model Context Protocol (MCP)</strong>. Puedes configurarlo en clientes compatibles (Claude Desktop, Cursor, Antigravity) para permitir a las inteligencias artificiales leer, crear, resumir u organizar tus notas en tiempo real sin salir de tu ventana de chat.',
+                
+                format_header: 'Formato de la Bóveda',
+                fmt_frontmatter_hdr: 'Markdown compatible',
+                fmt_para_hdr: 'Metodología PARA',
+                
+                preview_header: 'Vista Previa',
                 stack_header: 'Tech Stack',
-                cta_header: '¿Listo para probarlo?',
-                cta_sub: 'Instala neuron en segundos y lleva tu knowledge base a la terminal.',
-                cta_github: 'Abrir en GitHub', cta_install: 'Instalar ahora',
-                footer: '© 2026 | Steevin'
+                
+                support_header: 'Apoyo al Proyecto',
+                support_desc: 'Crear y mantener herramientas de código abierto requiere tiempo y dedicación. Si Neuron hace que tu día a día en la terminal sea un poco mejor, considera invitarme a un café o apoyar el desarrollo del proyecto.',
+                support_btn: 'Apoyar el proyecto ➔',
+                support_star: 'Dar una ⭐ en GitHub',
+                
+                license_title: 'Licencia GNU GPL v3',
+                license_1: 'Neuron CLI es software libre y está licenciado bajo la <strong>GNU GPL v3</strong>.',
+                license_2: '<strong>Manténlo abierto:</strong> Si modificas y distribuyes este código, tu versión también debe ser de código abierto bajo GPL v3.',
+                license_3: '<strong>Da crédito:</strong> Por favor, conserva los avisos de copyright originales y la autoría de Daniel Steevin.',
+                license_4: '<strong>Muestra algo de cariño:</strong> Si utilizas partes de este proyecto en una bifurcación pública, añade una nota en el README que enlace de vuelta a Neuron CLI.',
+                
+                footer: '© 2026 | Steevin',
+                footer_repo: 'neuron-cli en GitHub'
             },
             en: {
-                nav_home: 'Home', nav_services: 'Services', nav_tech: 'Tech Stack',
-                nav_projects: 'Projects', nav_contact: 'Contact', nav_focus: 'Mind Gym',
-                hero_sub: 'A terminal knowledge manager that doesn\'t get in your way.',
-                hero_github: 'View on GitHub', hero_install: 'Quick install',
-                about_header: 'About',
-                about_desc: '<strong style="color:var(--accent-color)">neuron</strong> is a <em>local-first</em>, Obsidian-compatible note manager for the terminal. It keeps your Markdown vault exactly where it is — no migration, no cloud, no subscription. Just fast, keyboard-driven access to your notes from anywhere in a shell.',
-                feat_header: 'Features',
-                f1_title: 'Interactive TUI', f1_desc: 'Navigate your full vault with a fluid Terminal UI. Press / for the fuzzy command palette or ? for all keybindings.',
-                f2_title: 'Smart Prompts', f2_desc: 'Missing an argument? neuron will ask you interactively using huh. No more generic help errors.',
-                f3_title: 'Git Sync', f3_desc: 'neuron sync commits and pushes your vault in a single command.',
-                f4_title: 'MCP Server', f4_desc: 'Exposes your vault as a Model Context Protocol server for AI agents like Claude or Gemini.',
-                f5_title: 'Daily Notes', f5_desc: 'neuron daily creates or opens today\'s note instantly with your preferred template.',
-                f6_title: 'Colorized Output', f6_desc: 'Clean, colorful output via lipgloss and animated spinners via bubbles.',
-                f7_title: 'PARA Methodology', f7_desc: 'Understands Projects, Areas, Resources, Archive. Includes interactive folder picker on creation.',
-                f8_title: 'Dual Search Engine', f8_desc: 'Built-in BM25 full-text search, plus semantic AI search with Ollama embeddings.',
-                f9_title: 'Clipboard Workflow', f9_desc: 'ctrl+v appends clipboard directly to a note. Supports bracketed paste for title + body in one go.',
-                f10_title: 'Wikilinks & Graph', f10_desc: 'Full [[wikilink]] and #tag extraction. Press g to instantly view your knowledge graph summary.',
-                f11_title: 'Template System', f11_desc: 'Create note templates and render them on demand with --template, or automatically for daily notes.',
-                f12_title: 'Theming & Splash', f12_desc: 'Premium splash screen with stats. Switch live between dark (Tokyo Night) and light (GitHub) themes.',
-                cmd_header: 'Commands',
-                c1: 'Open the main TUI (default mode)',
-                c2: 'Interactive setup wizard (first run)',
-                c3: 'Create a new note; prompts for title if missing',
-                c4: 'Open the note in $EDITOR',
-                c5: 'Fuzzy search across the whole vault',
-                c6: 'Create or open today\'s daily note',
-                c7: 'Commit and push vault to Git',
-                c8: 'Start the MCP server for AI agents',
-                c9: 'Move note to a PARA folder',
-                c10: 'Show vault statistics',
-                c11: 'Change color theme',
-                palette_header: 'Command Palette',
-                p1: 'Create a new note (triggers folder picker)',
-                p2: 'Open or create today\'s daily note',
-                p3: 'Open the selected note in $EDITOR',
-                p4: 'Move the selected note to a PARA folder',
-                p5: 'Delete the selected note',
-                p6: 'Git push (with optional pull)',
-                p7: 'Show vault statistics',
-                p8: 'Reveal vault in Finder / Explorer',
-                p9: 'Switch the TUI colour scheme live',
-                p10: 'Exit neuron',
-                keys_header: 'TUI Keybindings',
-                k1: 'Navigate note list',
-                k2: 'Select / confirm',
-                k3: 'Switch pane focus (sidebar ↔ preview)',
-                k4: 'New note (triggers PARA folder picker)',
-                k5: 'Edit selected note in $EDITOR',
-                k6: 'Paste clipboard into selected note',
-                k7: 'Command palette (fuzzy search)',
-                k8: 'Git sync',
-                k9: 'Knowledge graph summary',
-                k10: 'Help overlay (all keybindings)',
-                k11: 'Quit',
-                preview_header: 'Preview',
+                nav_back: 'Back to Portfolio',
+                nav_home: 'Home',
+                nav_philosophy: 'Philosophy',
+                nav_features: 'Features',
+                nav_commands: 'Commands',
+                nav_mcp: 'MCP / AI',
+                
+                hero_slogan: 'Your notes are plain text. Why does managing them have to feel so heavy?',
+                hero_github: 'View on GitHub',
+                hero_install: 'Quick install',
+                
+                qs_header: 'Quick Start',
+                qs1_title: 'Install Neuron',
+                qs1_desc: 'Get Neuron through Homebrew, or via direct download in seconds.',
+                qs2_title: 'Initialize Your Vault',
+                qs2_desc: 'Point Neuron to an existing Obsidian directory, or create a brand new vault.',
+                qs3_title: 'Launch the TUI',
+                qs3_desc: 'Navigate, create, and organize notes. Press <em>?</em> inside the TUI to see all shortcuts.',
+                
+                demo_c1: '# open the TUI',
+                demo_c2: '# setup wizard',
+                demo_c3: 'Note created: standup notes.md',
+                demo_c4: '# fuzzy search in vault',
+                demo_c5: '# open/create daily note',
+                demo_c6: '# git commit & push',
+                
+                philosophy_header: 'Project Philosophy',
+                phil1_title: 'Keyboard First',
+                phil1_desc: 'Your hands should never have to leave the home row. Every action — from searching notes to moving folders and copying code — is a keystroke away.',
+                phil2_title: 'Privacy by Default',
+                phil2_desc: 'Your thoughts are yours. Neuron is offline-first. It does not track you, upload your notes, or require a cloud account.',
+                phil3_title: 'Format Freedom',
+                phil3_desc: 'We believe plain Markdown with standard YAML frontmatter is the best way. If you quit Neuron tomorrow, your notes remain plain text.',
+                phil4_title: 'Zero Lock-in',
+                phil4_desc: 'Work directly with your local directory. Open files in Obsidian, VS Code, or Vim at any time with no import or export steps needed.',
+                phil5_title: 'Frictionless Speed',
+                phil5_desc: 'Launch, search, create, and organize notes in milliseconds with a native application built in Go and optimized for raw speed.',
+                phil6_title: 'AI-Ready',
+                phil6_desc: 'Query your vault by concepts using local AI (via Ollama) or expose notes to intelligent agents using the Model Context Protocol.',
+                
+                feat_header: 'Main Features',
+                f1_title: 'Interactive TUI',
+                f1_desc: 'Navigate your full vault with a fluid Terminal UI. Press / for the fuzzy command palette or ? for all keybindings.',
+                f2_title: 'Smart Prompts',
+                f2_desc: 'neuron prompts you interactively with huh if you forget a flag. No more generic, cryptic help errors.',
+                f3_title: 'Git Sync',
+                f3_desc: 'neuron sync commits and pushes your vault changes in a single command.',
+                f4_title: 'MCP Server',
+                f4_desc: 'Exposes your vault as a Model Context Protocol server for AI assistants like Claude Desktop or Cursor.',
+                f5_title: 'Daily Notes',
+                f5_desc: 'neuron daily creates or opens today\'s note instantly using your custom template.',
+                f6_title: 'Colorized Output',
+                f6_desc: 'Clean, colorful CLI output via lipgloss and animated spinner overlays via bubbles.',
+                f7_title: 'PARA Methodology',
+                f7_desc: 'Built-in Projects, Areas, Resources, Archive organization with an interactive folder selector.',
+                f8_title: 'Dual Search Engine',
+                f8_desc: 'Fast built-in BM25 full-text keyword search, alongside semantic AI search powered by Ollama.',
+                f9_title: 'Clipboard Workflow',
+                f9_desc: 'Press ctrl+v to paste clipboard content directly. Supports bracketed paste for instant title + body.',
+                f10_title: 'Wikilinks & Graph',
+                f10_desc: 'Full [[wikilink]] and #tag extraction. Press g to instantly view your knowledge graph node counts.',
+                f11_title: 'Template System',
+                f11_desc: 'Define custom templates and instantiate them on the fly with --template, or automatically for daily notes.',
+                f12_title: 'Theming & Splash',
+                f12_desc: 'Startup screen with stats. Switch live between dark (Tokyo Night) and light (GitHub) color themes.',
+                
+                update_notes: 'To upgrade: run <code>brew upgrade steevin/tap/neuron</code> or run the curl command again.',
+                
+                hub_header: 'Commands & Keybindings',
+                tab_cli: 'CLI Usage',
+                tab_palette: 'Command Palette',
+                tab_keys: 'Keyboard Shortcuts',
+                
+                hdr_command: 'Command',
+                hdr_desc: 'Description',
+                hdr_palette_cmd: 'TUI Command',
+                hdr_key_nav: 'General Navigation',
+                hdr_action: 'Action',
+                hdr_key_save: 'During Folder Selection',
+                hdr_key_copy: 'During Code Copy Mode',
+                
+                cli_1: 'Open the TUI interface (default behavior).',
+                cli_2: 'Launch the interactive wizard to set up your vault.',
+                cli_3: 'Create a new note (prompts for title and opens folder picker).',
+                cli_4: 'Create a note with a tag and trigger the folder picker.',
+                cli_5: 'Create a note at an explicit path, skipping the selector menu.',
+                cli_6: 'Create a note directly by importing an external file as code.',
+                cli_7: 'Create a note by piping code content into standard input.',
+                cli_8: 'Open the selected note directly in your configured $EDITOR.',
+                cli_9: 'Create or open today\'s daily note using templates.',
+                cli_10: 'Perform classic keyword search or semantic concept search (AI).',
+                cli_11: 'Move a note directly to your Projects folder.',
+                cli_12: 'Attach a local file or image, copying it to assets/ and linking it.',
+                cli_13: 'Scan, extract, and open links in the note in your browser.',
+                cli_14: 'Synchronize your notes by pulling and pushing changes with Git.',
+                cli_15: 'Display vault stats (total notes, unique tags, links).',
+                cli_16: 'Set your preferred terminal text editor permanently.',
+                cli_17: 'Set the permanent color theme for the TUI visual style.',
+                cli_18: 'Start the local Model Context Protocol (MCP) server.',
+                
+                pal_1: 'Create a new note (triggers folder picker).',
+                pal_2: 'Open or create today\'s daily note.',
+                pal_3: 'Open the selected note in $EDITOR.',
+                pal_4: 'Copy the current note contents to your clipboard.',
+                pal_5: 'Download or copy image to assets/ and attach to note.',
+                pal_6: 'Open the first URL link inside the note in your browser.',
+                pal_7: 'Move the selected note to a PARA folder.',
+                pal_8: 'Delete the selected note permanently from disk.',
+                pal_9: 'Git push changes (with optional pull).',
+                pal_10: 'Show global vault statistics.',
+                pal_11: 'Reveal your vault directory inside Finder / File Explorer.',
+                pal_12: 'Switch the TUI color scheme live inside the terminal.',
+                pal_13: 'Exit the Neuron TUI session.',
+                
+                key_1: 'Move list selection up or down.',
+                key_2: 'Select active note or confirm dialogs.',
+                key_3: 'Switch pane focus (sidebar navigation list ↔ preview panel).',
+                key_4: 'New note (opens PARA folder picker).',
+                key_5: 'Edit the selected file directly in your editor.',
+                key_6: 'Append clipboard contents directly to the end of the note.',
+                key_7: 'Enter code extraction mode to copy snippets.',
+                key_8: 'Open the fuzzy command palette input.',
+                key_9: 'Synchronize vault files with Git repository.',
+                key_10: 'Display knowledge graph stats overlay.',
+                key_11: 'Show help overlay screen listing all shortcuts.',
+                key_12: 'Quit the terminal user interface.',
+                
+                keysf_1: 'Navigate through folder chips layout options.',
+                keysf_2: 'Confirm chosen folder destination for the note.',
+                keysf_3: 'Cancel action and return to list navigation.',
+                
+                keysc_1: 'Navigate between code blocks extracted from the note.',
+                keysc_2: 'Copy the selected code block to clipboard.',
+                keysc_3: 'Exit code selection mode.',
+                
+                mcp_header: 'AI Agent Access (MCP)',
+                mcp_desc: 'Neuron exposes your local note vault as a <strong>Model Context Protocol (MCP)</strong> server. You can add it to compatible clients (Claude Desktop, Cursor, Antigravity) to give AI models read, write, search, and organization access to your knowledge base in real-time.',
+                
+                format_header: 'Vault Format',
+                fmt_frontmatter_hdr: 'Obsidian Compatible',
+                fmt_para_hdr: 'PARA Framework',
+                
+                preview_header: 'Live Preview',
                 stack_header: 'Tech Stack',
-                cta_header: 'Ready to try it?',
-                cta_sub: 'Install neuron in seconds and bring your knowledge base to the terminal.',
-                cta_github: 'Open on GitHub', cta_install: 'Install now',
-                footer: '© 2026 | Steevin'
+                
+                support_header: 'Support the Project',
+                support_desc: 'Building and maintaining open-source tools takes time. If Neuron makes your day-to-day terminal workflow a little better, consider buying me a coffee or supporting the project.',
+                support_btn: 'Support the project ➔',
+                support_star: 'Give a ⭐ on GitHub',
+                
+                license_title: 'GNU GPL v3 License',
+                license_1: 'Neuron CLI is open-source software distributed under the <strong>GNU GPL v3</strong>.',
+                license_2: '<strong>Keep it open:</strong> If you modify and share this code, your version must also be open-source under GPL v3.',
+                license_3: '<strong>Give credit:</strong> Please retain the original copyright notice and author Daniel Steevin.',
+                license_4: '<strong>Show some love:</strong> If you use parts of this project in a public fork, please add a note in your README pointing back to Neuron CLI.',
+                
+                footer: '© 2026 | Steevin',
+                footer_repo: 'neuron-cli on GitHub'
             }
         };
 
-        const lang = navigator.language.startsWith('en') ? 'en' : 'es';
+        /* ── Language Switcher Controller ── */
+        let currentLang = localStorage.getItem('preferred-language');
+        if (!currentLang) {
+            currentLang = navigator.language.startsWith('en') ? 'en' : 'es';
+        }
+        applyLanguage(currentLang);
 
-        document.querySelectorAll('[data-key]').forEach(el => {
-            const key = el.getAttribute('data-key');
-            if (t[lang][key]) el.innerHTML = t[lang][key];
-        });
+        function applyLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Translate data-key elements
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (t[lang] && t[lang][key]) {
+                    el.innerHTML = t[lang][key];
+                }
+            });
 
-        document.documentElement.lang = lang;
+            // Translate placeholder elements
+            document.querySelectorAll('[data-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-placeholder');
+                if (t[lang] && t[lang][key]) {
+                    el.placeholder = t[lang][key];
+                }
+            });
+
+            // Update Page Document SEO Details
+            document.title = lang === 'es' ? 'neuron-cli | Steevin - Gestor de Notas Terminal' : 'neuron-cli | Steevin - Terminal Note Manager';
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.setAttribute('content', lang === 'es' ? 
+                    'neuron-cli — Gestor de notas local-first para la terminal. Compatible con Obsidian, TUI, sincronización Git y servidor MCP para agentes de IA.' : 
+                    'neuron-cli — Local-first, Obsidian-compatible note manager built for the terminal. Features TUI, Git sync, and MCP server for AI agents.');
+            }
+
+            // Update language toggle button label
+            const langBtnSpan = document.querySelector('.lang-toggle-btn span');
+            if (langBtnSpan) {
+                langBtnSpan.textContent = lang === 'es' ? 'EN' : 'ES';
+            }
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'es' ? 'en' : 'es';
+            localStorage.setItem('preferred-language', newLang);
+            applyLanguage(newLang);
+        }
 
         /* ── Install tabs ── */
         function switchTab(btn, panel) {
@@ -1133,6 +1868,18 @@
             document.querySelectorAll('.install-panel').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
             document.getElementById('panel-' + panel).classList.add('active');
+        }
+
+        /* ── Command Hub tabs ── */
+        function switchHubTab(btn, panelId) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.hub-tab').forEach(b => b.classList.remove('active'));
+            
+            const hubContainer = parent.parentElement;
+            hubContainer.querySelectorAll('.hub-panel').forEach(p => p.classList.remove('active'));
+            
+            btn.classList.add('active');
+            document.getElementById(panelId).classList.add('active');
         }
 
         /* ── Copy button ── */
