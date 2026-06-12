@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Política de Privacidad — VinHub</title>
+  <style>
+    :root {
+      --bg-color: #f2f2f7;
+      --card-bg: #ffffff;
+      --text-color: #1c1c1e;
+      --text-secondary: #6c6c70;
+      --accent-color: #007aff;
+      --accent-gradient: linear-gradient(135deg, #a855f7, #3b82f6);
+      --border-color: #e5e5ea;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0a0a0c;
+        --card-bg: #16161e;
+        --text-color: #f2f2f7;
+        --text-secondary: #8e8e93;
+        --accent-color: #0a84ff;
+        --border-color: #2c2c35;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-color);
+      background: var(--bg-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    }
+
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      background: var(--card-bg);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--card-shadow);
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    /* Policy Content */
+    .policy-content {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .policy-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      section:hover {
+        box-shadow: 0 12px 25px -3px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    section h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    section p {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    section p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    ul li {
+      margin-top: 6px;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s ease;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    strong {
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(168, 85, 247, 0.1);
+      color: #a855f7;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo-container">
+      <div class="logo">V</div>
+    </div>
+    <h1>VinHub</h1>
+    <p id="last-update">Última actualización: Mayo de 2026</p>
+  </header>
+
+  <!-- Language selector -->
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLanguage('es')">Español</button>
+    <button class="lang-btn" onclick="switchLanguage('en')">English</button>
+  </div>
+
+  <!-- SPANISH CONTENT -->
+  <div id="content-es" class="policy-content active">
+    <section>
+      <h2>1. Información General</h2>
+      <p>VinHub es una aplicación móvil avanzada de finanzas personales desarrollada por <strong>Steevin</strong>. Esta política describe cómo manejamos y protegemos tu información cuando utilizas nuestra aplicación y servicios asociados.</p>
+    </section>
+
+    <section>
+      <h2>2. Datos que Recopilamos</h2>
+      <p>VinHub almacena únicamente la información financiera y de configuración que tú introduces voluntariamente en la aplicación:</p>
+      <ul>
+        <li>Transacciones de ingresos y gastos (montos, categorías, fechas, comercios).</li>
+        <li>Préstamos y cronogramas de cuotas correspondientes.</li>
+        <li>Suscripciones recurrentes y fechas de renovación.</li>
+        <li>Metas de ahorro y presupuestos mensuales por categoría.</li>
+        <li>Preferencias de la aplicación (moneda local, tema visual, idioma).</li>
+      </ul>
+      <p>Para crear, gestionar tu cuenta y sincronizar tus datos, recopilamos tu <strong>dirección de correo electrónico</strong> al momento de registrarte.</p>
+    </section>
+
+    <section>
+      <h2>3. Almacenamiento y Sincronización en la Nube</h2>
+      <p>VinHub implementa una arquitectura **Offline-First** (local-primero). Tus datos se almacenan de manera local en tu dispositivo mediante la tecnología SwiftData de Apple.</p>
+      <p>Cuando cuentas con una conexión activa a Internet, tu información se sincroniza de forma encriptada (mediante protocolo seguro HTTPS) en la plataforma <strong>Google Firebase (Firestore y Auth)</strong>. Esto tiene como única finalidad permitirte recuperar tus datos en caso de pérdida y mantener la información sincronizada en múltiples dispositivos iOS y macOS en los que inicies sesión.</p>
+      <p><strong>Copia de seguridad en iCloud:</strong> Si tienes activa la copia de seguridad general de tu dispositivo en iCloud, los datos locales de VinHub pueden formar parte de esta copia, sujeta a la Política de Privacidad de Apple.</p>
+    </section>
+
+    <section>
+      <h2>4. Inteligencia Artificial (Google Gemini)</h2>
+      <p>VinHub incluye funciones inteligentes opcionales para la importación rápida de transacciones:</p>
+      <ul>
+        <li><strong>Lectura de recibos por cámara:</strong> Utiliza la tecnología Vision local de tu dispositivo para extraer texto. Posteriormente, este texto se envía de forma segura a través de la API de Google Gemini para clasificar y organizar los conceptos del ticket.</li>
+        <li><strong>Importación por SMS y Apple Pay:</strong> Procesa el texto de las notificaciones o mensajes que tú decidas importar, enviándolo a los servidores de Google Gemini para estructurar la transacción.</li>
+      </ul>
+      <p>Estas consultas se rigen por la Política de Privacidad de Google. VinHub <strong>no comparte</strong> tu base de datos financiera completa con la IA; únicamente se envía el texto puntual de la transacción o recibo que deseas importar en ese instante.</p>
+    </section>
+
+    <section>
+      <h2>5. No Vendemos tus Datos</h2>
+      <p>VinHub tiene un firme compromiso con tu privacidad: <strong>no vendemos, no alquilamos, ni compartimos</strong> tu información personal o financiera con terceros, anunciantes ni intermediarios de datos. No realizamos análisis de comportamiento comercial ni telemetría.</p>
+    </section>
+
+    <section>
+      <h2>6. Compras Integradas (VinHub Pro)</h2>
+      <p>Las transacciones y suscripciones de VinHub Pro son gestionadas íntegramente por Apple a través del framework nativo StoreKit 2. VinHub <strong>no tiene acceso, no almacena ni procesa</strong> información de tus tarjetas de crédito o datos bancarios de facturación.</p>
+    </section>
+
+    <section>
+      <h2>7. Datos Técnicos y Análisis</h2>
+      <p>VinHub <strong>no utiliza SDKs de analítica de comportamiento ni servicios de rastreo de errores automatizados de terceros</strong> (como Firebase Analytics, Google Analytics o Sentry). Las conexiones con Firebase se limitan estrictamente a la autenticación de usuarios y la base de datos de sincronización en la nube.</p>
+    </section>
+
+    <section>
+      <h2>8. Seguridad Biométrica</h2>
+      <p>Si activas la protección por Face ID o Touch ID en los ajustes de la aplicación, la autenticación es controlada por el sistema operativo iOS (LocalAuthentication). VinHub no puede acceder a tus datos biométricos en ningún momento.</p>
+    </section>
+
+    <section>
+      <h2>9. Eliminación de Datos</h2>
+      <p>Tienes el control total de tu información. Puedes eliminar permanentemente tu cuenta y borrar de inmediato todos tus registros (tanto locales en el dispositivo como sincronizados en Firebase) directamente desde la aplicación en <strong>Ajustes → Zona de Peligro → Eliminar Cuenta</strong>.</p>
+      <p>También puedes solicitar la eliminación manual enviando un correo electrónico a <a href="mailto:daniel@steevin.com">daniel@steevin.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>10. Derechos de Privacidad (RGPD y LGPD)</h2>
+      <p>Si accedes a la aplicación desde la Unión Europea (RGPD) o Brasil (LGPD), cuentas con los derechos de acceso, rectificación, portabilidad y supresión de tus datos. Puedes ejercerlos de manera directa eliminando tu cuenta o contactándonos a través del correo de soporte.</p>
+    </section>
+
+    <section>
+      <h2>11. Contacto</h2>
+      <p>Si tienes alguna duda o sugerencia sobre esta Política de Privacidad, puedes escribirnos a:</p>
+      <p><a href="mailto:daniel@steevin.com">daniel@steevin.com</a></p>
+    </section>
+  </div>
+
+  <!-- ENGLISH CONTENT -->
+  <div id="content-en" class="policy-content">
+    <section>
+      <h2>1. General Information</h2>
+      <p>VinHub is an advanced personal finance mobile application developed by <strong>Steevin</strong>. This policy describes how we handle and protect your information when you use our application and associated services.</p>
+    </section>
+
+    <section>
+      <h2>2. Data We Collect</h2>
+      <p>VinHub only stores the financial and configuration information that you voluntarily enter into the application:</p>
+      <ul>
+        <li>Income and expense transactions (amounts, categories, dates, merchants).</li>
+        <li>Loans and corresponding installment schedules.</li>
+        <li>Recurring subscriptions and renewal dates.</li>
+        <li>Savings goals and monthly budgets by category.</li>
+        <li>Application preferences (local currency, visual theme, language).</li>
+      </ul>
+      <p>To create, manage your account, and synchronize your data, we collect your <strong>email address</strong> when you sign up.</p>
+    </section>
+
+    <section>
+      <h2>3. Storage and Cloud Sync</h2>
+      <p>VinHub implements an **Offline-First** architecture. Your data is stored locally on your device using Apple's SwiftData technology.</p>
+      <p>When you have an active internet connection, your information is synchronized in an encrypted format (using secure HTTPS protocol) with the <strong>Google Firebase (Firestore and Auth)</strong> platform. This is solely intended to allow you to recover your data in case of loss and keep information in sync across multiple iOS and macOS devices where you log in.</p>
+      <p><strong>iCloud Backup:</strong> If you have general device backup active on iCloud, local VinHub data may be included in this backup, subject to Apple's Privacy Policy.</p>
+    </section>
+
+    <section>
+      <h2>4. Artificial Intelligence (Google Gemini)</h2>
+      <p>VinHub includes optional smart features for quick transaction importing:</p>
+      <ul>
+        <li><strong>Camera receipt scanning:</strong> Uses local Vision technology on your device to extract text. This text is then securely sent to the Google Gemini API to classify and organize receipt details.</li>
+        <li><strong>SMS and Apple Pay import:</strong> Processes the text of notifications or messages you choose to import, sending it to Google Gemini servers to structure the transaction.</li>
+      </ul>
+      <p>These requests are governed by Google's Privacy Policy. VinHub <strong>does not share</strong> your entire financial database with the AI; only the specific text of the transaction or receipt you choose to import is sent.</p>
+    </section>
+
+    <section>
+      <h2>5. We Do Not Sell Your Data</h2>
+      <p>VinHub is firmly committed to your privacy: <strong>we do not sell, rent, or share</strong> your personal or financial information with third parties, advertisers, or data brokers. We do not perform behavior analysis or telemetry.</p>
+    </section>
+
+    <section>
+      <h2>6. In-App Purchases (VinHub Pro)</h2>
+      <p>Transactions and subscriptions for VinHub Pro are fully managed by Apple through the native StoreKit 2 framework. VinHub <strong>does not access, store, or process</strong> credit card or billing information.</p>
+    </section>
+
+    <section>
+      <h2>7. Technical Data and Analytics</h2>
+      <p>VinHub <strong>does not use third-party behavioral analytics or automated crash reporting SDKs</strong> (such as Firebase Analytics, Google Analytics, or Sentry). Connection with Firebase is strictly limited to user authentication and cloud database synchronization.</p>
+    </section>
+
+    <section>
+      <h2>8. Biometric Security</h2>
+      <p>If you enable Face ID or Touch ID protection in the app settings, authentication is handled by the iOS operating system (LocalAuthentication). VinHub cannot access your biometric data at any time.</p>
+    </section>
+
+    <section>
+      <h2>9. Data Deletion</h2>
+      <p>You have full control over your information. You can permanently delete your account and immediately wipe all records (both local and Firebase cloud sync data) directly from the application in <strong>Settings → Danger Zone → Delete Account</strong>.</p>
+      <p>You can also request manual deletion by sending an email to <a href="mailto:daniel@steevin.com">daniel@steevin.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>10. Privacy Rights (GDPR & LGPD)</h2>
+      <p>If you access the application from the European Union (GDPR) or Brazil (LGPD), you have the right to access, rectify, port, and delete your data. You can exercise these rights directly by deleting your account or by contacting us via our support email.</p>
+    </section>
+
+    <section>
+      <h2>11. Contact Us</h2>
+      <p>If you have any questions or suggestions regarding this Privacy Policy, please contact us at:</p>
+      <p><a href="mailto:daniel@steevin.com">daniel@steevin.com</a></p>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2026 Steevin · VinHub. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+  function switchLanguage(lang) {
+    // Hide all contents
+    document.querySelectorAll('.policy-content').forEach(el => {
+      el.classList.remove('active');
+    });
+    
+    // Deactivate all buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    // Show selected content and activate button
+    if (lang === 'es') {
+      document.getElementById('content-es').classList.add('active');
+      document.querySelector('.lang-btn[onclick="switchLanguage(\'es\')"]').classList.add('active');
+      document.getElementById('last-update').innerText = "Última actualización: Mayo de 2026";
+      document.title = "Política de Privacidad — VinHub";
+    } else {
+      document.getElementById('content-en').classList.add('active');
+      document.querySelector('.lang-btn[onclick="switchLanguage(\'en\')"]').classList.add('active');
+      document.getElementById('last-update').innerText = "Last updated: May 2026";
+      document.title = "Privacy Policy — VinHub";
+    }
+  }
+</script>
+</body>
+</html>
