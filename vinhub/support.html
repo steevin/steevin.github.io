@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soporte - VinHub</title>
+  <style>
+    :root {
+      --bg-color: #f2f2f7;
+      --card-bg: #ffffff;
+      --text-color: #1c1c1e;
+      --text-secondary: #6c6c70;
+      --accent-color: #007aff;
+      --accent-gradient: linear-gradient(135deg, #a855f7, #3b82f6);
+      --border-color: #e5e5ea;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #0a0a0c;
+        --card-bg: #16161e;
+        --text-color: #f2f2f7;
+        --text-secondary: #8e8e93;
+        --accent-color: #0a84ff;
+        --border-color: #2c2c35;
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-color);
+      background: var(--bg-color);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    header {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 32px;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    }
+
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      background: var(--card-bg);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--card-shadow);
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .content {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+    }
+
+    section h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-color);
+    }
+
+    section p {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    section p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    li {
+      margin-top: 6px;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div class="logo-container">
+        <div class="logo">V</div>
+      </div>
+      <h1>VinHub Support</h1>
+      <p>Help for your personal finance app</p>
+    </header>
+
+    <div class="lang-switcher" aria-label="Language selector">
+      <button class="lang-btn active" type="button" data-lang="es">Español</button>
+      <button class="lang-btn" type="button" data-lang="en">English</button>
+    </div>
+
+    <div id="es" class="content active">
+      <section>
+        <h2>Soporte de VinHub</h2>
+        <p>Si necesitas ayuda con VinHub, puedes contactarnos por correo electrónico. Te responderemos lo antes posible.</p>
+        <p><strong>Email:</strong> <a href="mailto:daniel@steevin.com">daniel@steevin.com</a></p>
+      </section>
+
+      <section>
+        <h2>Podemos ayudarte con</h2>
+        <ul>
+          <li>Problemas para iniciar sesión o crear una cuenta.</li>
+          <li>Dudas sobre movimientos, créditos, deudas, metas o suscripciones.</li>
+          <li>Compras dentro de la app, planes Plus o Pro y restauración de compras.</li>
+          <li>Eliminación de cuenta y solicitud de eliminación de datos.</li>
+          <li>Privacidad, seguridad y uso de IA dentro de la app.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Soporte dentro de la app</h2>
+        <p>También puedes abrir VinHub y entrar a Ajustes para enviar una solicitud de soporte desde la app.</p>
+      </section>
+
+      <section>
+        <h2>Privacidad</h2>
+        <p>Puedes consultar nuestra política de privacidad aquí: <a href="./privacy-policy.html">Política de Privacidad de VinHub</a>.</p>
+      </section>
+    </div>
+
+    <div id="en" class="content">
+      <section>
+        <h2>VinHub Support</h2>
+        <p>If you need help with VinHub, you can contact us by email. We will reply as soon as possible.</p>
+        <p><strong>Email:</strong> <a href="mailto:daniel@steevin.com">daniel@steevin.com</a></p>
+      </section>
+
+      <section>
+        <h2>We can help with</h2>
+        <ul>
+          <li>Issues signing in or creating an account.</li>
+          <li>Questions about transactions, credit, debt, goals, or subscriptions.</li>
+          <li>In-app purchases, Plus or Pro plans, and purchase restoration.</li>
+          <li>Account deletion and data deletion requests.</li>
+          <li>Privacy, security, and AI features inside the app.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>In-app support</h2>
+        <p>You can also open VinHub and go to Settings to send a support request from inside the app.</p>
+      </section>
+
+      <section>
+        <h2>Privacy</h2>
+        <p>You can read our privacy policy here: <a href="./privacy-policy.html">VinHub Privacy Policy</a>.</p>
+      </section>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 VinHub. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.lang-btn');
+    const contents = document.querySelectorAll('.content');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const lang = button.dataset.lang;
+        buttons.forEach((item) => item.classList.toggle('active', item === button));
+        contents.forEach((content) => content.classList.toggle('active', content.id === lang));
+        document.documentElement.lang = lang;
+      });
+    });
+  </script>
+</body>
+</html>
