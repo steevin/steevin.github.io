@@ -238,7 +238,7 @@
       <div class="logo">V</div>
     </div>
     <h1>VinHub</h1>
-    <p id="last-update">Última actualización: Mayo de 2026</p>
+    <p id="last-update">Última actualización: 18 de junio de 2026</p>
   </header>
 
   <!-- Language selector -->
@@ -256,47 +256,54 @@
 
     <section>
       <h2>2. Datos que Recopilamos</h2>
-      <p>VinHub almacena únicamente la información financiera y de configuración que tú introduces voluntariamente en la aplicación:</p>
+      <p>VinHub recopila y almacena la información necesaria para crear tu cuenta, sincronizar tus datos y ofrecer las funciones que decides utilizar:</p>
       <ul>
+        <li>Nombre, dirección de correo electrónico e identificador de cuenta.</li>
         <li>Transacciones de ingresos y gastos (montos, categorías, fechas, comercios).</li>
         <li>Préstamos y cronogramas de cuotas correspondientes.</li>
         <li>Suscripciones recurrentes y fechas de renovación.</li>
         <li>Metas de ahorro y presupuestos mensuales por categoría.</li>
         <li>Preferencias de la aplicación (moneda local, tema visual, idioma).</li>
+        <li>Contenido que decides enviar, como consultas de IA, SMS, imágenes de recibos y solicitudes de soporte.</li>
       </ul>
-      <p>Para crear, gestionar tu cuenta y sincronizar tus datos, recopilamos tu <strong>dirección de correo electrónico</strong> al momento de registrarte.</p>
     </section>
 
     <section>
       <h2>3. Almacenamiento y Sincronización en la Nube</h2>
-      <p>VinHub implementa una arquitectura **Offline-First** (local-primero). Tus datos se almacenan de manera local en tu dispositivo mediante la tecnología SwiftData de Apple.</p>
-      <p>Cuando cuentas con una conexión activa a Internet, tu información se sincroniza de forma encriptada (mediante protocolo seguro HTTPS) en la plataforma <strong>Google Firebase (Firestore y Auth)</strong>. Esto tiene como única finalidad permitirte recuperar tus datos en caso de pérdida y mantener la información sincronizada en múltiples dispositivos iOS y macOS en los que inicies sesión.</p>
+      <p>VinHub almacena tus datos localmente mediante SwiftData y utiliza <strong>Google Firebase Authentication y Cloud Firestore</strong> para autenticar tu cuenta, sincronizar información y permitir la recuperación y el uso multidispositivo. Esto puede incluir tu nombre, correo electrónico, identificador de usuario, preferencias y datos financieros como transacciones, presupuestos, préstamos, metas, suscripciones y categorías personalizadas.</p>
+      <p>La información se transmite mediante conexiones cifradas HTTPS y se almacena asociada a tu cuenta de Firebase. Google procesa estos datos como proveedor de infraestructura conforme a sus términos y políticas de privacidad.</p>
       <p><strong>Copia de seguridad en iCloud:</strong> Si tienes activa la copia de seguridad general de tu dispositivo en iCloud, los datos locales de VinHub pueden formar parte de esta copia, sujeta a la Política de Privacidad de Apple.</p>
     </section>
 
     <section>
       <h2>4. Inteligencia Artificial (Google Gemini)</h2>
-      <p>VinHub incluye funciones inteligentes opcionales para la importación rápida de transacciones:</p>
+      <p>VinHub utiliza <strong>Google Gemini mediante Firebase AI Logic</strong> para ofrecer funciones opcionales de inteligencia artificial. Cuando decides utilizar una de estas funciones, se envía a Google únicamente la información necesaria para procesar tu solicitud. Según la función, puede incluir:</p>
       <ul>
-        <li><strong>Lectura de recibos por cámara:</strong> Utiliza la tecnología Vision local de tu dispositivo para extraer texto. Posteriormente, este texto se envía de forma segura a través de la API de Google Gemini para clasificar y organizar los conceptos del ticket.</li>
-        <li><strong>Importación por SMS y Apple Pay:</strong> Procesa el texto de las notificaciones o mensajes que tú decidas importar, enviándolo a los servidores de Google Gemini para estructurar la transacción.</li>
+        <li>Consultas y mensajes enviados al asistente financiero.</li>
+        <li>SMS bancarios o notificaciones que seleccionas para importar.</li>
+        <li>Imágenes de recibos, texto obtenido mediante OCR y detalles del recibo.</li>
+        <li>Descripciones, montos y categorías de transacciones para clasificación o detección de anomalías.</li>
+        <li>Contexto o resúmenes relevantes de transacciones, presupuestos, suscripciones, metas o préstamos para generar análisis y explicaciones.</li>
       </ul>
-      <p>Estas consultas se rigen por la Política de Privacidad de Google. VinHub <strong>no comparte</strong> tu base de datos financiera completa con la IA; únicamente se envía el texto puntual de la transacción o recibo que deseas importar en ese instante.</p>
+      <p>VinHub aplica filtros para ocultar identificadores comunes —como correos, teléfonos, números de tarjeta y códigos de verificación— en solicitudes de texto cuando corresponde. Sin embargo, el contenido que seleccionas, especialmente imágenes o texto libre, todavía puede contener información personal o financiera.</p>
+      <p>Estas funciones solo se activan cuando las solicitas y puedes usar las funciones no relacionadas con IA sin enviar contenido a Gemini. Google procesa esta información conforme a sus términos y a su <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.</p>
     </section>
 
     <section>
       <h2>5. No Vendemos tus Datos</h2>
-      <p>VinHub tiene un firme compromiso con tu privacidad: <strong>no vendemos, no alquilamos, ni compartimos</strong> tu información personal o financiera con terceros, anunciantes ni intermediarios de datos. No realizamos análisis de comportamiento comercial ni telemetría.</p>
+      <p>VinHub <strong>no vende ni alquila</strong> tu información personal o financiera. Solo compartimos o permitimos el procesamiento de datos por los proveedores necesarios para operar la app, como Apple, Google Firebase, Google Gemini y Google Mobile Ads, según se describe en esta política.</p>
     </section>
 
     <section>
-      <h2>6. Compras Integradas (VinHub Pro)</h2>
-      <p>Las transacciones y suscripciones de VinHub Pro son gestionadas íntegramente por Apple a través del framework nativo StoreKit 2. VinHub <strong>no tiene acceso, no almacena ni procesa</strong> información de tus tarjetas de crédito o datos bancarios de facturación.</p>
+      <h2>6. Compras Integradas (VinHub Plus y Pro)</h2>
+      <p>Las transacciones y suscripciones de VinHub Plus y Pro son gestionadas íntegramente por Apple a través de StoreKit 2. VinHub <strong>no tiene acceso, no almacena ni procesa</strong> información de tus tarjetas de crédito o datos bancarios de facturación. VinHub recibe de Apple la información necesaria para conocer el producto adquirido, restaurar compras y habilitar el nivel correspondiente.</p>
     </section>
 
     <section>
-      <h2>7. Datos Técnicos y Análisis</h2>
-      <p>VinHub <strong>no utiliza SDKs de analítica de comportamiento ni servicios de rastreo de errores automatizados de terceros</strong> (como Firebase Analytics, Google Analytics o Sentry). Las conexiones con Firebase se limitan estrictamente a la autenticación de usuarios y la base de datos de sincronización en la nube.</p>
+      <h2>7. Datos Técnicos, Publicidad y Análisis</h2>
+      <p>La versión gratuita de VinHub puede mostrar anuncios mediante <strong>Google Mobile Ads (AdMob)</strong>. Este SDK puede recopilar o procesar identificadores del dispositivo, dirección IP y ubicación aproximada derivada de ella, interacción con la app y los anuncios, datos publicitarios, así como información de errores y rendimiento.</p>
+      <p>Google puede utilizar estos datos para mostrar anuncios, limitar el fraude, medir el rendimiento y realizar análisis, de acuerdo con la configuración del dispositivo, los permisos aplicables y sus propias políticas. VinHub no proporciona a AdMob tu base de datos financiera, tus credenciales ni el contenido de tus consultas de IA.</p>
+      <p>Apple también puede recopilar información técnica y de rendimiento mediante iOS y App Store conforme a sus políticas.</p>
     </section>
 
     <section>
@@ -312,7 +319,8 @@
 
     <section>
       <h2>10. Derechos de Privacidad (RGPD y LGPD)</h2>
-      <p>Si accedes a la aplicación desde la Unión Europea (RGPD) o Brasil (LGPD), cuentas con los derechos de acceso, rectificación, portabilidad y supresión de tus datos. Puedes ejercerlos de manera directa eliminando tu cuenta o contactándonos a través del correo de soporte.</p>
+      <p>Puedes acceder a la información disponible en VinHub desde tus dispositivos autorizados. Parte de tus datos reside localmente y parte puede estar sincronizada con Firebase. Puedes utilizar las funciones de exportación disponibles en la app o solicitar acceso, rectificación, portabilidad o eliminación escribiendo al correo de soporte.</p>
+      <p>Si accedes a la aplicación desde la Unión Europea (RGPD) o Brasil (LGPD), también cuentas con los derechos que reconozca la legislación aplicable.</p>
     </section>
 
     <section>
@@ -331,47 +339,54 @@
 
     <section>
       <h2>2. Data We Collect</h2>
-      <p>VinHub only stores the financial and configuration information that you voluntarily enter into the application:</p>
+      <p>VinHub collects and stores the information needed to create your account, synchronize your data, and provide the features you choose to use:</p>
       <ul>
+        <li>Name, email address, and account identifier.</li>
         <li>Income and expense transactions (amounts, categories, dates, merchants).</li>
         <li>Loans and corresponding installment schedules.</li>
         <li>Recurring subscriptions and renewal dates.</li>
         <li>Savings goals and monthly budgets by category.</li>
         <li>Application preferences (local currency, visual theme, language).</li>
+        <li>Content you choose to submit, such as AI prompts, SMS messages, receipt images, and support requests.</li>
       </ul>
-      <p>To create, manage your account, and synchronize your data, we collect your <strong>email address</strong> when you sign up.</p>
     </section>
 
     <section>
       <h2>3. Storage and Cloud Sync</h2>
-      <p>VinHub implements an **Offline-First** architecture. Your data is stored locally on your device using Apple's SwiftData technology.</p>
-      <p>When you have an active internet connection, your information is synchronized in an encrypted format (using secure HTTPS protocol) with the <strong>Google Firebase (Firestore and Auth)</strong> platform. This is solely intended to allow you to recover your data in case of loss and keep information in sync across multiple iOS and macOS devices where you log in.</p>
+      <p>VinHub stores your data locally using SwiftData and uses <strong>Google Firebase Authentication and Cloud Firestore</strong> to authenticate your account, synchronize information, and enable recovery and multi-device use. This may include your name, email address, user identifier, preferences, and financial data such as transactions, budgets, loans, goals, subscriptions, and custom categories.</p>
+      <p>Information is transmitted over encrypted HTTPS connections and stored in association with your Firebase account. Google processes this data as an infrastructure provider under its terms and privacy policies.</p>
       <p><strong>iCloud Backup:</strong> If you have general device backup active on iCloud, local VinHub data may be included in this backup, subject to Apple's Privacy Policy.</p>
     </section>
 
     <section>
       <h2>4. Artificial Intelligence (Google Gemini)</h2>
-      <p>VinHub includes optional smart features for quick transaction importing:</p>
+      <p>VinHub uses <strong>Google Gemini through Firebase AI Logic</strong> to provide optional artificial intelligence features. When you choose to use one of these features, only the information needed to process your request is sent to Google. Depending on the feature, this may include:</p>
       <ul>
-        <li><strong>Camera receipt scanning:</strong> Uses local Vision technology on your device to extract text. This text is then securely sent to the Google Gemini API to classify and organize receipt details.</li>
-        <li><strong>SMS and Apple Pay import:</strong> Processes the text of notifications or messages you choose to import, sending it to Google Gemini servers to structure the transaction.</li>
+        <li>Prompts and messages sent to the financial assistant.</li>
+        <li>Banking SMS messages or notifications you select for import.</li>
+        <li>Receipt images, OCR-extracted text, and receipt details.</li>
+        <li>Transaction descriptions, amounts, and categories for classification or anomaly detection.</li>
+        <li>Relevant context or summaries of transactions, budgets, subscriptions, goals, or loans used to generate insights and explanations.</li>
       </ul>
-      <p>These requests are governed by Google's Privacy Policy. VinHub <strong>does not share</strong> your entire financial database with the AI; only the specific text of the transaction or receipt you choose to import is sent.</p>
+      <p>VinHub applies filters to conceal common identifiers—such as email addresses, phone numbers, card numbers, and verification codes—in text requests where applicable. However, content you select, especially images or free-form text, may still contain personal or financial information.</p>
+      <p>These features are activated only when you request them, and you can use non-AI features without sending content to Gemini. Google processes this information under its terms and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
     </section>
 
     <section>
       <h2>5. We Do Not Sell Your Data</h2>
-      <p>VinHub is firmly committed to your privacy: <strong>we do not sell, rent, or share</strong> your personal or financial information with third parties, advertisers, or data brokers. We do not perform behavior analysis or telemetry.</p>
+      <p>VinHub <strong>does not sell or rent</strong> your personal or financial information. We only share data with, or allow it to be processed by, providers required to operate the app, such as Apple, Google Firebase, Google Gemini, and Google Mobile Ads, as described in this policy.</p>
     </section>
 
     <section>
-      <h2>6. In-App Purchases (VinHub Pro)</h2>
-      <p>Transactions and subscriptions for VinHub Pro are fully managed by Apple through the native StoreKit 2 framework. VinHub <strong>does not access, store, or process</strong> credit card or billing information.</p>
+      <h2>6. In-App Purchases (VinHub Plus and Pro)</h2>
+      <p>Transactions and subscriptions for VinHub Plus and Pro are fully managed by Apple through StoreKit 2. VinHub <strong>does not access, store, or process</strong> credit card or billing information. VinHub receives the information needed to identify the purchased product, restore purchases, and enable the corresponding subscription tier.</p>
     </section>
 
     <section>
-      <h2>7. Technical Data and Analytics</h2>
-      <p>VinHub <strong>does not use third-party behavioral analytics or automated crash reporting SDKs</strong> (such as Firebase Analytics, Google Analytics, or Sentry). Connection with Firebase is strictly limited to user authentication and cloud database synchronization.</p>
+      <h2>7. Technical Data, Advertising, and Analytics</h2>
+      <p>The free version of VinHub may display ads through <strong>Google Mobile Ads (AdMob)</strong>. This SDK may collect or process device identifiers, IP address and approximate location derived from it, interactions with the app and ads, advertising data, and crash or performance information.</p>
+      <p>Google may use this data to serve ads, prevent fraud, measure performance, and perform analytics, according to device settings, applicable permissions, and its own policies. VinHub does not provide AdMob with your financial database, credentials, or AI prompt content.</p>
+      <p>Apple may also collect technical and performance information through iOS and the App Store under its policies.</p>
     </section>
 
     <section>
@@ -387,7 +402,8 @@
 
     <section>
       <h2>10. Privacy Rights (GDPR & LGPD)</h2>
-      <p>If you access the application from the European Union (GDPR) or Brazil (LGPD), you have the right to access, rectify, port, and delete your data. You can exercise these rights directly by deleting your account or by contacting us via our support email.</p>
+      <p>You can access the information available in VinHub from your authorized devices. Some data is stored locally and some may be synchronized with Firebase. You can use export features available in the app or request access, correction, portability, or deletion by contacting our support email.</p>
+      <p>If you access the application from the European Union (GDPR) or Brazil (LGPD), you also have the rights granted by applicable law.</p>
     </section>
 
     <section>
@@ -418,12 +434,12 @@
     if (lang === 'es') {
       document.getElementById('content-es').classList.add('active');
       document.querySelector('.lang-btn[onclick="switchLanguage(\'es\')"]').classList.add('active');
-      document.getElementById('last-update').innerText = "Última actualización: Mayo de 2026";
+      document.getElementById('last-update').innerText = "Última actualización: 18 de junio de 2026";
       document.title = "Política de Privacidad — VinHub";
     } else {
       document.getElementById('content-en').classList.add('active');
       document.querySelector('.lang-btn[onclick="switchLanguage(\'en\')"]').classList.add('active');
-      document.getElementById('last-update').innerText = "Last updated: May 2026";
+      document.getElementById('last-update').innerText = "Last updated: June 18, 2026";
       document.title = "Privacy Policy — VinHub";
     }
   }
