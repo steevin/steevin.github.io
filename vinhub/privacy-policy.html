@@ -238,7 +238,7 @@
       <div class="logo">V</div>
     </div>
     <h1>VinHub</h1>
-    <p id="last-update">Última actualización: 18 de junio de 2026</p>
+    <p id="last-update">Última actualización: 20 de junio de 2026</p>
   </header>
 
   <!-- Language selector -->
@@ -259,6 +259,8 @@
       <p>VinHub recopila y almacena la información necesaria para crear tu cuenta, sincronizar tus datos y ofrecer las funciones que decides utilizar:</p>
       <ul>
         <li>Nombre, dirección de correo electrónico e identificador de cuenta.</li>
+        <li>Proveedor de autenticación usado o asociado a tu cuenta, como correo, Google o Apple.</li>
+        <li>Nombre y apellido recibidos desde Google o Apple cuando decides iniciar sesión con esos proveedores y ellos entregan esa información.</li>
         <li>Transacciones de ingresos y gastos (montos, categorías, fechas, comercios).</li>
         <li>Préstamos y cronogramas de cuotas correspondientes.</li>
         <li>Suscripciones recurrentes y fechas de renovación.</li>
@@ -270,8 +272,9 @@
 
     <section>
       <h2>3. Almacenamiento y Sincronización en la Nube</h2>
-      <p>VinHub almacena tus datos localmente mediante SwiftData y utiliza <strong>Google Firebase Authentication y Cloud Firestore</strong> para autenticar tu cuenta, sincronizar información y permitir la recuperación y el uso multidispositivo. Esto puede incluir tu nombre, correo electrónico, identificador de usuario, preferencias y datos financieros como transacciones, presupuestos, préstamos, metas, suscripciones y categorías personalizadas.</p>
-      <p>La información se transmite mediante conexiones cifradas HTTPS y se almacena asociada a tu cuenta de Firebase. Google procesa estos datos como proveedor de infraestructura conforme a sus términos y políticas de privacidad.</p>
+      <p>VinHub almacena tus datos localmente mediante SwiftData y utiliza <strong>Google Firebase Authentication y Cloud Firestore</strong> para autenticar tu cuenta, sincronizar información y permitir la recuperación y el uso multidispositivo. Esto puede incluir tu nombre, correo electrónico, identificador de usuario, proveedor de inicio de sesión, proveedores asociados, preferencias y datos financieros como transacciones, presupuestos, préstamos, metas, suscripciones y categorías personalizadas.</p>
+      <p>Puedes iniciar sesión con correo y contraseña, Google o Apple, y puedes asociar Google o Apple a una cuenta existente desde Configuración. Al usar Google o Apple, VinHub recibe una credencial de autenticación y, cuando el proveedor la entrega, tu correo, nombre y apellido. Si usas Sign in with Apple y eliges ocultar tu correo, Apple puede proporcionarnos una dirección privada de retransmisión. VinHub no recibe tu contraseña de Google ni de Apple.</p>
+      <p>La información se transmite mediante conexiones cifradas HTTPS y se almacena asociada a tu cuenta de Firebase. Google procesa estos datos como proveedor de infraestructura conforme a sus términos y políticas de privacidad. Google y Apple también procesan información de autenticación conforme a sus propias políticas cuando utilizas sus métodos de inicio de sesión.</p>
       <p><strong>Copia de seguridad en iCloud:</strong> Si tienes activa la copia de seguridad general de tu dispositivo en iCloud, los datos locales de VinHub pueden formar parte de esta copia, sujeta a la Política de Privacidad de Apple.</p>
     </section>
 
@@ -342,6 +345,8 @@
       <p>VinHub collects and stores the information needed to create your account, synchronize your data, and provide the features you choose to use:</p>
       <ul>
         <li>Name, email address, and account identifier.</li>
+        <li>Authentication provider used or linked to your account, such as email, Google, or Apple.</li>
+        <li>First and last name received from Google or Apple when you choose to sign in with those providers and they provide that information.</li>
         <li>Income and expense transactions (amounts, categories, dates, merchants).</li>
         <li>Loans and corresponding installment schedules.</li>
         <li>Recurring subscriptions and renewal dates.</li>
@@ -353,8 +358,9 @@
 
     <section>
       <h2>3. Storage and Cloud Sync</h2>
-      <p>VinHub stores your data locally using SwiftData and uses <strong>Google Firebase Authentication and Cloud Firestore</strong> to authenticate your account, synchronize information, and enable recovery and multi-device use. This may include your name, email address, user identifier, preferences, and financial data such as transactions, budgets, loans, goals, subscriptions, and custom categories.</p>
-      <p>Information is transmitted over encrypted HTTPS connections and stored in association with your Firebase account. Google processes this data as an infrastructure provider under its terms and privacy policies.</p>
+      <p>VinHub stores your data locally using SwiftData and uses <strong>Google Firebase Authentication and Cloud Firestore</strong> to authenticate your account, synchronize information, and enable recovery and multi-device use. This may include your name, email address, user identifier, sign-in provider, linked providers, preferences, and financial data such as transactions, budgets, loans, goals, subscriptions, and custom categories.</p>
+      <p>You can sign in with email and password, Google, or Apple, and you can link Google or Apple to an existing account from Settings. When you use Google or Apple, VinHub receives an authentication credential and, when the provider supplies it, your email, first name, and last name. If you use Sign in with Apple and choose to hide your email, Apple may provide us with a private relay address. VinHub does not receive your Google or Apple password.</p>
+      <p>Information is transmitted over encrypted HTTPS connections and stored in association with your Firebase account. Google processes this data as an infrastructure provider under its terms and privacy policies. Google and Apple also process authentication information under their own policies when you use their sign-in methods.</p>
       <p><strong>iCloud Backup:</strong> If you have general device backup active on iCloud, local VinHub data may be included in this backup, subject to Apple's Privacy Policy.</p>
     </section>
 
@@ -434,12 +440,12 @@
     if (lang === 'es') {
       document.getElementById('content-es').classList.add('active');
       document.querySelector('.lang-btn[onclick="switchLanguage(\'es\')"]').classList.add('active');
-      document.getElementById('last-update').innerText = "Última actualización: 18 de junio de 2026";
+      document.getElementById('last-update').innerText = "Última actualización: 20 de junio de 2026";
       document.title = "Política de Privacidad — VinHub";
     } else {
       document.getElementById('content-en').classList.add('active');
       document.querySelector('.lang-btn[onclick="switchLanguage(\'en\')"]').classList.add('active');
-      document.getElementById('last-update').innerText = "Last updated: June 18, 2026";
+      document.getElementById('last-update').innerText = "Last updated: June 20, 2026";
       document.title = "Privacy Policy — VinHub";
     }
   }
