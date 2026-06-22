@@ -345,6 +345,22 @@
             transform: scale(1.05);
         }
 
+        .project-screenshot.vinhub-preview {
+            gap: 10px;
+            padding: 12px;
+            align-items: center;
+            background: radial-gradient(circle at top, rgba(0, 229, 255, 0.08), var(--primary-bg) 70%);
+        }
+
+        .project-screenshot.vinhub-preview img {
+            width: auto;
+            height: 88%;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.35);
+        }
+
         footer { 
             padding: 40px; 
             text-align: center; 
@@ -456,12 +472,20 @@
                 <p data-key="p1_desc">ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.</p>
             </div>
             <div class="project-card reveal">
-                <div class="project-screenshot">
-                    <img src="assets/projects/vinance.png" alt="Vinance" style="object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);\' ><i class=\'fas fa-mobile-screen\' style=\'font-size:2rem;\'></i></div>';">
-                </div>
+                <a href="vinhub.html" style="text-decoration:none;display:block;">
+                    <div class="project-screenshot vinhub-preview">
+                        <img src="assets/projects/vinhub/01_resumen_dashboard.jpg" alt="Dashboard de VinHub" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);\' ><i class=\'fas fa-mobile-screen\' style=\'font-size:2rem;\'></i></div>';">
+                        <img src="assets/projects/vinhub/02_nuevo_movimiento_ia.jpg" alt="Nuevo movimiento con IA en VinHub" onerror="this.style.display='none';">
+                        <img src="assets/projects/vinhub/05_creditos.jpg" alt="Créditos en VinHub" onerror="this.style.display='none';">
+                    </div>
+                </a>
                 <span class="tags">iOS · Swift · Finanzas</span>
-                <h3>Vinance</h3>
+                <h3><a href="vinhub.html" style="color:inherit;text-decoration:none;">VinHub</a></h3>
                 <p data-key="p2_desc">App iOS de finanzas personales con recomendaciones por IA: balance, movimientos, presupuestos, metas, créditos y suscripciones en una sola vista.</p>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+                    <a href="vinhub.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--accent-color);font-family:'Fira Code',monospace;font-size:0.85rem;text-decoration:none;border:1px solid var(--accent-color);padding:7px 14px;border-radius:6px;background:var(--accent-hover);transition:all 0.3s;" data-key="p2_page"><i class="fas fa-external-link-alt"></i> Ver proyecto</a>
+                    <a href="https://apps.apple.com/us/app/vinhub-finanzas-y-gastos-ia/id6781144820" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;color:var(--accent-color);font-family:'Fira Code',monospace;font-size:0.85rem;text-decoration:none;border:1px solid var(--border-color);padding:7px 14px;border-radius:6px;transition:all 0.3s;" onmouseover="this.style.borderColor='var(--accent-color)';this.style.background='var(--accent-hover)'" onmouseout="this.style.borderColor='var(--border-color)';this.style.background='transparent'" data-key="p2_store"><i class="fab fa-apple"></i> App Store</a>
+                </div>
             </div>
             <div class="project-card reveal">
                 <a href="neuron-cli.html" style="text-decoration:none;display:block;">
@@ -510,6 +534,8 @@
                 'projects_header': 'Proyectos',
                 'p1_desc': 'ERP modular hecho en Colombia: CRM, facturación electrónica DIAN, ventas, logística (COD), mesa de ayuda, tesorería y e-learning. Pago en COP, 14 días gratis sin tarjeta.',
                 'p2_desc': 'App iOS de finanzas personales con recomendaciones por IA: balance, movimientos, presupuestos, metas, créditos y suscripciones en una sola vista.',
+                'p2_page': 'Ver proyecto',
+                'p2_store': 'App Store',
                 'p3_desc': 'Gestor de notas local-first compatible con Obsidian para la terminal. Acceso rápido a tu vault con TUI, búsqueda, notas diarias, sincronización Git y servidor MCP para agentes de IA.',
                 'p3_page': 'Ver proyecto',
                 'p3_link': 'Ver en GitHub',
@@ -540,6 +566,8 @@
                 'projects_header': 'Projects',
                 'p1_desc': 'Modular ERP made in Colombia: CRM, DIAN e-invoicing, sales, logistics (COD), help desk, treasury and e-learning. Paid in COP, 14-day free trial, no card.',
                 'p2_desc': 'iOS personal finance app with AI insights: balance, transactions, budgets, goals, credits and subscriptions in a single view.',
+                'p2_page': 'View project',
+                'p2_store': 'App Store',
                 'p3_desc': 'Local-first, Obsidian-compatible note manager for the terminal. Fast keyboard-driven access to your vault with TUI, search, daily notes, Git sync and MCP server for AI agents.',
                 'p3_page': 'View project',
                 'p3_link': 'View on GitHub',
