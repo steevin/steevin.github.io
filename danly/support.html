@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Soporte de Danly. Ayuda, contacto y recursos para usuarios de la app.">
+  <link rel="canonical" href="https://steevin.com/danly/support.html">
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <title>Soporte de Danly</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f7f4;
+      --panel: #ffffff;
+      --text: #181818;
+      --muted: #5f625f;
+      --line: #deded6;
+      --accent: #2f7d6d;
+      --accent-soft: #e7f3ef;
+      --shadow: 0 16px 40px rgba(25, 35, 30, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101312;
+        --panel: #191d1b;
+        --text: #f2f4f1;
+        --muted: #b0b7b1;
+        --line: #2c332f;
+        --accent: #75d8bf;
+        --accent-soft: #173229;
+        --shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(880px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 44px 0 72px;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 8vw, 3.25rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .updated {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .intro {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin: 24px 0;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 34px;
+      padding-top: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><span class="mark">D</span>Danly</div>
+      <h1>Soporte</h1>
+      <p class="updated">Última actualización: 22 de junio de 2026</p>
+    </header>
+
+    <div class="intro">
+      <p>Estamos aquí para ayudarte con Danly, una app de diario personal para guardar, organizar y recordar momentos importantes.</p>
+      <p>Para soporte, preguntas o solicitudes relacionadas con tu cuenta, escríbenos a <a href="mailto:danly@steevin.com">danly@steevin.com</a>.</p>
+    </div>
+
+    <section>
+      <h2>Contacto</h2>
+      <p>Envía tu consulta a <a href="mailto:danly@steevin.com">danly@steevin.com</a>. Incluye una descripción breve del problema, el dispositivo que usas y, si aplica, los pasos para reproducirlo.</p>
+      <p>Responderemos tan pronto como sea posible.</p>
+    </section>
+
+    <section>
+      <h2>Ayuda frecuente</h2>
+      <ul>
+        <li>Si no puedes iniciar sesión, revisa que estés usando el mismo método de acceso con el que creaste tu cuenta.</li>
+        <li>Si activaste sincronización, asegúrate de tener conexión a internet y una sesión activa.</li>
+        <li>Si usas recuerdos cifrados en otro dispositivo, necesitarás tu frase de recuperación.</li>
+        <li>Si una compra premium no aparece, abre Ajustes dentro de Danly y usa la opción para restaurar compras.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Privacidad y datos</h2>
+      <p>Puedes revisar cómo Danly maneja tus datos en la <a href="privacy-policy.html">política de privacidad</a>.</p>
+      <p>Para solicitudes de acceso, corrección, exportación o eliminación de datos, escríbenos a <a href="mailto:danly@steevin.com">danly@steevin.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>Reporte de problemas</h2>
+      <p>Cuando reportes un error, ayuda incluir la versión de iOS, el modelo del dispositivo, la versión de Danly y qué estabas intentando hacer antes de que ocurriera el problema.</p>
+      <p>No envíes información sensible ni contenido privado de tu diario salvo que sea necesario para resolver tu solicitud.</p>
+    </section>
+
+    <footer>
+      © 2026 Daniel Steevin. Danly.
+    </footer>
+  </main>
+</body>
+</html>
