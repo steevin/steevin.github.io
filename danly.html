@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Daniel Steevin">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danly | Smart Private Journal</title>
+    <meta name="description" content="Danly es una app iOS de diario privado inteligente para guardar notas, fotos y voz, transcribir audio, organizar recuerdos y generar resúmenes diarios con IA opcional.">
+    <meta name="keywords" content="Danly, diario privado, journal, iOS, SwiftUI, SwiftData, Firebase, CloudKit, Gemini, IA, App Store">
+    <link rel="canonical" href="https://steevin.com/danly.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --panel-bg: #0b1018;
+            --border-color: #30363d;
+            --accent-color: #00e5ff;
+            --accent-hover: rgba(0, 229, 255, 0.15);
+            --rose: #f87171;
+            --green: #3fb950;
+            --purple: #bc8cff;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --text-bright: #ffffff;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-main);
+            background-color: var(--primary-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3 { color: var(--text-bright); }
+
+        nav {
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .bracket { color: var(--text-muted); }
+        .line { color: var(--accent-color); margin: 0 4px; }
+        .name { color: var(--text-bright); text-transform: lowercase; font-weight: 500; }
+        .cursor { color: var(--accent-color); font-weight: bold; animation: blink 1.2s infinite; margin-left: 2px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; padding: 0.8rem; gap: 15px; }
+            nav ul { gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; }
+            nav a { font-size: 0.8rem; }
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .hero {
+            min-height: 78vh;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+            gap: 54px;
+            align-items: center;
+            padding: 80px 10%;
+            border-bottom: 1px solid var(--border-color);
+            background: radial-gradient(ellipse at 20% 0%, rgba(248,113,113,0.12) 0%, rgba(13,17,23,0) 45%), var(--primary-bg);
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,229,255,0.08);
+            border: 1px solid rgba(0,229,255,0.25);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            margin-bottom: 24px;
+            letter-spacing: 0.3px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5.8rem);
+            line-height: 1;
+            margin: 0 0 18px;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span { color: var(--rose); }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 640px;
+            font-family: 'Fira Code', monospace;
+            margin: 0 0 34px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        .btn-primary:hover {
+            background: rgba(0,229,255,0.86);
+            box-shadow: 0 0 24px rgba(0,229,255,0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 16px rgba(0,229,255,0.2);
+            transform: translateY(-1px);
+        }
+
+        .phone-hero {
+            width: min(100%, 360px);
+            margin: 0 auto;
+            border-radius: 32px;
+            padding: 10px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.14);
+            box-shadow: 0 28px 70px rgba(0,0,0,0.65);
+        }
+
+        .phone-hero img {
+            display: block;
+            width: 100%;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        section {
+            padding: 90px 10%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0 0 60px;
+            font-weight: 600;
+            font-size: 2rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        h2::before { content: "// "; color: var(--accent-color); }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px;
+            align-items: start;
+        }
+
+        .screen-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 20px 44px rgba(0,0,0,0.35);
+        }
+
+        .screen-card img {
+            display: block;
+            width: 100%;
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .screen-card figcaption {
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.78rem;
+            padding: 12px 4px 2px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-muted);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .feature-card h3 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .architecture {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 980px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        .arch-panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .arch-panel h3 {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            margin: 0 0 16px;
+        }
+
+        .arch-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .arch-list li {
+            display: flex;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .arch-list i {
+            color: var(--green);
+            margin-top: 4px;
+        }
+
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .stack-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            transition: all 0.25s;
+        }
+
+        .stack-badge:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            box-shadow: 0 0 12px rgba(0,229,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .stack-badge i { color: var(--accent-color); }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 10%;
+            background: radial-gradient(ellipse at center, rgba(248,113,113,0.08) 0%, var(--primary-bg) 70%);
+        }
+
+        .cta-section h2 {
+            margin-bottom: 16px;
+        }
+
+        .cta-section h2::before { content: ""; }
+
+        .cta-section p {
+            color: var(--text-muted);
+            font-family: 'Fira Code', monospace;
+            margin: 0 auto 36px;
+            max-width: 650px;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--accent-color); }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding: 60px 7%;
+                text-align: center;
+            }
+
+            .hero-actions { justify-content: center; }
+            .phone-hero { max-width: 300px; }
+            section { padding: 74px 7%; }
+            .architecture { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="brand">
+            <span class="bracket">&lt;</span>
+            <span class="line">/</span>
+            <span class="name">steevin</span>
+            <span class="cursor">_</span>
+            <span class="bracket">&gt;</span>
+        </a>
+        <ul>
+            <li><a href="/">Volver al Portafolio</a></li>
+            <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#funciones">Funciones</a></li>
+            <li><a href="#arquitectura">Arquitectura</a></li>
+            <li><a href="https://apps.apple.com/us/app/danly-smart-private-journal/id6783036513" target="_blank" rel="noopener noreferrer">App Store</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div>
+            <div class="hero-badge">
+                <i class="fab fa-apple"></i>
+                <span>iOS · SwiftUI · Diario privado · IA</span>
+            </div>
+            <h1><span>Dan</span>ly</h1>
+            <p class="hero-subtitle">Un diario privado inteligente para guardar notas, fotos y voz, organizar recuerdos y cerrar el día con resúmenes generados por IA opcional.</p>
+            <div class="hero-actions">
+                <a href="https://apps.apple.com/us/app/danly-smart-private-journal/id6783036513" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fab fa-apple"></i>
+                    <span>Ver en App Store</span>
+                </a>
+                <a href="#capturas" class="btn btn-secondary">
+                    <i class="fas fa-mobile-screen"></i>
+                    <span>Ver capturas</span>
+                </a>
+            </div>
+        </div>
+        <div class="phone-hero reveal">
+            <img src="assets/projects/danly/01_today.jpg" alt="Pantalla Hoy de Danly con captura rápida, resumen del día y acciones de voz/foto">
+        </div>
+    </section>
+
+    <section id="capturas">
+        <h2>Capturas de la app</h2>
+        <div class="screenshot-grid">
+            <figure class="screen-card reveal">
+                <img src="assets/projects/danly/01_today.jpg" alt="Inicio de Danly con captura rápida y resumen del día">
+                <figcaption>Captura rápida</figcaption>
+            </figure>
+            <figure class="screen-card reveal">
+                <img src="assets/projects/danly/02_capture.jpg" alt="Danly registrando notas, fotos y voz">
+                <figcaption>Notas, fotos y voz</figcaption>
+            </figure>
+            <figure class="screen-card reveal">
+                <img src="assets/projects/danly/03_memories.jpg" alt="Vista de recuerdos inteligentes de Danly">
+                <figcaption>Recuerdos inteligentes</figcaption>
+            </figure>
+            <figure class="screen-card reveal">
+                <img src="assets/projects/danly/04_settings.jpg" alt="Ajustes de Danly con privacidad, sincronización e IA">
+                <figcaption>Privacidad y control</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section id="funciones" style="background: var(--secondary-bg);">
+        <h2>Qué resuelve</h2>
+        <div class="feature-grid">
+            <div class="feature-card reveal">
+                <i class="fas fa-pen-to-square feature-icon"></i>
+                <h3>Captura sin fricción</h3>
+                <p>Guarda notas rápidas, listas, ideas, pendientes, fotos y audios desde una interfaz enfocada en registrar antes de olvidar.</p>
+            </div>
+            <div class="feature-card reveal">
+                <i class="fas fa-microphone-lines feature-icon"></i>
+                <h3>Voz con transcripción</h3>
+                <p>Convierte notas habladas en texto buscable usando reconocimiento de voz, manteniendo también el audio original.</p>
+            </div>
+            <div class="feature-card reveal">
+                <i class="fas fa-wand-magic-sparkles feature-icon"></i>
+                <h3>Resumen diario con IA</h3>
+                <p>Cuando el usuario lo autoriza, Gemini consolida notas y transcripciones en un diario claro del día y detecta estados de ánimo.</p>
+            </div>
+            <div class="feature-card reveal">
+                <i class="fas fa-tags feature-icon"></i>
+                <h3>Organización inteligente</h3>
+                <p>Permite etiquetas, personas con @nombre, favoritos, emociones, calendario, búsqueda y recuerdos destacados.</p>
+            </div>
+            <div class="feature-card reveal">
+                <i class="fas fa-lock feature-icon"></i>
+                <h3>Privacidad por diseño</h3>
+                <p>Soporta modo local, bloqueo con Face ID o código, cifrado de datos sincronizados y frase de recuperación para abrir recuerdos en otros dispositivos.</p>
+            </div>
+            <div class="feature-card reveal">
+                <i class="fas fa-file-export feature-icon"></i>
+                <h3>Datos exportables</h3>
+                <p>El usuario conserva control sobre sus recuerdos con exportación estructurada y opciones para borrar, restaurar o vaciar la papelera.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="arquitectura">
+        <h2>Arquitectura del proyecto</h2>
+        <div class="architecture">
+            <div class="arch-panel reveal">
+                <h3>Producto</h3>
+                <ul class="arch-list">
+                    <li><i class="fas fa-check"></i><span>App iOS bilingüe para diario personal, notas visuales, notas de voz, emociones, tareas y recuerdos.</span></li>
+                    <li><i class="fas fa-check"></i><span>Funciones premium con IA sin cupo mensual, transcripciones extendidas, sincronización cifrada y exportación avanzada.</span></li>
+                    <li><i class="fas fa-check"></i><span>Privacidad explícita: IA opcional, modo local, Face ID y control sobre sincronización, exportación y borrado.</span></li>
+                </ul>
+            </div>
+            <div class="arch-panel reveal">
+                <h3>Implementación</h3>
+                <ul class="arch-list">
+                    <li><i class="fas fa-check"></i><span>SwiftUI y SwiftData como base local para entradas, resúmenes diarios y recuerdos destacados.</span></li>
+                    <li><i class="fas fa-check"></i><span>Firebase Auth/Firestore para cuenta y sincronización, con medios cifrados almacenados mediante CloudKit.</span></li>
+                    <li><i class="fas fa-check"></i><span>Gemini vía Firebase AI Logic para diarios del día y análisis de ánimo, con compras administradas por StoreKit 2.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="stack" style="background: var(--secondary-bg);">
+        <h2>Stack técnico</h2>
+        <div class="stack-grid">
+            <span class="stack-badge"><i class="fab fa-swift"></i>SwiftUI</span>
+            <span class="stack-badge"><i class="fas fa-database"></i>SwiftData</span>
+            <span class="stack-badge"><i class="fas fa-fire"></i>Firebase</span>
+            <span class="stack-badge"><i class="fas fa-cloud"></i>CloudKit</span>
+            <span class="stack-badge"><i class="fas fa-brain"></i>Gemini</span>
+            <span class="stack-badge"><i class="fas fa-microphone-lines"></i>Speech</span>
+            <span class="stack-badge"><i class="fas fa-key"></i>Keychain</span>
+            <span class="stack-badge"><i class="fas fa-bag-shopping"></i>StoreKit 2</span>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Disponible en App Store</h2>
+        <p>Danly está publicado como una app iOS para escribir, grabar y preservar recuerdos privados con ayuda de IA opcional.</p>
+        <div class="hero-actions">
+            <a href="https://apps.apple.com/us/app/danly-smart-private-journal/id6783036513" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-apple"></i>
+                <span>Abrir App Store</span>
+            </a>
+            <a href="/danly/privacy-policy.html" class="btn btn-secondary">
+                <i class="fas fa-shield-halved"></i>
+                <span>Privacidad</span>
+            </a>
+            <a href="/danly/support.html" class="btn btn-secondary">
+                <i class="fas fa-life-ring"></i>
+                <span>Soporte</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 | Steevin · <a href="/danly/privacy-policy.html">Privacidad</a> · <a href="/danly/support.html">Soporte</a></p>
+    </footer>
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+</html>
