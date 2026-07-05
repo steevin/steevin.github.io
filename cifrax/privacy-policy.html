@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Política de privacidad de Cifrax.">
+  <link rel="canonical" href="https://steevin.com/cifrax/privacy-policy.html">
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <title>Política de privacidad de Cifrax</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #151923;
+      --muted: #626b7a;
+      --line: #dfe5ee;
+      --accent: #246bfe;
+      --accent-soft: #e9f0ff;
+      --shadow: 0 16px 40px rgba(26, 44, 80, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e1117;
+        --panel: #171b24;
+        --text: #f3f6fb;
+        --muted: #a9b2c2;
+        --line: #2c3442;
+        --accent: #7ba4ff;
+        --accent-soft: #17233f;
+        --shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(880px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 44px 0 72px;
+    }
+
+    header { margin-bottom: 28px; }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 8vw, 3.25rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .updated {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .intro, section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    .intro { margin: 24px 0; }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    a {
+      color: var(--accent);
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 34px;
+      padding-top: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><span class="mark">C</span>Cifrax</div>
+      <h1>Política de privacidad</h1>
+      <p class="updated">Última actualización: 5 de julio de 2026</p>
+    </header>
+
+    <div class="intro">
+      <p>Cifrax es una bóveda privada para fotos, videos, archivos y notas. La app está diseñada para cifrar tu contenido antes de guardarlo y para mantener el procesamiento sensible en tu dispositivo siempre que sea posible.</p>
+      <p>No vendemos tus datos personales, no mostramos publicidad y no usamos tu contenido para seguimiento publicitario.</p>
+    </div>
+
+    <section>
+      <h2>Datos que puedes guardar</h2>
+      <p>Cifrax puede guardar fotos, videos, Live Photos, archivos, notas, carpetas, favoritos, fechas, nombres de archivo, metadatos de ubicación, etiquetas, nombres de personas, señales sensibles y estados de papelera.</p>
+      <p>Como estos elementos pueden contener información personal o sensible, tú decides qué importar, guardar, eliminar o exportar.</p>
+    </section>
+
+    <section>
+      <h2>Cuenta e inicio de sesión</h2>
+      <p>Cifrax usa Firebase Authentication con Sign in with Apple para autenticarte. Podemos recibir y guardar un identificador de usuario, nombre visible y correo electrónico o correo privado de Apple cuando Apple lo proporciona.</p>
+      <p>El inicio de sesión se usa para separar tu bóveda, preparar llaves locales y habilitar funciones que dependen de tu identidad de app.</p>
+    </section>
+
+    <section>
+      <h2>Cifrado y sincronización</h2>
+      <p>El contenido de la bóveda se cifra antes de guardarse en el almacenamiento local o sincronizarse. Cifrax usa servicios de Apple como Keychain, iCloud Keychain y CloudKit para proteger llaves y respaldos cifrados.</p>
+      <p>Si activas o usas sincronización, los archivos cifrados y sus registros técnicos pueden guardarse en tu iCloud privado mediante CloudKit. Cifrax no sube copias descifradas de tu contenido a servidores propios.</p>
+    </section>
+
+    <section>
+      <h2>Procesamiento privado e inteligencia local</h2>
+      <p>Cifrax puede analizar contenido en el dispositivo para generar etiquetas, texto, resúmenes, detección de rostros, nombres de personas o señales sensibles. Estas funciones están diseñadas para funcionar localmente usando tecnologías del sistema.</p>
+      <p>Los resultados de ese procesamiento se guardan cifrados dentro de tu bóveda y puedes eliminarlos eliminando el elemento asociado.</p>
+    </section>
+
+    <section>
+      <h2>Compras y Cifrax Pro</h2>
+      <p>Las compras se procesan mediante StoreKit y Apple. Cifrax no recibe ni almacena números de tarjeta ni datos completos de pago.</p>
+      <p>La app puede guardar localmente si tu Apple ID tiene una compra o suscripción Pro activa para desbloquear funciones premium.</p>
+    </section>
+
+    <section>
+      <h2>Permisos del dispositivo</h2>
+      <p>Cifrax puede solicitar acceso a Fotos para importar o eliminar originales si tú lo confirmas. También puede solicitar Face ID o el código del dispositivo para bloquear la bóveda local.</p>
+      <p>iOS te permite conceder, limitar o revocar permisos desde Ajustes. Cifrax no recibe ni almacena datos biométricos.</p>
+    </section>
+
+    <section>
+      <h2>Eliminación de cuenta y datos</h2>
+      <p>Desde Ajustes puedes iniciar la eliminación de tu cuenta. Cifrax intentará borrar tus elementos locales, registros cifrados en iCloud asociados a la bóveda, carpetas, PIN local, llaves locales y la cuenta de Firebase.</p>
+      <p>Si importaste contenido desde Fotos y decidiste conservar los originales, esos originales siguen bajo tu control en la biblioteca de Fotos y no se eliminan automáticamente al borrar la cuenta.</p>
+    </section>
+
+    <section>
+      <h2>Proveedores</h2>
+      <p>Cifrax usa servicios de Apple para Sign in with Apple, StoreKit, CloudKit, Keychain, Fotos, Face ID y funciones del sistema; y Firebase/Google para autenticación.</p>
+      <p>Estos proveedores pueden procesar datos técnicos necesarios para operar sus servicios, como identificadores de app, estado de compra, registros operativos o información de seguridad.</p>
+    </section>
+
+    <section>
+      <h2>Retención</h2>
+      <p>Conservamos datos mientras permanezcan en tu app, en tu cuenta o en tu iCloud privado. Puedes borrar elementos desde la app o eliminar tu cuenta desde Ajustes.</p>
+      <p>Los archivos exportados, compartidos o copiados fuera de Cifrax no se eliminan automáticamente cuando borras contenido dentro de la app.</p>
+    </section>
+
+    <section>
+      <h2>Menores</h2>
+      <p>Cifrax no está dirigida a menores de 13 años. Si crees que un menor nos proporcionó datos personales sin autorización, contáctanos para revisar y eliminar la información correspondiente.</p>
+    </section>
+
+    <section>
+      <h2>Tus opciones</h2>
+      <p>Puedes revocar permisos en iOS, borrar elementos, vaciar la papelera, cerrar sesión, eliminar tu cuenta y escribirnos para solicitar ayuda con acceso, corrección, exportación o eliminación.</p>
+      <p>Para solicitudes de privacidad, escríbenos a <a href="mailto:cifrax@steevin.com">cifrax@steevin.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>Contacto</h2>
+      <p>Si tienes preguntas sobre esta política o sobre tus datos, contáctanos en <a href="mailto:cifrax@steevin.com">cifrax@steevin.com</a>.</p>
+      <p>Esta política puede actualizarse cuando cambien las funciones, proveedores o requisitos legales de Cifrax.</p>
+    </section>
+
+    <footer>
+      © 2026 Daniel Steevin. Cifrax.
+    </footer>
+  </main>
+</body>
+</html>

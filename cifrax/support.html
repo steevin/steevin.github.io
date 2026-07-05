@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Soporte de Cifrax.">
+  <link rel="canonical" href="https://steevin.com/cifrax/support.html">
+  <link rel="icon" type="image/png" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <title>Soporte de Cifrax</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --text: #151923;
+      --muted: #626b7a;
+      --line: #dfe5ee;
+      --accent: #246bfe;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e1117;
+        --panel: #171b24;
+        --text: #f3f6fb;
+        --muted: #a9b2c2;
+        --line: #2c3442;
+        --accent: #7ba4ff;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+    }
+    main {
+      width: min(820px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 48px 0 72px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 8vw, 3rem); letter-spacing: 0; }
+    h2 { margin: 0 0 10px; font-size: 1.12rem; }
+    p { margin: 0 0 12px; color: var(--muted); }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--accent); font-weight: 650; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Soporte de Cifrax</h1>
+    <p>Ayuda para cuenta, privacidad, compras y funcionamiento de la bóveda.</p>
+
+    <section>
+      <h2>Contacto</h2>
+      <p>Escríbenos a <a href="mailto:cifrax@steevin.com">cifrax@steevin.com</a>. Incluye tu versión de iOS, modelo de dispositivo y una descripción breve del problema.</p>
+    </section>
+
+    <section>
+      <h2>Privacidad</h2>
+      <p>Consulta la <a href="/cifrax/privacy-policy.html">política de privacidad</a> para conocer cómo Cifrax maneja cuenta, cifrado, iCloud, compras y eliminación de datos.</p>
+    </section>
+  </main>
+</body>
+</html>
