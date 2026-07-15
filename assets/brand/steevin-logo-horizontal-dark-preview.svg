@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+  <title id="title">Steevin horizontal logo dark preview</title>
+  <desc id="desc">Preview wrapper showing the transparent dark-background Steevin logo on a dark surface.</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2="1200" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D1117"/>
+      <stop offset="1" stop-color="#05070B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" rx="28" fill="url(#surface)"/>
+  <image href="./steevin-logo-horizontal.svg" x="140" y="80" width="920" height="260"/>
+</svg>

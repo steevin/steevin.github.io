@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title desc">
+  <title id="title">Steevin navbar logo</title>
+  <desc id="desc">Compact Steevin logo for site navigation using the approved mark.</desc>
+  <defs>
+    <linearGradient id="mark-bg" x1="10" y1="12" x2="98" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.54" stop-color="#080D14"/>
+      <stop offset="1" stop-color="#05070B"/>
+    </linearGradient>
+    <linearGradient id="signal" x1="34" y1="30" x2="82" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="0.46" stop-color="#2F8CFF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(16 14) scale(0.46)">
+    <rect width="200" height="200" rx="44" fill="url(#mark-bg)"/>
+    <rect x="8" y="8" width="184" height="184" rx="37" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+    <path
+      d="M133 56C121 46 96 44 84 55C72 66 75 79 90 84C102 88 126 90 136 104C148 121 136 145 110 148C90 151 71 142 63 126"
+      fill="none"
+      stroke="url(#signal)"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
+    <path d="M73 68L58 84L73 100" fill="none" stroke="#090F17" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M134 103L149 119L134 135" fill="none" stroke="#090F17" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <g opacity="0.56" stroke="url(#signal)" stroke-width="2.7" stroke-linecap="round">
+      <path d="M159 31L176 43L188 35" fill="none"/>
+      <circle cx="159" cy="31" r="3.8" fill="#0B111A"/>
+      <circle cx="176" cy="43" r="3.8" fill="#0B111A"/>
+      <circle cx="188" cy="35" r="3.8" fill="#0B111A"/>
+    </g>
+  </g>
+
+  <text
+    x="130"
+    y="78"
+    fill="#F8FAFC"
+    font-family="Inter, SF Pro Display, Segoe UI, Arial, sans-serif"
+    font-size="56"
+    font-weight="680">Steevin</text>
+</svg>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steevin Brand Preview</title>
+  <style>
+    :root {
+      --ink: #070B11;
+      --panel: #0D1117;
+      --line: rgba(255,255,255,0.09);
+      --text: #E6EDF3;
+      --muted: #8B949E;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: #05070B;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(30px, 5vw, 56px);
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 34px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .sample {
+      min-height: 280px;
+      display: grid;
+      place-items: center;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .sample.light {
+      background: #F6F8FB;
+      border-color: #D9E0EA;
+    }
+
+    .sample.wide {
+      grid-column: 1 / -1;
+    }
+
+    .label {
+      align-self: start;
+      justify-self: start;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      width: min(100%, 720px);
+      height: auto;
+    }
+
+    .mark {
+      width: min(70vw, 280px);
+      height: auto;
+    }
+
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .sample.wide { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Steevin</h1>
+    <p>Preview de logo personal: limpio, premium, con codigo e IA sugeridos de forma sutil.</p>
+    <section class="grid">
+      <div class="sample wide">
+        <span class="label">Horizontal original</span>
+        <img class="logo" src="./steevin-logo-horizontal.svg" alt="Logo horizontal Steevin para fondo oscuro">
+      </div>
+      <div class="sample wide">
+        <span class="label">V2 recomendado</span>
+        <img class="logo" src="./steevin-logo-horizontal-v2.svg" alt="Logo horizontal Steevin v2">
+      </div>
+      <div class="sample wide">
+        <span class="label">V3 editorial</span>
+        <img class="logo" src="./steevin-logo-horizontal-v3.svg" alt="Logo horizontal Steevin v3">
+      </div>
+      <div class="sample wide">
+        <span class="label">Navbar compacto</span>
+        <img class="logo" src="./steevin-logo-navbar.svg" alt="Logo compacto Steevin para navbar">
+      </div>
+      <div class="sample">
+        <span class="label">Mark</span>
+        <img class="mark" src="./steevin-mark.svg" alt="Icono Steevin">
+      </div>
+      <div class="sample light">
+        <span class="label">Fondo claro</span>
+        <img class="logo" src="./steevin-logo-horizontal-light.svg" alt="Logo horizontal Steevin para fondo claro">
+      </div>
+    </section>
+  </main>
+</body>
+</html>

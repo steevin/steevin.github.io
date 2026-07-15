@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 900" role="img" aria-labelledby="title desc">
+  <title id="title">Steevin horizontal logo options</title>
+  <desc id="desc">Dark preview of three revised Steevin horizontal logo options.</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2="1240" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0D1117"/>
+      <stop offset="1" stop-color="#05070B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1240" height="900" rx="34" fill="url(#surface)"/>
+  <text x="98" y="96" fill="#8B949E" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600">V2</text>
+  <image href="./steevin-logo-horizontal-v2.svg" x="148" y="24" width="920" height="260"/>
+  <line x1="98" y1="304" x2="1142" y2="304" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  <text x="98" y="396" fill="#8B949E" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600">V3</text>
+  <image href="./steevin-logo-horizontal-v3.svg" x="148" y="324" width="920" height="260"/>
+  <line x1="98" y1="604" x2="1142" y2="604" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  <text x="98" y="744" fill="#8B949E" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600">NAV</text>
+  <image href="./steevin-logo-navbar.svg" x="172" y="684" width="520" height="120"/>
+</svg>
