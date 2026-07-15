@@ -1,5 +1,5 @@
 <!-- PESTAÑA 2: GIMNASIA NEURO-REFLEJO -->
-<section id="pane-neuro-matrix" class="tab-pane hidden space-y-4">
+<section id="pane-neuro-matrix" class="tab-pane hidden space-y-4" role="tabpanel" aria-labelledby="tab-btn-neuro-matrix" aria-hidden="true" tabindex="0">
     <div class="flex items-center justify-between mb-2">
         <div>
             <span class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest">Actividad 01</span>
@@ -18,26 +18,27 @@
     </div>
 
     <p class="text-xs text-slate-400 max-w-xl">
-        Memoriza la secuencia lumínica en la cuadrícula y repítela. Ejercita directamente el córtex prefrontal, estimulando la retención secuencial.
+        Observa la secuencia de luces y repítela en el mismo orden. Cada nivel añade un paso y aumenta ligeramente la velocidad.
     </p>
+    <p id="game-status" class="sr-only" aria-live="polite">Pulsa iniciar para comenzar.</p>
 
     <!-- El Tablero de 3x3 -->
     <div class="flex justify-center py-4">
         <div class="grid grid-cols-3 gap-3 w-full max-w-xs aspect-square" id="grid-container">
-            <button onclick="cellClicked(0)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(1)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(2)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(3)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(4)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(5)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(6)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(7)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
-            <button onclick="cellClicked(8)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 1" onclick="cellClicked(0)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 2" onclick="cellClicked(1)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 3" onclick="cellClicked(2)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 4" onclick="cellClicked(3)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 5" onclick="cellClicked(4)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 6" onclick="cellClicked(5)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 7" onclick="cellClicked(6)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 8" onclick="cellClicked(7)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
+            <button type="button" aria-label="Celda 9" onclick="cellClicked(8)" class="grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer" disabled></button>
         </div>
     </div>
 
     <div class="flex justify-center">
-        <button id="game-btn" onclick="startGame()" class="w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/25">
+        <button id="game-btn" type="button" onclick="startGame()" class="w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/25">
             Iniciar Gimnasia de Memoria
         </button>
     </div>

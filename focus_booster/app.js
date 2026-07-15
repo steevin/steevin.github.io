@@ -42,6 +42,9 @@ function selectWave(mode) {
         btnAlpha.className = 'py-2 px-3 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 font-semibold text-xs text-center transition-all hover:bg-slate-800 focus:outline-none';
     }
 
+    btnAlpha.setAttribute('aria-pressed', String(mode === 'alpha'));
+    btnBeta.setAttribute('aria-pressed', String(mode === 'beta'));
+
     if (isAudioPlaying) {
         updateFrequencies();
     }
@@ -104,6 +107,7 @@ function toggleBrownNoise() {
         brownNoiseNode.start();
 
         isBrownNoisePlaying = true;
+        btn.setAttribute('aria-pressed', 'true');
         btn.className = "w-full py-2 px-3 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-xs font-semibold border border-indigo-500 text-indigo-300 transition-all flex items-center justify-center gap-2";
         status.textContent = "Sintonizado";
         showToast("🔊 Ruido Marrón profundo encendido", "💤");
@@ -113,6 +117,7 @@ function toggleBrownNoise() {
             brownNoiseNode.disconnect();
         }
         isBrownNoisePlaying = false;
+        btn.setAttribute('aria-pressed', 'false');
         btn.className = "w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-semibold border border-slate-800 text-slate-300 transition-all flex items-center justify-center gap-2";
         status.textContent = "Apagado";
         showToast("Muteado el Ruido Marrón", "🔇");
@@ -155,6 +160,7 @@ function toggleAudio() {
         rightOsc.start();
 
         isAudioPlaying = true;
+        btn.setAttribute('aria-pressed', 'true');
         btn.className = "w-full py-3.5 mt-2 rounded-xl bg-red-600/30 hover:bg-red-700/40 border border-red-500 text-red-200 font-bold text-xs transition-all shadow-lg flex justify-center items-center gap-2";
         btnText.textContent = "Detener Binaural";
         playIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />`;
@@ -163,6 +169,7 @@ function toggleAudio() {
         if (leftOsc) { leftOsc.stop(); leftOsc.disconnect(); }
         if (rightOsc) { rightOsc.stop(); rightOsc.disconnect(); }
         isAudioPlaying = false;
+        btn.setAttribute('aria-pressed', 'false');
 
         btn.className = "w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 flex justify-center items-center gap-2";
         btnText.textContent = "Iniciar Binaural";
@@ -210,6 +217,7 @@ function toggleBreathing() {
 
     if (!isBreathing) {
         isBreathing = true;
+        btn.setAttribute('aria-pressed', 'true');
         breathingPhase = 0;
         breathTimeLeft = 4;
 
@@ -242,6 +250,7 @@ function toggleBreathing() {
     } else {
         clearInterval(breathingInterval);
         isBreathing = false;
+        btn.setAttribute('aria-pressed', 'false');
         actionText.textContent = "Listo";
         timerText.textContent = "4s";
         ball.className = "breathing-circle w-24 h-24 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 rounded-full flex flex-col justify-center items-center scale-100 custom-glow relative z-10";
@@ -258,13 +267,22 @@ function toggleBreathing() {
 let timerSeconds = 1500; // 25 min default
 let timerInterval = null;
 let isTimerActive = false;
+let selectedTimerMinutes = 25;
 
 function setTimer(minutes) {
+    selectedTimerMinutes = minutes;
     timerSeconds = minutes * 60;
     updateTimerDisplay();
     if (isTimerActive) {
         toggleTimer();
     }
+
+    document.querySelectorAll('[data-timer-minutes]').forEach(button => {
+        const selected = Number(button.dataset.timerMinutes) === minutes;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('bg-slate-800', selected);
+        button.classList.toggle('text-indigo-300', selected);
+    });
 }
 
 function updateTimerDisplay() {
@@ -279,7 +297,13 @@ function toggleTimer() {
     const icon = document.getElementById('timer-icon');
 
     if (!isTimerActive) {
+        if (timerSeconds <= 0) {
+            timerSeconds = selectedTimerMinutes * 60;
+            updateTimerDisplay();
+        }
         isTimerActive = true;
+        btn.setAttribute('aria-pressed', 'true');
+        btn.setAttribute('aria-label', 'Pausar temporizador');
         btn.className = "p-2.5 rounded-lg bg-red-600/20 border border-red-500 text-red-300 hover:bg-red-600/30 transition-all";
         icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6" />`;
 
@@ -290,6 +314,8 @@ function toggleTimer() {
             } else {
                 clearInterval(timerInterval);
                 isTimerActive = false;
+                btn.setAttribute('aria-pressed', 'false');
+                btn.setAttribute('aria-label', 'Iniciar temporizador');
                 btn.className = "p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 transition-all";
                 icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />`;
 
@@ -301,6 +327,8 @@ function toggleTimer() {
     } else {
         clearInterval(timerInterval);
         isTimerActive = false;
+        btn.setAttribute('aria-pressed', 'false');
+        btn.setAttribute('aria-label', 'Reanudar temporizador');
         btn.className = "p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 transition-all";
         icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />`;
     }
@@ -335,6 +363,7 @@ function startGame() {
     gameScore = 0;
     document.getElementById('game-level').textContent = gameLevel;
     document.getElementById('game-score').textContent = gameScore;
+    updateGameStatus('Observa el patrón.');
 
     btn.textContent = "Observa el Patrón...";
     btn.disabled = true;
@@ -369,6 +398,7 @@ function playSequence() {
         disableAllCells(false);
         const btn = document.getElementById('game-btn');
         btn.textContent = "Tu Turno - Repite";
+        updateGameStatus('Tu turno. Repite la secuencia.');
     }, (gameSequence.length + 1) * delay);
 }
 
@@ -434,6 +464,7 @@ function cellClicked(idx) {
         disableAllCells(true);
         const btn = document.getElementById('game-btn');
         btn.textContent = "¡Perfecto! Siguiente nivel...";
+        updateGameStatus(`Correcto. Preparando el nivel ${gameLevel}.`);
 
         // Flash de éxito en todos los cuadros seleccionados antes de limpiar
         const cells = document.getElementsByClassName('grid-cell');
@@ -477,9 +508,15 @@ function gameOver() {
     btn.disabled = false;
     btn.textContent = `Fallo. Racha final: ${gameScore}. ¿Reiniciar?`;
     btn.className = "w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 text-white font-bold text-xs shadow-lg";
+    updateGameStatus(`Secuencia incorrecta. Racha final: ${gameScore}.`);
 
     playSoftNote(150, 0.6);
     showToast(`Fin de partida. Nivel alcanzado: ${gameLevel}`, "🛑");
+}
+
+function updateGameStatus(message) {
+    const status = document.getElementById('game-status');
+    if (status) status.textContent = message;
 }
 
 
@@ -510,6 +547,7 @@ function startStroop() {
 
     document.getElementById('stroop-start-btn').classList.add('hidden');
     document.getElementById('stroop-controls').classList.remove('hidden');
+    document.getElementById('stroop-status').textContent = 'Prueba en curso. Responde con el color de la tinta.';
 
     nextStroopQuestion();
 
@@ -554,11 +592,13 @@ function stroopAnswer(selectedKey) {
 
         // Guardar récord de Stroop
         saveRecord('stroop', stroopScore);
+        document.getElementById('stroop-status').textContent = 'Correcto.';
     } else {
         // Penalización de tiempo (-2 seg) por respuesta incorrecta
         stroopTimeLeft = Math.max(0, stroopTimeLeft - 2);
         document.getElementById('stroop-timer').textContent = `${stroopTimeLeft}s`;
         playSoftNote(150, 0.2);
+        document.getElementById('stroop-status').textContent = 'Incorrecto. Penalización de dos segundos.';
     }
     nextStroopQuestion();
 }
@@ -571,6 +611,7 @@ function endStroop() {
     document.getElementById('stroop-start-btn').classList.remove('hidden');
     document.getElementById('stroop-start-btn').textContent = "¿Volver a probar?";
     document.getElementById('stroop-controls').classList.add('hidden');
+    document.getElementById('stroop-status').textContent = `Tiempo completo. Puntuación: ${stroopScore}.`;
 
     showToast(`Puntuación Stroop final: ${stroopScore} aciertos`, "⚡");
 }
@@ -603,6 +644,7 @@ function startSchulte() {
         const btn = document.createElement('button');
         btn.textContent = num;
         btn.className = "schulte-cell bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-extrabold text-sm md:text-base aspect-square rounded-lg transition-all flex items-center justify-center border border-slate-800/60 active:scale-95";
+        btn.setAttribute('aria-label', `Número ${num}`);
         btn.onclick = () => clickedSchulte(num, btn);
         grid.appendChild(btn);
     });
@@ -671,19 +713,59 @@ function shuffleArray(array) {
  * 7. NAVEGACIÓN Y CONFIGURACIONES GLOBALES
  **************************************************************/
 function switchTab(targetTabId) {
+    // Detener ejercicios que no deben seguir ejecutándose en segundo plano.
+    if (targetTabId !== 'calm-chamber' && isBreathing) {
+        toggleBreathing();
+    }
+
+    if (targetTabId !== 'neuro-matrix' && gameActive) {
+        gameActive = false;
+        disableAllCells(true);
+        resetAllCells();
+        const gameBtn = document.getElementById('game-btn');
+        if (gameBtn) {
+            gameBtn.disabled = false;
+            gameBtn.textContent = 'Iniciar Gimnasia de Memoria';
+            gameBtn.className = 'w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/25';
+        }
+        updateGameStatus('Sesión cancelada. Pulsa iniciar para comenzar de nuevo.');
+    }
+
+    if (targetTabId !== 'stroop-challenge' && stroopGameActive) {
+        clearInterval(stroopInterval);
+        stroopGameActive = false;
+        stroopTimeLeft = 30;
+        document.getElementById('stroop-timer').textContent = '30s';
+        document.getElementById('stroop-word').textContent = 'PRESIONA INICIAR';
+        document.getElementById('stroop-word').className = 'text-4xl md:text-5xl font-black tracking-widest uppercase transition-all duration-100 select-none text-slate-500';
+        document.getElementById('stroop-start-btn').classList.remove('hidden');
+        document.getElementById('stroop-start-btn').textContent = 'Iniciar Prueba Stroop';
+        document.getElementById('stroop-controls').classList.add('hidden');
+        document.getElementById('stroop-status').textContent = 'Sesión cancelada. Pulsa iniciar para comenzar de nuevo.';
+    }
+
+    if (targetTabId !== 'schulte-table' && schulteGameActive) {
+        clearInterval(schulteInterval);
+        schulteGameActive = false;
+        document.getElementById('schulte-target').textContent = '1';
+        document.getElementById('schulte-timer').textContent = '00.0s';
+        document.getElementById('schulte-start-btn').textContent = 'Generar & Iniciar Tabla';
+    }
+
     // Ocultar todas las pestañas
     const panes = document.getElementsByClassName('tab-pane');
     for (let i = 0; i < panes.length; i++) {
         panes[i].classList.add('hidden');
         panes[i].classList.remove('block');
+        panes[i].setAttribute('aria-hidden', 'true');
     }
 
-    // Quitar estilos de botón activo de todos
-    const navButtons = document.querySelectorAll('nav button');
+    // Actualizar el estado de las pestañas
+    const navButtons = document.querySelectorAll('.training-tab');
     navButtons.forEach(btn => {
-        if (btn.id.startsWith('tab-btn-')) {
-            btn.className = "flex-shrink-0 flex items-center gap-3 px-4 py-3 rounded-xl text-left text-xs font-bold transition-all duration-200 w-auto lg:w-full bg-slate-900/40 text-slate-400 hover:bg-slate-800/40 hover:text-slate-200 border border-transparent";
-        }
+        btn.classList.remove('is-active');
+        btn.setAttribute('aria-selected', 'false');
+        btn.setAttribute('tabindex', '-1');
     });
 
     // Si la pestaña destino NO es calm-chamber, detener el audio binaural y el ruido marrón
@@ -699,6 +781,7 @@ function switchTab(targetTabId) {
             const audioBtnText = document.getElementById('audio-btn-text');
             const playIcon = document.getElementById('play-icon');
             if (audioBtn) audioBtn.className = "w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/20 flex justify-center items-center gap-2";
+            if (audioBtn) audioBtn.setAttribute('aria-pressed', 'false');
             if (audioBtnText) audioBtnText.textContent = "Iniciar Binaural";
             if (playIcon) playIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />`;
         }
@@ -711,6 +794,7 @@ function switchTab(targetTabId) {
             const brownBtn = document.getElementById('brown-noise-btn');
             const brownStatus = document.getElementById('brown-noise-status');
             if (brownBtn) brownBtn.className = "w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-semibold border border-slate-800 text-slate-300 transition-all flex items-center justify-center gap-2";
+            if (brownBtn) brownBtn.setAttribute('aria-pressed', 'false');
             if (brownStatus) brownStatus.textContent = "Apagado";
         }
     }
@@ -719,15 +803,23 @@ function switchTab(targetTabId) {
     const selectedPane = document.getElementById(`pane-${targetTabId}`);
     selectedPane.classList.remove('hidden');
     selectedPane.classList.add('block');
+    selectedPane.setAttribute('aria-hidden', 'false');
 
-    // Asignar clase activa al botón correspondiente
+    // Marcar la pestaña activa
     const activeBtn = document.getElementById(`tab-btn-${targetTabId}`);
-    activeBtn.className = "flex-shrink-0 flex items-center gap-3 px-4 py-3 rounded-xl text-left text-xs font-bold transition-all duration-200 w-auto lg:w-full bg-indigo-600/20 text-indigo-300 border border-indigo-500/30";
+    activeBtn.classList.add('is-active');
+    activeBtn.setAttribute('aria-selected', 'true');
+    activeBtn.setAttribute('tabindex', '0');
 }
 
 // Guardar Tarea Global en LocalStorage
 function saveGlobalTask(val) {
     localStorage.setItem('cyber_zen_global_task', val);
+    const status = document.getElementById('goal-status');
+    if (!status) return;
+    status.classList.add('visible');
+    clearTimeout(saveGlobalTask.statusTimer);
+    saveGlobalTask.statusTimer = setTimeout(() => status.classList.remove('visible'), 1400);
 }
 
 // Sistema de Notificaciones Flotantes (Toasts)
@@ -740,13 +832,12 @@ function showToast(message, icon = "💡") {
     toastIcon.textContent = icon;
 
     // Animar entrada
-    toast.classList.remove('translate-y-20', 'opacity-0');
-    toast.classList.add('translate-y-0', 'opacity-100');
+    toast.classList.add('is-visible');
 
-    setTimeout(() => {
+    clearTimeout(showToast.hideTimer);
+    showToast.hideTimer = setTimeout(() => {
         // Animar salida
-        toast.classList.add('translate-y-20', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.remove('is-visible');
     }, 3000);
 }
 
@@ -778,20 +869,44 @@ function updateRecordDisplays() {
     const stroopRec = localStorage.getItem('cyber_zen_rec_stroop') || '0';
     const schulteRec = localStorage.getItem('cyber_zen_rec_schulte') || '--';
 
-    document.getElementById('stat-memory-record').textContent = `${memRec} Niveles`;
+    document.getElementById('stat-memory-record').textContent = `${memRec} niveles`;
     document.getElementById('stat-stroop-record').textContent = `${stroopRec} aciertos`;
-    document.getElementById('stat-schulte-record').textContent = schulteRec !== '--' ? `${schulteRec} s` : '--';
+    document.getElementById('stat-schulte-record').textContent = schulteRec !== '--' ? `${schulteRec} s` : '—';
 }
 
-// Inicializar Datos al cargar
-window.onload = function() {
+let focusBoosterInitialized = false;
+
+// Inicializar datos después de que los módulos dinámicos estén disponibles.
+window.initializeFocusBooster = function() {
+    if (focusBoosterInitialized) return;
+    focusBoosterInitialized = true;
+
     // Cargar tarea guardada
     const savedTask = localStorage.getItem('cyber_zen_global_task');
     if (savedTask) {
         document.getElementById('global-task').value = savedTask;
     }
     updateRecordDisplays();
+    setTimer(25);
 
-    // Iniciar de forma responsiva en la pestaña de calma
+    const tabs = Array.from(document.querySelectorAll('.training-tab'));
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('keydown', event => {
+            if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+            event.preventDefault();
+
+            let nextIndex = index;
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % tabs.length;
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + tabs.length) % tabs.length;
+            if (event.key === 'Home') nextIndex = 0;
+            if (event.key === 'End') nextIndex = tabs.length - 1;
+
+            const targetId = tabs[nextIndex].id.replace('tab-btn-', '');
+            switchTab(targetId);
+            tabs[nextIndex].focus();
+        });
+    });
+
+    // Iniciar en la pestaña de calma
     switchTab('calm-chamber');
 }
