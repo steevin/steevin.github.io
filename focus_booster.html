@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#090c16">
+    <meta name="theme-color" content="#080a13">
     <title>Gimnasio cerebral — Steevin</title>
     <meta name="description" content="Entrena respiración, memoria, atención selectiva y visión periférica con sesiones breves y herramientas de enfoque.">
     <link rel="canonical" href="https://steevin.com/focus_booster.html">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23090c16%22/><path d=%22M50 13 83 32 50 87 17 32Z%22 fill=%22none%22 stroke=%22%238aa4ff%22 stroke-width=%227%22/><path d=%22m17 32 33 18 33-18M50 50v37%22 fill=%22none%22 stroke=%22%238aa4ff%22 stroke-width=%225%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23080a13%22/><path d=%22M50 13 83 32 50 87 17 32Z%22 fill=%22none%22 stroke=%22%2393a8ff%22 stroke-width=%227%22/><path d=%22m17 32 33 18 33-18M50 50v37%22 fill=%22none%22 stroke=%22%2393a8ff%22 stroke-width=%225%22/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --bg: #090c16;
-            --surface: #111727;
-            --surface-2: #151c30;
-            --line: rgba(223, 228, 255, 0.12);
-            --line-strong: rgba(223, 228, 255, 0.22);
-            --accent: #8aa4ff;
-            --accent-soft: rgba(138, 164, 255, 0.12);
-            --text: #f3f5fb;
-            --muted: #a5abc0;
+            --bg: #080a13;
+            --surface: #10131f;
+            --surface-2: #141828;
+            --line: rgba(226, 230, 255, 0.10);
+            --line-strong: rgba(226, 230, 255, 0.20);
+            --accent: #93a8ff;
+            --accent-soft: rgba(147, 168, 255, 0.12);
+            --text: #f2f4fb;
+            --muted: #9ba1bd;
+            --serif: 'Instrument Serif', 'Times New Roman', serif;
         }
 
         * { box-sizing: border-box; }
@@ -37,7 +38,7 @@
             margin: 0;
             overflow-x: hidden;
             background:
-                radial-gradient(circle at 85% 0%, rgba(138, 164, 255, 0.12), transparent 30rem),
+                radial-gradient(circle at 85% 0%, rgba(147, 168, 255, 0.12), transparent 30rem),
                 var(--bg);
             color: var(--text);
             font-family: 'DM Sans', system-ui, sans-serif;
@@ -59,7 +60,7 @@
             padding: 10px 14px;
             border-radius: 10px;
             background: var(--accent);
-            color: #111a47;
+            color: #0c1030;
             font-weight: 700;
             transform: translateY(-150%);
         }
@@ -76,7 +77,7 @@
             top: 0;
             z-index: 50;
             border-bottom: 1px solid var(--line);
-            background: rgba(9, 12, 22, 0.82);
+            background: rgba(8, 10, 19, 0.82);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
         }
@@ -104,7 +105,7 @@
             height: 30px;
             display: grid;
             place-items: center;
-            border: 1px solid rgba(138, 164, 255, 0.65);
+            border: 1px solid rgba(147, 168, 255, 0.65);
             border-radius: 9px;
             background: var(--accent-soft);
             color: var(--accent);
@@ -159,15 +160,16 @@
         }
 
         .intro h1 {
-            max-width: 760px;
-            margin: 18px 0 20px;
-            font-size: clamp(2.8rem, 6vw, 5.8rem);
-            font-weight: 600;
-            letter-spacing: -.06em;
-            line-height: .98;
+            max-width: 780px;
+            margin: 20px 0 22px;
+            font-family: var(--serif);
+            font-size: clamp(2.8rem, 6.4vw, 5rem);
+            font-weight: 400;
+            letter-spacing: -.01em;
+            line-height: 1;
         }
 
-        .intro h1 em { color: var(--accent); font-style: normal; }
+        .intro h1 em { color: var(--accent); font-style: italic; }
 
         .intro-copy {
             max-width: 650px;
@@ -213,7 +215,7 @@
             padding: 0 15px;
             border: 1px solid var(--line-strong);
             border-radius: 12px;
-            background: rgba(9, 12, 22, .68);
+            background: rgba(8, 10, 19, .68);
             color: var(--text);
         }
 
@@ -275,7 +277,7 @@
         .training-tab:hover { background: rgba(255,255,255,.04); color: var(--text); }
 
         .training-tab.is-active {
-            border-color: rgba(138,164,255,.28);
+            border-color: rgba(147, 168, 255,.28);
             background: var(--accent-soft);
             color: var(--text);
         }
@@ -290,7 +292,7 @@
             font-size: 1rem;
         }
 
-        .training-tab.is-active .tab-icon { background: rgba(138,164,255,.15); }
+        .training-tab.is-active .tab-icon { background: rgba(147, 168, 255,.15); }
         .tab-name { display: block; font-size: .82rem; font-weight: 600; line-height: 1.25; }
         .tab-description { display: block; margin-top: 3px; color: #777f97; font-size: .67rem; line-height: 1.25; }
 
@@ -339,7 +341,7 @@
 
         @keyframes pulse { 50% { transform: scale(.7); opacity: .65; } }
 
-        .custom-glow { box-shadow: 0 0 30px -5px rgba(138, 164, 255, .35); }
+        .custom-glow { box-shadow: 0 0 30px -5px rgba(147, 168, 255, .35); }
         .custom-glow-green { box-shadow: 0 0 30px -5px rgba(16, 185, 129, .35); }
         .breathing-circle { transition: transform 4s cubic-bezier(.4, 0, .2, 1); }
 
@@ -378,7 +380,7 @@
         .footer-inner strong { color: #b8bed0; font-weight: 500; }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #090c16; }
+        ::-webkit-scrollbar-track { background: #080a13; }
         ::-webkit-scrollbar-thumb { border-radius: 10px; background: #29314a; }
 
         @media (max-width: 900px) {

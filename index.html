@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Daniel Steevin">
-    <meta name="theme-color" content="#090c16">
+    <meta name="theme-color" content="#080a13">
     <meta name="color-scheme" content="dark">
 
     <title>Steevin — Desarrollo de software y productos digitales</title>
@@ -18,25 +18,26 @@
     <meta name="twitter:card" content="summary_large_image">
     <script>document.documentElement.classList.add('js');</script>
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23090c16%22/><path d=%22M50 13 83 32 50 87 17 32Z%22 fill=%22none%22 stroke=%22%238aa4ff%22 stroke-width=%227%22/><path d=%22m17 32 33 18 33-18M50 50v37%22 fill=%22none%22 stroke=%22%238aa4ff%22 stroke-width=%225%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23080a13%22/><path d=%22M50 13 83 32 50 87 17 32Z%22 fill=%22none%22 stroke=%22%2393a8ff%22 stroke-width=%227%22/><path d=%22m17 32 33 18 33-18M50 50v37%22 fill=%22none%22 stroke=%22%2393a8ff%22 stroke-width=%225%22/></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #090c16;
-            --bg-soft: #0d1120;
-            --surface: #111727;
-            --surface-hover: #171f35;
-            --line: rgba(223, 228, 255, 0.12);
-            --line-strong: rgba(223, 228, 255, 0.22);
-            --accent: #8aa4ff;
-            --accent-dark: #111a47;
-            --warm: #f3c969;
-            --text: #f3f7f5;
-            --muted: #a5abc0;
-            --max-width: 1180px;
+            --bg: #080a13;
+            --bg-soft: #0c0f1c;
+            --surface: #10131f;
+            --surface-hover: #141828;
+            --line: rgba(226, 230, 255, 0.10);
+            --line-strong: rgba(226, 230, 255, 0.20);
+            --accent: #93a8ff;
+            --accent-dark: #0c1030;
+            --warm: #e8c07a;
+            --text: #f2f4fb;
+            --muted: #9ba1bd;
+            --serif: 'Instrument Serif', 'Times New Roman', serif;
+            --max-width: 1240px;
             --radius: 24px;
             --shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
         }
@@ -53,7 +54,7 @@
             margin: 0;
             overflow-x: hidden;
             background:
-                radial-gradient(circle at 80% 5%, rgba(138, 164, 255, 0.09), transparent 28rem),
+                radial-gradient(circle at 80% 5%, rgba(147, 168, 255, 0.09), transparent 28rem),
                 var(--bg);
             color: var(--text);
             font-family: 'DM Sans', system-ui, sans-serif;
@@ -96,7 +97,7 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid transparent;
-            background: rgba(9, 12, 22, 0.8);
+            background: rgba(8, 10, 19, 0.8);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             transition: border-color 180ms ease;
@@ -127,9 +128,9 @@
             height: 30px;
             display: grid;
             place-items: center;
-            border: 1px solid rgba(138, 164, 255, 0.65);
+            border: 1px solid rgba(147, 168, 255, 0.65);
             border-radius: 9px;
-            background: rgba(138, 164, 255, 0.08);
+            background: rgba(147, 168, 255, 0.08);
             color: var(--accent);
             font-size: 0.8rem;
             transform: rotate(-4deg);
@@ -227,7 +228,7 @@
             right: -220px;
             border: 1px solid var(--line);
             border-radius: 50%;
-            box-shadow: 0 0 0 80px rgba(138, 164, 255, 0.018), 0 0 0 160px rgba(138, 164, 255, 0.01);
+            box-shadow: 0 0 0 80px rgba(147, 168, 255, 0.018), 0 0 0 160px rgba(147, 168, 255, 0.01);
             pointer-events: none;
         }
 
@@ -261,17 +262,18 @@
         }
 
         .hero h1 {
-            max-width: 850px;
-            margin: 22px 0 26px;
-            font-size: clamp(3.2rem, 7.4vw, 7.1rem);
-            line-height: 0.96;
-            letter-spacing: -0.065em;
-            font-weight: 600;
+            max-width: 900px;
+            margin: 26px 0 30px;
+            font-family: var(--serif);
+            font-size: clamp(3.2rem, 8vw, 6.2rem);
+            line-height: 0.98;
+            letter-spacing: -0.01em;
+            font-weight: 400;
         }
 
         .hero h1 em {
             color: var(--accent);
-            font-style: normal;
+            font-style: italic;
         }
 
         .hero-lead {
@@ -307,8 +309,8 @@
 
         .button:hover {
             transform: translateY(-2px);
-            border-color: rgba(138, 164, 255, 0.55);
-            background: rgba(138, 164, 255, 0.08);
+            border-color: rgba(147, 168, 255, 0.55);
+            background: rgba(147, 168, 255, 0.08);
         }
 
         .button.primary {
@@ -348,7 +350,7 @@
             height: 9px;
             border-radius: 50%;
             background: var(--accent);
-            box-shadow: 0 0 0 5px rgba(138, 164, 255, 0.12);
+            box-shadow: 0 0 0 5px rgba(147, 168, 255, 0.12);
         }
 
         .hero-aside dl { margin: 0; }
@@ -370,11 +372,12 @@
         }
 
         .section h2 {
-            margin: 16px 0 0;
-            font-size: clamp(2.35rem, 4.8vw, 4.7rem);
-            line-height: 1.03;
-            letter-spacing: -0.055em;
-            font-weight: 600;
+            margin: 18px 0 0;
+            font-family: var(--serif);
+            font-size: clamp(2.35rem, 4.4vw, 3.9rem);
+            line-height: 1.02;
+            letter-spacing: -0.005em;
+            font-weight: 400;
         }
 
         .section-intro {
@@ -410,10 +413,12 @@
 
         .service-card h3 {
             max-width: 260px;
-            margin: 82px 0 16px;
-            font-size: 1.45rem;
-            line-height: 1.2;
-            letter-spacing: -0.025em;
+            margin: 90px 0 16px;
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.85rem;
+            line-height: 1.15;
         }
 
         .service-card p { margin: 0; color: var(--muted); }
@@ -443,7 +448,7 @@
             display: grid;
             place-items: center;
             border-radius: 50%;
-            background: rgba(138, 164, 255, 0.1);
+            background: rgba(147, 168, 255, 0.1);
             color: var(--accent);
             font-size: 0.68rem;
         }
@@ -485,32 +490,6 @@
 
         .project:hover .project-visual > img { transform: scale(1.025); }
 
-        .project-visual.mobile-previews {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(10px, 2vw, 22px);
-            padding: 36px 24px;
-            background:
-                radial-gradient(circle at 50% 10%, rgba(138, 164, 255, 0.14), transparent 50%),
-                #0b0f1c;
-        }
-
-        .project-visual.mobile-previews.warm {
-            background: radial-gradient(circle at 50% 10%, rgba(243, 201, 105, 0.14), transparent 50%), #15120b;
-        }
-
-        .mobile-previews img {
-            width: auto;
-            height: 88%;
-            max-height: 390px;
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 18px;
-            box-shadow: 0 22px 40px rgba(0,0,0,.38);
-        }
-
-        .mobile-previews img:nth-child(2) { transform: translateY(-12px); }
-
         .project-body {
             display: flex;
             flex-direction: column;
@@ -529,10 +508,11 @@
 
         .project h3 {
             margin: 0 0 18px;
-            font-size: clamp(2rem, 4vw, 3.8rem);
-            line-height: 1;
-            letter-spacing: -0.05em;
-            font-weight: 600;
+            font-family: var(--serif);
+            font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.01em;
+            font-weight: 400;
         }
 
         .project-body p { margin: 0; color: var(--muted); }
@@ -603,7 +583,7 @@
             width: 100%;
             border: 1px solid var(--line-strong);
             border-radius: 12px;
-            background: rgba(9, 12, 22, 0.72);
+            background: rgba(8, 10, 19, 0.72);
             color: var(--text);
             transition: border-color 180ms ease, box-shadow 180ms ease;
         }
@@ -611,7 +591,7 @@
         .field input { height: 52px; padding: 0 15px; }
         .field textarea { min-height: 150px; padding: 14px 15px; resize: vertical; }
         .field input::placeholder, .field textarea::placeholder { color: #71837c; }
-        .field input:focus, .field textarea:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(138, 164, 255, 0.12); }
+        .field input:focus, .field textarea:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(147, 168, 255, 0.12); }
         .contact-form .button { width: 100%; }
 
         .site-footer {
@@ -648,7 +628,7 @@
                 gap: 12px;
                 padding: 16px 24px 22px;
                 border-bottom: 1px solid var(--line);
-                background: rgba(9, 12, 22, 0.98);
+                background: rgba(8, 10, 19, 0.98);
                 opacity: 0;
                 pointer-events: none;
                 transform: translateY(-8px);
@@ -686,8 +666,6 @@
             .service-card { padding: 28px 24px; }
             .project { border-radius: 20px; }
             .project-visual { min-height: 300px; }
-            .project-visual.mobile-previews { height: 360px; min-height: 0; padding: 24px 14px; gap: 9px; }
-            .mobile-previews img { max-height: 300px; border-radius: 13px; }
             .project-body { padding: 30px 24px 34px; }
             .contact-form { padding: 24px 18px; }
             .footer-inner { flex-direction: column; gap: 8px; }
@@ -810,11 +788,7 @@
                     </article>
 
                     <article class="project reveal">
-                        <div class="project-visual mobile-previews">
-                            <img src="assets/projects/vinhub/01_resumen_dashboard.jpg" alt="Balance financiero en VinHub" width="620" height="1346" loading="lazy">
-                            <img src="assets/projects/vinhub/02_nuevo_movimiento_ia.jpg" alt="Registro de movimiento con IA en VinHub" width="620" height="1346" loading="lazy">
-                            <img src="assets/projects/vinhub/05_creditos.jpg" alt="Gestión de créditos en VinHub" width="620" height="1346" loading="lazy">
-                        </div>
+                        <div class="project-visual"><img src="assets/projects/vinhub/01_resumen_dashboard.jpg" alt="Balance financiero en VinHub" width="620" height="1346" loading="lazy"></div>
                         <div class="project-body">
                             <span class="project-meta">iOS · Swift · Finanzas · IA</span>
                             <h3>VinHub</h3>
@@ -827,11 +801,7 @@
                     </article>
 
                     <article class="project reveal">
-                        <div class="project-visual mobile-previews warm">
-                            <img src="assets/projects/danly/01_today.jpg" alt="Inicio del diario privado Danly" width="600" height="1299" loading="lazy">
-                            <img src="assets/projects/danly/02_capture.jpg" alt="Captura de recuerdos en Danly" width="600" height="1299" loading="lazy">
-                            <img src="assets/projects/danly/03_memories.jpg" alt="Recuerdos inteligentes en Danly" width="600" height="1299" loading="lazy">
-                        </div>
+                        <div class="project-visual"><img src="assets/projects/danly/01_today.jpg" alt="Inicio del diario privado Danly" width="600" height="1299" loading="lazy"></div>
                         <div class="project-body">
                             <span class="project-meta">iOS · SwiftUI · Journal · IA</span>
                             <h3>Danly</h3>
