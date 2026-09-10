@@ -45,6 +45,16 @@
             </div>
         </section>
 
+        <section class="shell session-bar" aria-label="Configurar sesión">
+            <div class="difficulty-field"><label for="difficulty">Dificultad</label><select id="difficulty" disabled onchange="changeDifficulty(this.value)"><option value="easy">Inicial</option><option value="normal" selected>Intermedia</option><option value="hard">Avanzada</option></select><p id="difficulty-hint"></p></div>
+            <div class="routine-card"><div><strong>Rutina guiada</strong><p>Hasta 5 min · Respiración → Memoria → Stroop</p></div><button class="gym-button primary" id="routine-start" onclick="startRoutine()" disabled>Empezar rutina</button></div>
+        </section>
+        <section class="shell routine-progress" id="routine-progress" hidden aria-label="Rutina en curso">
+            <div><strong id="routine-title" role="status"></strong><p id="routine-description"></p></div>
+            <span id="routine-time" aria-label="Tiempo restante del paso"></span>
+            <button class="gym-button primary" id="routine-next" onclick="nextRoutineStep()" hidden>Continuar</button>
+            <button class="gym-button" id="routine-cancel" onclick="cancelRoutine()">Terminar rutina</button>
+        </section>
         <section class="shell dashboard" aria-label="Módulos de entrenamiento">
             <nav class="module-nav" id="module-nav" aria-label="Ejercicios">
                 <p class="nav-title">Elige un módulo</p>
@@ -68,9 +78,9 @@
                 </div>
 
                 <div class="records" aria-label="Récords personales">
-                    <p class="nav-title" style="margin:0 0 2px">Tus mejores marcas</p>
-                    <div class="record-row"><span>Memoria</span><strong class="record-value" id="stat-memory-record">0 niveles</strong></div>
-                    <div class="record-row"><span>Stroop</span><strong class="record-value" id="stat-stroop-record">0 aciertos</strong></div>
+                    <p class="nav-title" style="margin:0 0 2px">Marcas recientes · práctica</p>
+                    <div class="record-row"><span>Memoria</span><strong class="record-value" id="stat-memory-record">—</strong></div>
+                    <div class="record-row"><span>Stroop</span><strong class="record-value" id="stat-stroop-record">—</strong></div>
                     <div class="record-row"><span>Schulte</span><strong class="record-value" id="stat-schulte-record">—</strong></div>
                 </div>
             </nav>
@@ -80,6 +90,15 @@
                     <div><span class="loading-dot"></span><p>Cargando ejercicios…</p></div>
                 </div>
             </div>
+        </section>
+        <section class="shell result-panel" id="session-result" hidden tabindex="-1" aria-labelledby="result-title">
+            <span class="eyebrow">Resultado de la sesión</span><h2 id="result-title"></h2><p id="result-detail"></p><p id="result-comparison"></p>
+        </section>
+        <section class="shell history-panel" aria-labelledby="history-title">
+            <div class="history-heading"><div><span class="eyebrow">Tu progreso</span><h2 id="history-title">Historial de sesiones</h2></div><label>Ejercicio <select id="history-filter" onchange="renderHistory()"><option value="all">Todos</option><option value="memory">Memoria</option><option value="stroop">Stroop</option><option value="schulte">Schulte</option><option value="routine">Rutina</option></select></label></div>
+            <p id="storage-note">Últimas 100 sesiones, guardadas solo en este navegador. Al salir de la página, la sesión se marca como interrumpida. Los resultados reflejan tu práctica en estos ejercicios.</p>
+            <details id="legacy-records" hidden><summary>Marcas anteriores a las dificultades</summary><p id="legacy-values"></p><p>Se conservan como referencia, separadas de las sesiones nuevas.</p></details>
+            <p id="history-summary" role="status"></p><div id="history-list"></div>
         </section>
     </main>
 

@@ -1,3 +1,13 @@
+// A blocked or full browser store must not prevent the exercises from running.
+const volatileStorage = new Map();
+const safeStorage = {
+    getItem(key) { try { return localStorage.getItem(key); } catch { return volatileStorage.get(key) ?? null; } },
+    setItem(key, value) {
+        volatileStorage.set(key, String(value));
+        try { localStorage.setItem(key, value); }
+        catch { const note = document.getElementById('storage-note'); if (note) note.textContent = 'El navegador no permite guardar datos. El historial estará disponible solo durante esta visita.'; }
+    }
+};
 /**************************************************************
  * 1. SISTEMA AUDIO BINAURAL & RUIDO MARRÓN (AudioContext Sintetizado)
  **************************************************************/
@@ -346,411 +356,400 @@ function playCampanaFocus() {
 
 
 /**************************************************************
- * 4. ACTIVIDAD COGNITIVA 1 - MATRIZ DE MEMORIA
+ * SESIONES, DIFICULTADES E HISTORIAL LOCAL
  **************************************************************/
-let gameSequence = [];
-let playerSequence = [];
-let gameActive = false;
-let gameLevel = 1;
-let gameScore = 0;
-const totalCells = 9;
+const difficultyLevels = {
+    easy: { label: 'Inicial', memoryLength: 2, memoryDelay: 850, grid: 3, stroopSeconds: null, penalty: 0, mismatch: .5 },
+    normal: { label: 'Intermedia', memoryLength: 3, memoryDelay: 650, grid: 4, stroopSeconds: 30, penalty: 2, mismatch: .75 },
+    hard: { label: 'Avanzada', memoryLength: 4, memoryDelay: 500, grid: 5, stroopSeconds: 30, penalty: 3, mismatch: 1 }
+};
+const exerciseNames = { memory: 'Memoria', stroop: 'Stroop', schulte: 'Schulte', routine: 'Rutina' };
+let difficulty = 'normal';
+let activeSession = null;
+let trainingHistory = [];
+let routine = null;
+let routineInterval = null;
+const routineSteps = [
+    { tab: 'calm-chamber', label: 'Respiración', seconds: 60, hint: 'Sigue el círculo durante un minuto.' },
+    { tab: 'neuro-matrix', label: 'Memoria', seconds: 120, hint: 'Repite las secuencias. El paso termina al fallar o al llegar a dos minutos.' },
+    { tab: 'stroop-challenge', label: 'Stroop', seconds: 120, hint: 'Responde al color de la tinta. Los errores pueden acortar el tiempo según la dificultad.' }
+];
+const $ = id => document.getElementById(id);
 
+function readTrainingHistory() {
+    try {
+        const value = JSON.parse(safeStorage.getItem('gym_history_v1') || '[]');
+        if (!Array.isArray(value)) return [];
+        return value.filter(r => r && exerciseNames[r.exercise] && difficultyLevels[r.difficulty]
+            && ['completed', 'interrupted'].includes(r.status) && ['practice', 'routine'].includes(r.mode)
+            && Number.isFinite(Date.parse(r.date)) && ['seconds','correct','errors','score'].every(k => Number.isFinite(r[k]) && r[k] >= 0)).slice(0,100);
+    } catch { return []; }
+}
+function changeDifficulty(value) {
+    if (!difficultyLevels[value] || routine) return;
+    cancelExercise();
+    difficulty = value;
+    safeStorage.setItem('gym_difficulty', value);
+    updateDifficultyUI();
+}
+function updateDifficultyUI() {
+    $('difficulty').value = difficulty;
+    const config = difficultyLevels[difficulty];
+    $('difficulty-hint').textContent = `${config.memoryLength} luces al empezar · Schulte ${config.grid}×${config.grid} · Stroop ${config.stroopSeconds ? '30 s' : 'sin reloj'}`;
+    $('schulte-range').textContent = `1 al ${config.grid ** 2}`;
+    if (!stroopGameActive) $('stroop-timer').textContent = config.stroopSeconds ? `${config.stroopSeconds}s` : 'Libre';
+    if (!schulteGameActive) {
+        $('schulte-grid').style.gridTemplateColumns = `repeat(${config.grid}, minmax(0, 1fr))`;
+        $('schulte-grid').innerHTML = '<p style="grid-column:1/-1;padding:24px;text-align:center">La tabla se generará al iniciar.</p>';
+        $('schulte-target').textContent = '1';
+        $('schulte-timer').textContent = '00.0s';
+    }
+    $('session-result').hidden = true;
+    updateRecordDisplays();
+}
+function beginSession(exercise) {
+    if (activeSession) finishSession('interrupted');
+    activeSession = { exercise, difficulty, mode: routine ? 'routine' : 'practice', started: performance.now(), correct: 0, errors: 0, score: 0, responseTotal: 0, responses: 0 };
+    $('session-result').hidden = true;
+    $('difficulty').disabled = true;
+}
+function recordAnswer(correct, latency) {
+    if (!activeSession) return;
+    activeSession[correct ? 'correct' : 'errors']++;
+    if (Number.isFinite(latency)) {
+        activeSession.responseTotal += Math.max(0,latency);
+        activeSession.responses++;
+    }
+}
+function appendHistory(record) {
+    trainingHistory.unshift(record);
+    trainingHistory = trainingHistory.slice(0,100);
+    safeStorage.setItem('gym_history_v1', JSON.stringify(trainingHistory));
+    renderHistory();
+    updateRecordDisplays();
+}
+function finishSession(status = 'completed') {
+    if (!activeSession) return null;
+    const session = activeSession;
+    activeSession = null;
+    const record = { exercise: session.exercise, difficulty: session.difficulty, mode: session.mode, date: new Date().toISOString(), status,
+        seconds: Math.round((performance.now()-session.started)/100)/10,
+        correct: session.correct, errors: session.errors, score: session.score,
+        responseMs: session.responses ? Math.round(session.responseTotal/session.responses) : null };
+    appendHistory(record);
+    $('difficulty').disabled = Boolean(routine);
+    if (status === 'completed') {
+        showSessionResult(record);
+        if (routine) finishRoutineStep();
+    }
+    return record;
+}
+function accuracy(record) {
+    const total = record.correct + record.errors;
+    return total ? `${Math.round(record.correct / total * 100)}%` : '—';
+}
+function resultText(record) {
+    if (record.exercise === 'routine') return `${record.score}/3 pasos · ${Math.round(record.seconds)} s`;
+    const result = record.exercise === 'memory' ? `${record.score} niveles completados` : record.exercise === 'stroop' ? `${record.correct} aciertos` : `${record.correct} números encontrados`;
+    return `${result} · ${record.errors} errores · ${accuracy(record)} de precisión · ${record.seconds} s${Number.isFinite(record.responseMs) ? ` · ${record.responseMs} ms por respuesta` : ''}`;
+}
+function showSessionResult(record) {
+    const previous = trainingHistory.find(r => r !== record && r.status === 'completed' && r.exercise === record.exercise && r.difficulty === record.difficulty && r.mode === record.mode);
+    $('result-title').textContent = `${exerciseNames[record.exercise]} · ${difficultyLevels[record.difficulty].label}`;
+    $('result-detail').textContent = resultText(record);
+    $('result-comparison').textContent = previous ? `Sesión anterior de la misma dificultad y modalidad: ${resultText(previous)}` : 'Primera sesión completada de esta dificultad y modalidad.';
+    $('session-result').hidden = false;
+    if (!routine) $('session-result').focus();
+}
+function renderHistory() {
+    const filter = $('history-filter').value;
+    const records = trainingHistory.filter(r => filter === 'all' || r.exercise === filter);
+    $('history-summary').textContent = `${records.length} sesiones · ${records.filter(r=>r.status==='completed').length} completadas`;
+    const list = $('history-list');
+    list.replaceChildren();
+    if (!records.length) { list.textContent = 'Tu primera sesión aparecerá aquí al terminar. Elige un ejercicio o empieza una rutina.'; return; }
+    const table = document.createElement('table');
+    const head = table.createTHead().insertRow();
+    const columns = ['Fecha','Ejercicio','Dificultad','Resultado','Estado'];
+    columns.forEach(title=>{ const th=document.createElement('th'); th.scope='col'; th.textContent=title; head.append(th); });
+    const body = table.createTBody();
+    records.forEach(record=>{
+        const row=body.insertRow();
+        [new Date(record.date).toLocaleString('es-CO',{dateStyle:'short',timeStyle:'short'}), `${exerciseNames[record.exercise]}${record.mode==='routine' && record.exercise!=='routine' ? ' · guiada' : ''}`, difficultyLevels[record.difficulty].label, resultText(record), record.status==='completed'?'Completada':'Interrumpida'].forEach((value,index)=>{
+            const cell=row.insertCell(); cell.textContent=value; cell.dataset.label=columns[index];
+        });
+    });
+    list.append(table);
+}
+function updateRecordDisplays() {
+    const records = trainingHistory.filter(r=>r.status==='completed' && r.difficulty===difficulty && r.mode==='practice');
+    const memory=records.filter(r=>r.exercise==='memory');
+    const stroop=records.filter(r=>r.exercise==='stroop');
+    const schulte=records.filter(r=>r.exercise==='schulte');
+    $('stat-memory-record').textContent=memory.length ? `${Math.max(...memory.map(r=>r.score))} niveles` : '—';
+    $('stat-stroop-record').textContent=stroop.length ? (difficulty==='easy' ? `${Math.max(...stroop.map(r=>r.correct+r.errors ? Math.round(100*r.correct/(r.correct+r.errors)):0))}% precisión` : `${Math.max(...stroop.map(r=>r.correct))} aciertos`) : '—';
+    $('stat-schulte-record').textContent=schulte.length ? `${Math.min(...schulte.map(r=>r.seconds))} s` : '—';
+}
+
+/**************************************************************
+ * MEMORIA: todos los callbacks pertenecen a una sola partida.
+ **************************************************************/
+let gameSequence = [], playerSequence = [];
+let gameActive = false, acceptingMemory = false;
+let gameLevel = 1, gameScore = 0, memoryResponseAt = 0;
+const memoryTimers = new Set();
+function memoryLater(callback, delay) {
+    const timer=setTimeout(()=>{memoryTimers.delete(timer); callback();},delay);
+    memoryTimers.add(timer);
+}
+function clearMemoryTimers() {
+    memoryTimers.forEach(clearTimeout);
+    memoryTimers.clear();
+}
+function resetAllCells() {
+    document.querySelectorAll('.grid-cell').forEach(cell=>cell.className='grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed');
+}
+function disableAllCells(disabled) { document.querySelectorAll('.grid-cell').forEach(cell=>cell.disabled=disabled); }
+function updateGameStatus(text) { $('game-status').textContent=text; }
+function stopMemory() {
+    clearMemoryTimers();
+    gameActive=false; acceptingMemory=false;
+    resetAllCells(); disableAllCells(true);
+    $('game-btn').disabled=false; $('game-btn').textContent='Iniciar memoria';
+    updateGameStatus('Pulsa iniciar para comenzar.');
+}
 function startGame() {
-    initAudioContext();
-    const btn = document.getElementById('game-btn');
-    gameActive = true;
-    gameLevel = 1;
-    gameScore = 0;
-    document.getElementById('game-level').textContent = gameLevel;
-    document.getElementById('game-score').textContent = gameScore;
-    updateGameStatus('Observa el patrón.');
-
-    btn.textContent = "Observa el Patrón...";
-    btn.disabled = true;
-    btn.className = "w-full max-w-xs py-4 rounded-xl bg-slate-950/40 border border-slate-800 text-slate-500 font-medium text-xs transition-all cursor-not-allowed";
-
+    if (routine && (routine.index!==1 || routine.waiting)) return;
+    cancelExercise(); initAudioContext(); beginSession('memory');
+    gameActive=true; gameLevel=1; gameScore=0;
+    $('game-level').textContent='1'; $('game-score').textContent='0';
+    $('game-btn').disabled=true;
     generateNextSequence();
 }
-
 function generateNextSequence() {
-    playerSequence = [];
-    gameSequence = [];
-    const sequenceLength = 2 + gameLevel;
-
-    for (let i = 0; i < sequenceLength; i++) {
-        gameSequence.push(Math.floor(Math.random() * totalCells));
-    }
-    playSequence();
-}
-
-function playSequence() {
-    disableAllCells(true);
-    let delay = 600 - (gameLevel * 15); // Acelera levemente con niveles altos
-    if (delay < 250) delay = 250;
-
-    gameSequence.forEach((cellIdx, i) => {
-        setTimeout(() => {
-            flashCell(cellIdx);
-        }, (i + 1) * delay);
-    });
-
-    setTimeout(() => {
-        disableAllCells(false);
-        const btn = document.getElementById('game-btn');
-        btn.textContent = "Tu Turno - Repite";
-        updateGameStatus('Tu turno. Repite la secuencia.');
-    }, (gameSequence.length + 1) * delay);
-}
-
-function flashCell(idx) {
-    const cell = document.getElementsByClassName('grid-cell')[idx];
-    cell.classList.remove('bg-slate-800/80', 'border-slate-700/60');
-    cell.classList.add(
-        'bg-indigo-500', 'scale-[1.06]',
-        'shadow-[0_0_28px_8px_rgba(99,102,241,0.75)]',
-        'border-indigo-300', 'brightness-125'
-    );
-
-    playSoftNote(200 + (idx * 50), 0.25);
-
-    setTimeout(() => {
-        cell.classList.remove(
-            'bg-indigo-500', 'scale-[1.06]',
-            'shadow-[0_0_28px_8px_rgba(99,102,241,0.75)]',
-            'border-indigo-300', 'brightness-125'
-        );
-        cell.classList.add('bg-slate-800/80', 'border-slate-700/60');
-    }, 380);
-}
-
-function cellClicked(idx) {
     if (!gameActive) return;
-
-    const cell = document.getElementsByClassName('grid-cell')[idx];
-
-    // Marcar la celda seleccionada con color visible y permanente
-    cell.classList.remove('bg-slate-800/80', 'border-slate-700/60');
-    cell.classList.add(
-        'bg-emerald-500', 'scale-[1.04]',
-        'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]',
-        'border-emerald-400'
-    );
-    playSoftNote(300 + (idx * 40), 0.12);
-
-    playerSequence.push(idx);
-    const currentMoveIndex = playerSequence.length - 1;
-
-    if (playerSequence[currentMoveIndex] !== gameSequence[currentMoveIndex]) {
-        // Marcar el error en rojo antes del game over
-        cell.classList.remove(
-            'bg-emerald-500', 'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]', 'border-emerald-400'
-        );
-        cell.classList.add(
-            'bg-red-500', 'shadow-[0_0_20px_6px_rgba(239,68,68,0.7)]', 'border-red-400'
-        );
-        setTimeout(() => gameOver(), 400);
-        return;
-    }
-
-    if (playerSequence.length === gameSequence.length) {
-        gameScore++;
-        gameLevel++;
-        document.getElementById('game-level').textContent = gameLevel;
-        document.getElementById('game-score').textContent = gameScore;
-
-        // Guardar récord de Memoria
-        saveRecord('memory', gameLevel);
-
-        disableAllCells(true);
-        const btn = document.getElementById('game-btn');
-        btn.textContent = "¡Perfecto! Siguiente nivel...";
-        updateGameStatus(`Correcto. Preparando el nivel ${gameLevel}.`);
-
-        // Flash de éxito en todos los cuadros seleccionados antes de limpiar
-        const cells = document.getElementsByClassName('grid-cell');
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].classList.remove('bg-emerald-500', 'shadow-[0_0_20px_6px_rgba(16,185,129,0.6)]', 'border-emerald-400');
-            cells[i].classList.add('bg-indigo-400', 'shadow-[0_0_16px_4px_rgba(129,140,248,0.5)]', 'border-indigo-300');
-        }
-        setTimeout(() => {
-            resetAllCells();
-            generateNextSequence();
-        }, 700);
+    playerSequence=[];
+    const config=difficultyLevels[difficulty];
+    gameSequence=Array.from({length:config.memoryLength+gameLevel-1},()=>Math.floor(Math.random()*9));
+    acceptingMemory=false; disableAllCells(true);
+    $('game-btn').textContent='Observa el patrón…'; updateGameStatus('Observa el patrón.');
+    // Always leave a gap after the light goes off, including repeated cells.
+    const delay=Math.max(470,config.memoryDelay-(gameLevel-1)*15);
+    gameSequence.forEach((index,i)=>memoryLater(()=>flashCell(index),(i+1)*delay));
+    memoryLater(()=>{
+        if (!gameActive) return;
+        acceptingMemory=true; disableAllCells(false); memoryResponseAt=performance.now();
+        $('game-btn').textContent='Tu turno'; updateGameStatus('Tu turno. Repite la secuencia.');
+    },(gameSequence.length+1)*delay);
+}
+function flashCell(index) {
+    if (!gameActive) return;
+    const cell=document.querySelectorAll('.grid-cell')[index];
+    cell.classList.remove('bg-slate-800/80'); cell.classList.add('bg-indigo-500','scale-[1.06]');
+    playSoftNote(200+index*50,.2);
+    memoryLater(()=>{cell.classList.remove('bg-indigo-500','scale-[1.06]');cell.classList.add('bg-slate-800/80');},300);
+}
+function cellClicked(index) {
+    if (!gameActive || !acceptingMemory) return;
+    const correct=index===gameSequence[playerSequence.length];
+    recordAnswer(correct,performance.now()-memoryResponseAt); memoryResponseAt=performance.now();
+    if (!correct) { gameOver(); return; }
+    playerSequence.push(index); playSoftNote(300+index*40,.1);
+    if (playerSequence.length===gameSequence.length) {
+        gameScore++; gameLevel++; activeSession.score=gameScore;
+        $('game-score').textContent=String(gameScore); $('game-level').textContent=String(gameLevel);
+        acceptingMemory=false; disableAllCells(true);
+        updateGameStatus('Correcto. Preparando la siguiente secuencia.');
+        memoryLater(generateNextSequence,700);
     }
 }
-
-function disableAllCells(disabled) {
-    const cells = document.getElementsByClassName('grid-cell');
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].disabled = disabled;
-    }
-}
-
-function resetAllCells() {
-    const cells = document.getElementsByClassName('grid-cell');
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].className = 'grid-cell bg-slate-800/80 hover:bg-slate-700/80 aspect-square rounded-2xl transition-all duration-100 border border-slate-700/60 disabled:opacity-90 disabled:cursor-not-allowed cursor-pointer';
-    }
-}
-
 function gameOver() {
-    gameActive = false;
-    disableAllCells(true);
-
-    const grid = document.getElementById('grid-container');
-    grid.classList.add('ring-4', 'ring-red-500/60');
-    setTimeout(() => {
-        grid.classList.remove('ring-4', 'ring-red-500/60');
-        resetAllCells();
-    }, 700);
-
-    const btn = document.getElementById('game-btn');
-    btn.disabled = false;
-    btn.textContent = `Fallo. Racha final: ${gameScore}. ¿Reiniciar?`;
-    btn.className = "w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-red-500 to-indigo-600 hover:from-red-600 text-white font-bold text-xs shadow-lg";
-    updateGameStatus(`Secuencia incorrecta. Racha final: ${gameScore}.`);
-
-    playSoftNote(150, 0.6);
-    showToast(`Fin de partida. Nivel alcanzado: ${gameLevel}`, "🛑");
+    if (!gameActive) return;
+    stopMemory(); updateGameStatus(`Sesión terminada. ${gameScore} niveles completados.`);
+    finishSession();
 }
-
-function updateGameStatus(message) {
-    const status = document.getElementById('game-status');
-    if (status) status.textContent = message;
-}
-
 
 /**************************************************************
- * 5. ACTIVIDAD COGNITIVA 2 - DESAFÍO STROOP
+ * STROOP: el plazo se verifica también antes de cada respuesta.
  **************************************************************/
-const stroopColors = [
-    { key: 'red',    name: 'Rojo',     textClass: 'text-red-500' },
-    { key: 'blue',   name: 'Azul',     textClass: 'text-blue-500' },
-    { key: 'green',  name: 'Verde',    textClass: 'text-emerald-400' },
-    { key: 'yellow', name: 'Amarillo', textClass: 'text-yellow-400' }
-];
-
-let stroopScore = 0;
-let stroopTimeLeft = 30;
-let stroopInterval = null;
-let stroopGameActive = false;
-let currentTargetColorKey = '';
-
+const stroopColors=[{key:'red',name:'Rojo',textClass:'text-red-500'},{key:'blue',name:'Azul',textClass:'text-blue-500'},{key:'green',name:'Verde',textClass:'text-emerald-400'},{key:'yellow',name:'Amarillo',textClass:'text-yellow-400'}];
+let stroopScore=0, stroopTimeLeft=30, stroopInterval=null, stroopGameActive=false, currentTargetColorKey='', stroopDeadline=null, stroopResponseAt=0;
+function stopStroop() {
+    clearInterval(stroopInterval); stroopInterval=null; stroopGameActive=false;
+    $('stroop-controls').classList.add('hidden'); $('stroop-start-btn').classList.remove('hidden'); $('stroop-finish').hidden=true;
+}
 function startStroop() {
-    initAudioContext();
-    stroopScore = 0;
-    stroopTimeLeft = 30;
-    stroopGameActive = true;
-
-    document.getElementById('stroop-score').textContent = stroopScore;
-    document.getElementById('stroop-timer').textContent = `${stroopTimeLeft}s`;
-
-    document.getElementById('stroop-start-btn').classList.add('hidden');
-    document.getElementById('stroop-controls').classList.remove('hidden');
-    document.getElementById('stroop-status').textContent = 'Prueba en curso. Responde con el color de la tinta.';
-
-    nextStroopQuestion();
-
-    stroopInterval = setInterval(() => {
-        stroopTimeLeft--;
-        document.getElementById('stroop-timer').textContent = `${stroopTimeLeft}s`;
-
-        if (stroopTimeLeft <= 0) {
-            clearInterval(stroopInterval);
-            endStroop();
-        }
-    }, 1000);
-    showToast("Prueba Stroop: ¡Presiona el color de la tinta!", "🎨");
+    if (routine && (routine.index!==2 || routine.waiting)) return;
+    cancelExercise(); initAudioContext(); beginSession('stroop');
+    stroopScore=0; stroopGameActive=true;
+    const seconds=routine ? routineSteps[2].seconds : difficultyLevels[difficulty].stroopSeconds;
+    stroopDeadline=seconds===null ? null : performance.now()+seconds*1000;
+    $('stroop-score').textContent='0';
+    $('stroop-start-btn').classList.add('hidden'); $('stroop-controls').classList.remove('hidden'); $('stroop-finish').hidden=seconds!==null;
+    nextStroopQuestion(); updateStroopClock();
+    if (seconds!==null) stroopInterval=setInterval(updateStroopClock,100);
 }
-
-function nextStroopQuestion() {
-    // Pick un nombre de color y una tinta de color (generalmente no coinciden)
-    const nameIdx = Math.floor(Math.random() * stroopColors.length);
-    let inkIdx = Math.floor(Math.random() * stroopColors.length);
-
-    // 75% de probabilidad de discordancia para asegurar que ocurra el efecto Stroop
-    if (inkIdx === nameIdx && Math.random() < 0.75) {
-        inkIdx = (inkIdx + 1) % stroopColors.length;
-    }
-
-    const wordDisplay = document.getElementById('stroop-word');
-    wordDisplay.textContent = stroopColors[nameIdx].name;
-
-    // Resetear clases completamente para evitar residuos de partidas anteriores (ej: text-rose-500 de endStroop)
-    wordDisplay.className = `text-5xl font-black tracking-widest uppercase transition-all duration-100 select-none ${stroopColors[inkIdx].textClass}`;
-
-    currentTargetColorKey = stroopColors[inkIdx].key;
-}
-
-function stroopAnswer(selectedKey) {
+function updateStroopClock() {
     if (!stroopGameActive) return;
-
-    if (selectedKey === currentTargetColorKey) {
-        stroopScore++;
-        document.getElementById('stroop-score').textContent = stroopScore;
-        playSoftNote(800, 0.1);
-
-        // Guardar récord de Stroop
-        saveRecord('stroop', stroopScore);
-        document.getElementById('stroop-status').textContent = 'Correcto.';
-    } else {
-        // Penalización de tiempo (-2 seg) por respuesta incorrecta
-        stroopTimeLeft = Math.max(0, stroopTimeLeft - 2);
-        document.getElementById('stroop-timer').textContent = `${stroopTimeLeft}s`;
-        playSoftNote(150, 0.2);
-        document.getElementById('stroop-status').textContent = 'Incorrecto. Penalización de dos segundos.';
-    }
-    nextStroopQuestion();
+    stroopTimeLeft=stroopDeadline===null ? null : Math.max(0,Math.ceil((stroopDeadline-performance.now())/1000));
+    $('stroop-timer').textContent=stroopTimeLeft===null ? 'Libre' : `${stroopTimeLeft}s`;
+    if (stroopTimeLeft===0) endStroop();
 }
-
+function nextStroopQuestion() {
+    if (!stroopGameActive) return;
+    const name=Math.floor(Math.random()*4);
+    const ink=Math.random()<difficultyLevels[difficulty].mismatch ? (name+1+Math.floor(Math.random()*3))%4 : name;
+    $('stroop-word').textContent=stroopColors[name].name;
+    $('stroop-word').className=`text-5xl font-black tracking-widest uppercase ${stroopColors[ink].textClass}`;
+    currentTargetColorKey=stroopColors[ink].key; stroopResponseAt=performance.now();
+}
+function stroopAnswer(key) {
+    if (!stroopGameActive) return;
+    if (stroopDeadline!==null && performance.now()>=stroopDeadline) { endStroop(); return; }
+    const correct=key===currentTargetColorKey;
+    recordAnswer(correct,performance.now()-stroopResponseAt);
+    if (correct) { stroopScore++; activeSession.score=stroopScore; $('stroop-score').textContent=String(stroopScore); }
+    else if (stroopDeadline!==null) stroopDeadline-=difficultyLevels[difficulty].penalty*1000;
+    $('stroop-status').textContent=correct?'Correcto.':'Incorrecto.';
+    updateStroopClock();
+    if (stroopGameActive) nextStroopQuestion();
+}
 function endStroop() {
-    stroopGameActive = false;
-    document.getElementById('stroop-word').textContent = "¡TIEMPO COMPLETO!";
-    document.getElementById('stroop-word').className = "text-3xl font-black text-rose-500";
-
-    document.getElementById('stroop-start-btn').classList.remove('hidden');
-    document.getElementById('stroop-start-btn').textContent = "¿Volver a probar?";
-    document.getElementById('stroop-controls').classList.add('hidden');
-    document.getElementById('stroop-status').textContent = `Tiempo completo. Puntuación: ${stroopScore}.`;
-
-    showToast(`Puntuación Stroop final: ${stroopScore} aciertos`, "⚡");
+    if (!stroopGameActive) return;
+    stopStroop();
+    $('stroop-word').textContent='Sesión terminada'; $('stroop-word').className='text-3xl font-black text-slate-500';
+    $('stroop-status').textContent=`Sesión terminada. ${stroopScore} aciertos.`;
+    finishSession();
 }
-
 
 /**************************************************************
- * 6. ACTIVIDAD COGNITIVA 3 - TABLA DE SCHULTE
+ * SCHULTE: tamaños y métricas separados por dificultad.
  **************************************************************/
-let schulteNumbers = [];
-let currentSchulteTarget = 1;
-let schulteStartTime = null;
-let schulteInterval = null;
-let schulteGameActive = false;
-
+let schulteNumbers=[], currentSchulteTarget=1, schulteStartTime=null, schulteInterval=null, schulteGameActive=false, schulteResponseAt=0;
+function stopSchulte() {
+    clearInterval(schulteInterval); schulteInterval=null; schulteGameActive=false;
+    document.querySelectorAll('.schulte-cell').forEach(cell=>cell.disabled=true);
+}
 function startSchulte() {
-    initAudioContext();
-    currentSchulteTarget = 1;
-    schulteGameActive = true;
-    document.getElementById('schulte-target').textContent = currentSchulteTarget;
-    document.getElementById('schulte-timer').textContent = "00.0s";
-
-    // Crear array 1 a 25 y desordenarlo
-    schulteNumbers = Array.from({length: 25}, (_, i) => i + 1);
-    shuffleArray(schulteNumbers);
-
-    const grid = document.getElementById('schulte-grid');
-    grid.innerHTML = ''; // Limpiar cuadrícula
-
-    schulteNumbers.forEach(num => {
-        const btn = document.createElement('button');
-        btn.textContent = num;
-        btn.className = "schulte-cell bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-extrabold text-sm md:text-base aspect-square rounded-lg transition-all flex items-center justify-center border border-slate-800/60 active:scale-95";
-        btn.setAttribute('aria-label', `Número ${num}`);
-        btn.onclick = () => clickedSchulte(num, btn);
-        grid.appendChild(btn);
+    if (routine) return;
+    cancelExercise(); initAudioContext(); beginSession('schulte');
+    const size=difficultyLevels[difficulty].grid;
+    schulteNumbers=Array.from({length:size*size},(_,i)=>i+1); shuffleArray(schulteNumbers);
+    currentSchulteTarget=1; schulteGameActive=true; schulteStartTime=performance.now(); schulteResponseAt=schulteStartTime;
+    $('schulte-target').textContent='1'; $('schulte-timer').textContent='00.0s';
+    const grid=$('schulte-grid'); grid.replaceChildren(); grid.style.gridTemplateColumns=`repeat(${size},minmax(0,1fr))`; grid.setAttribute('aria-label',`Tabla de números del 1 al ${size*size}`);
+    schulteNumbers.forEach(num=>{
+        const btn=document.createElement('button'); btn.type='button'; btn.textContent=String(num); btn.setAttribute('aria-label',`Número ${num}`);
+        btn.className='schulte-cell bg-slate-900/80 text-slate-200 font-extrabold aspect-square rounded-lg border border-slate-800/60';
+        btn.onclick=()=>clickedSchulte(num,btn); grid.append(btn);
     });
-
-    document.getElementById('schulte-start-btn').textContent = "Reiniciar Tabla";
-
-    schulteStartTime = performance.now();
-    if (schulteInterval) clearInterval(schulteInterval);
-
-    schulteInterval = setInterval(() => {
-        const elapsed = (performance.now() - schulteStartTime) / 1000;
-        document.getElementById('schulte-timer').textContent = `${elapsed.toFixed(1)}s`;
-    }, 100);
-    showToast("Tabla Schulte: Busca en orden del 1 al 25", "👁️");
+    schulteInterval=setInterval(()=>$('schulte-timer').textContent=`${((performance.now()-schulteStartTime)/1000).toFixed(1)}s`,100);
+    $('schulte-start-btn').textContent='Reiniciar tabla';
 }
-
-function clickedSchulte(num, buttonElement) {
-    if (!schulteGameActive) return;
-
-    if (num === currentSchulteTarget) {
-        // Correcto
-        buttonElement.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
-        buttonElement.disabled = true;
-
-        playSoftNote(500 + (num * 20), 0.1);
-
-        currentSchulteTarget++;
-        if (currentSchulteTarget > 25) {
-            endSchulte();
-        } else {
-            document.getElementById('schulte-target').textContent = currentSchulteTarget;
-        }
-    } else {
-        // Error (Flash rojo rápido)
-        buttonElement.classList.add('bg-red-500/20', 'border-red-500/40');
-        playSoftNote(180, 0.15);
-        setTimeout(() => {
-            buttonElement.classList.remove('bg-red-500/20', 'border-red-500/40');
-        }, 200);
-    }
+function clickedSchulte(num,button) {
+    if (!schulteGameActive || button.disabled) return;
+    const correct=num===currentSchulteTarget;
+    recordAnswer(correct,performance.now()-schulteResponseAt); schulteResponseAt=performance.now();
+    if (correct) {
+        button.disabled=true; currentSchulteTarget++; activeSession.score++;
+        $('schulte-target').textContent=String(currentSchulteTarget);
+        if (currentSchulteTarget>schulteNumbers.length) endSchulte();
+    } else showToast(`Busca el número ${currentSchulteTarget}.`,'↗');
 }
-
 function endSchulte() {
-    clearInterval(schulteInterval);
-    schulteGameActive = false;
-    const finalTime = ((performance.now() - schulteStartTime) / 1000).toFixed(2);
-    document.getElementById('schulte-timer').textContent = `${finalTime}s`;
-    document.getElementById('schulte-target').textContent = "¡Listo!";
-
-    // Guardar récord de Schulte
-    saveRecord('schulte', parseFloat(finalTime));
-
-    showToast(`¡Completado en ${finalTime} segundos!`, "🎖️");
+    if (!schulteGameActive) return;
+    stopSchulte(); $('schulte-target').textContent='¡Listo!';
+    $('schulte-timer').textContent=`${((performance.now()-schulteStartTime)/1000).toFixed(1)}s`;
+    finishSession();
+}
+function shuffleArray(array) { for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]];} }
+function cancelExercise() {
+    stopMemory(); stopStroop(); stopSchulte();
+    finishSession('interrupted');
 }
 
-// Utilidad para desordenar un arreglo (Fisher-Yates Shuffle)
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+/**************************************************************
+ * RUTINA GUIADA: pasos acotados y avance explícito.
+ **************************************************************/
+function startRoutine() {
+    if (routine) return;
+    cancelExercise();
+    if (isBreathing) toggleBreathing();
+    if (isTimerActive) toggleTimer();
+    routine={index:-1,started:performance.now(),completed:0,waiting:false};
+    $('routine-start').disabled=true; $('difficulty').disabled=true;
+    lockRoutineControls(true);
+    $('routine-progress').hidden=false;
+    nextRoutineStep();
+}
+function nextRoutineStep() {
+    if (!routine || (routine.index>=0 && !routine.waiting)) return;
+    routine.index++; routine.waiting=false;
+    if (routine.index>=routineSteps.length) { completeRoutine('completed'); return; }
+    const step=routineSteps[routine.index];
+    switchTab(step.tab,true);
+    routine.deadline=performance.now()+step.seconds*1000;
+    $('routine-title').textContent=`Paso ${routine.index+1} de 3 · ${step.label}`;
+    $('routine-description').textContent=step.hint;
+    $('routine-next').hidden=true;
+    if (routine.index===0) { if (!isBreathing) toggleBreathing(); }
+    if (routine.index===1) startGame();
+    if (routine.index===2) startStroop();
+    clearInterval(routineInterval);
+    routineInterval=setInterval(tickRoutine,100); tickRoutine();
+    $('workspace').focus();
+}
+function tickRoutine() {
+    if (!routine || routine.waiting) return;
+    const deadline = routine.index === 2 && stroopDeadline !== null ? Math.min(routine.deadline, stroopDeadline) : routine.deadline;
+    const left=Math.max(0,Math.ceil((deadline-performance.now())/1000));
+    $('routine-time').textContent=`${Math.floor(left/60)}:${String(left%60).padStart(2,'0')}`;
+    if (left===0) {
+        if (routine.index===0) { if(isBreathing) toggleBreathing(); finishRoutineStep(); }
+        else if (routine.index===1) { stopMemory(); finishSession(); }
+        else endStroop();
     }
 }
-
+function finishRoutineStep() {
+    if (!routine || routine.waiting) return;
+    routine.waiting=true; routine.completed++;
+    clearInterval(routineInterval);
+    $('routine-title').textContent=`${routineSteps[routine.index].label} completada`;
+    $('routine-time').textContent='';
+    $('routine-description').textContent='Continúa cuando estés listo.';
+    $('routine-next').textContent=routine.index===2?'Ver resumen':'Siguiente ejercicio';
+    $('routine-next').hidden=false; $('routine-next').focus();
+}
+function cancelRoutine() { if (routine) completeRoutine('interrupted'); }
+function lockRoutineControls(locked) {
+    document.querySelectorAll('#breath-btn, #timer-btn, [data-timer-minutes]').forEach(button => button.disabled = locked);
+}
+function completeRoutine(status) {
+    const completed=routine.completed, started=routine.started;
+    clearInterval(routineInterval); routine=null;
+    cancelExercise();
+    if(isBreathing) toggleBreathing();
+    if(isAudioPlaying) toggleAudio();
+    if(isBrownNoisePlaying) toggleBrownNoise();
+    if(isTimerActive) toggleTimer();
+    $('routine-start').disabled=false; $('difficulty').disabled=false; $('routine-progress').hidden=true;
+    lockRoutineControls(false);
+    const record={exercise:'routine',difficulty,mode:'routine',date:new Date().toISOString(),status,seconds:Math.round((performance.now()-started)/1000),correct:0,errors:0,score:completed,responseMs:null};
+    appendHistory(record); showSessionResult(record);
+    $('result-title').textContent=status==='completed'?'Rutina completada':'Rutina interrumpida';
+    const task=$('global-task').value.trim();
+    $('result-comparison').textContent=task?`Tu siguiente paso: ${task}`:'Vuelve a tu tarea cuando estés listo.';
+    $('session-result').focus();
+}
 
 /**************************************************************
  * 7. NAVEGACIÓN Y CONFIGURACIONES GLOBALES
  **************************************************************/
-function switchTab(targetTabId) {
-    // Detener ejercicios que no deben seguir ejecutándose en segundo plano.
-    if (targetTabId !== 'calm-chamber' && isBreathing) {
-        toggleBreathing();
-    }
-
-    if (targetTabId !== 'neuro-matrix' && gameActive) {
-        gameActive = false;
-        disableAllCells(true);
-        resetAllCells();
-        const gameBtn = document.getElementById('game-btn');
-        if (gameBtn) {
-            gameBtn.disabled = false;
-            gameBtn.textContent = 'Iniciar Gimnasia de Memoria';
-            gameBtn.className = 'w-full max-w-xs py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/25';
-        }
-        updateGameStatus('Sesión cancelada. Pulsa iniciar para comenzar de nuevo.');
-    }
-
-    if (targetTabId !== 'stroop-challenge' && stroopGameActive) {
-        clearInterval(stroopInterval);
-        stroopGameActive = false;
-        stroopTimeLeft = 30;
-        document.getElementById('stroop-timer').textContent = '30s';
-        document.getElementById('stroop-word').textContent = 'PRESIONA INICIAR';
-        document.getElementById('stroop-word').className = 'text-4xl md:text-5xl font-black tracking-widest uppercase transition-all duration-100 select-none text-slate-500';
-        document.getElementById('stroop-start-btn').classList.remove('hidden');
-        document.getElementById('stroop-start-btn').textContent = 'Iniciar Prueba Stroop';
-        document.getElementById('stroop-controls').classList.add('hidden');
-        document.getElementById('stroop-status').textContent = 'Sesión cancelada. Pulsa iniciar para comenzar de nuevo.';
-    }
-
-    if (targetTabId !== 'schulte-table' && schulteGameActive) {
-        clearInterval(schulteInterval);
-        schulteGameActive = false;
-        document.getElementById('schulte-target').textContent = '1';
-        document.getElementById('schulte-timer').textContent = '00.0s';
-        document.getElementById('schulte-start-btn').textContent = 'Generar & Iniciar Tabla';
-    }
+function switchTab(targetTabId, fromRoutine = false) {
+    if (routine && !fromRoutine) cancelRoutine();
+    const currentTab = document.querySelector('.training-tab.is-active')?.id;
+    if (currentTab !== `tab-btn-${targetTabId}`) cancelExercise();
+    if (targetTabId !== 'calm-chamber' && isBreathing) toggleBreathing();
 
     // Ocultar todas las pestañas
     const panes = document.getElementsByClassName('tab-pane');
@@ -814,7 +813,7 @@ function switchTab(targetTabId) {
 
 // Guardar Tarea Global en LocalStorage
 function saveGlobalTask(val) {
-    localStorage.setItem('cyber_zen_global_task', val);
+    safeStorage.setItem('cyber_zen_global_task', val);
     const status = document.getElementById('goal-status');
     if (!status) return;
     status.classList.add('visible');
@@ -841,39 +840,6 @@ function showToast(message, icon = "💡") {
     }, 3000);
 }
 
-// Sistema para guardar y cargar récords desde LocalStorage
-function saveRecord(type, score) {
-    if (type === 'memory') {
-        const currentRecord = parseInt(localStorage.getItem('cyber_zen_rec_memory') || '0');
-        if (score > currentRecord) {
-            localStorage.setItem('cyber_zen_rec_memory', score);
-            updateRecordDisplays();
-        }
-    } else if (type === 'stroop') {
-        const currentRecord = parseInt(localStorage.getItem('cyber_zen_rec_stroop') || '0');
-        if (score > currentRecord) {
-            localStorage.setItem('cyber_zen_rec_stroop', score);
-            updateRecordDisplays();
-        }
-    } else if (type === 'schulte') {
-        const currentRecord = parseFloat(localStorage.getItem('cyber_zen_rec_schulte') || '999.0');
-        if (score < currentRecord) {
-            localStorage.setItem('cyber_zen_rec_schulte', score);
-            updateRecordDisplays();
-        }
-    }
-}
-
-function updateRecordDisplays() {
-    const memRec = localStorage.getItem('cyber_zen_rec_memory') || '0';
-    const stroopRec = localStorage.getItem('cyber_zen_rec_stroop') || '0';
-    const schulteRec = localStorage.getItem('cyber_zen_rec_schulte') || '--';
-
-    document.getElementById('stat-memory-record').textContent = `${memRec} niveles`;
-    document.getElementById('stat-stroop-record').textContent = `${stroopRec} aciertos`;
-    document.getElementById('stat-schulte-record').textContent = schulteRec !== '--' ? `${schulteRec} s` : '—';
-}
-
 let focusBoosterInitialized = false;
 
 // Inicializar datos después de que los módulos dinámicos estén disponibles.
@@ -882,11 +848,28 @@ window.initializeFocusBooster = function() {
     focusBoosterInitialized = true;
 
     // Cargar tarea guardada
-    const savedTask = localStorage.getItem('cyber_zen_global_task');
+    const savedTask = safeStorage.getItem('cyber_zen_global_task');
     if (savedTask) {
         document.getElementById('global-task').value = savedTask;
     }
-    updateRecordDisplays();
+    trainingHistory = readTrainingHistory();
+    const legacy = [['memory', 'Memoria', 'niveles alcanzados'], ['stroop', 'Stroop', 'aciertos'], ['schulte', 'Schulte', 's']]
+        .map(([key, label, unit]) => {
+            const raw = safeStorage.getItem(`cyber_zen_rec_${key}`);
+            const value = Number(raw);
+            return raw !== null && Number.isFinite(value) && value > 0 ? `${label}: ${value} ${unit}` : null;
+        }).filter(Boolean);
+    if (legacy.length) {
+        $('legacy-records').hidden = false;
+        $('legacy-values').textContent = legacy.join(' · ');
+    }
+    const savedDifficulty = safeStorage.getItem('gym_difficulty');
+    difficulty = difficultyLevels[savedDifficulty] ? savedDifficulty : 'normal';
+    updateDifficultyUI();
+    renderHistory();
+    $('routine-start').disabled = false;
+    $('difficulty').disabled = false;
+    $('workspace').tabIndex = -1;
     setTimer(25);
 
     const tabs = Array.from(document.querySelectorAll('.training-tab'));
@@ -914,4 +897,16 @@ window.initializeFocusBooster = function() {
 
     // Iniciar en la pestaña de calma
     switchTab('calm-chamber');
+
+    // Do not let suspended callbacks silently continue a timed exercise.
+    const interruptVisit = () => {
+        if (routine) cancelRoutine();
+        else cancelExercise();
+        if (isBreathing) toggleBreathing();
+        if (isAudioPlaying) toggleAudio();
+        if (isBrownNoisePlaying) toggleBrownNoise();
+        if (isTimerActive) toggleTimer();
+    };
+    document.addEventListener('visibilitychange', () => { if (document.hidden) interruptVisit(); });
+    window.addEventListener('pagehide', interruptVisit);
 }
