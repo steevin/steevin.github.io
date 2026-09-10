@@ -890,6 +890,11 @@ window.initializeFocusBooster = function() {
     setTimer(25);
 
     const tabs = Array.from(document.querySelectorAll('.training-tab'));
+    const compactNavigation = window.matchMedia('(max-width: 760px)');
+    const updateTabOrientation = () => document.querySelector('[role="tablist"]')
+        .setAttribute('aria-orientation', compactNavigation.matches ? 'horizontal' : 'vertical');
+    updateTabOrientation();
+    compactNavigation.addEventListener('change', updateTabOrientation);
     tabs.forEach((tab, index) => {
         tab.addEventListener('keydown', event => {
             if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;

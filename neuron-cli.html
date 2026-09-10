@@ -859,6 +859,12 @@
             font-size: 1.1rem;
         }
     </style>
+    <style>
+        .terminal-demo, .vault-pane { min-width: 0; max-width: 100%; }
+        .install-tabs, .hub-tabs { max-width: 100%; overflow-x: auto; }
+        .tree-view { overflow-x: auto; }
+        .screenshot-body img { width: 100%; height: auto; object-fit: contain; }
+    </style>
 </head>
 <body>
     <nav>
@@ -1424,19 +1430,19 @@ Contenido con <span style="color: var(--accent-color);">[[wikilinks]]</span> e <
 
     <!-- ── SCREENSHOT ── -->
     <section id="preview">
+        <p style="text-align:center;color:var(--text-muted)">Espacio web local · Captura real de septiembre de 2026 · Notas de demostración</p>
         <h2 data-key="preview_header">Vista Previa</h2>
         <div class="screenshot-wrapper reveal">
             <div class="screenshot-bar">
                 <div class="dot dot-red"></div>
                 <div class="dot dot-yellow"></div>
                 <div class="dot dot-green"></div>
-                <span class="path">~/vault — neuron</span>
+                <span class="path">neuron web · Markdown workspace</span>
             </div>
             <div class="screenshot-body">
                 <img
-                    src="assets/projects/neuron-cli.png"
-                    alt="neuron-cli TUI screenshot"
-                    onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:260px;gap:12px;\'><i class=\'fas fa-terminal\' style=\'font-size:2.5rem;color:var(--accent-color);\'></i><span style=\'font-family:Fira Code,monospace;color:var(--text-muted);\'> neuron-cli TUI</span></div>';"
+                    src="assets/projects/current/neuron-workspace.png"
+                    alt="Espacio web actual de neuron-cli con notas Markdown y tareas"
                 >
             </div>
         </div>
