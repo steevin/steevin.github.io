@@ -62,7 +62,7 @@ button, input { font: inherit; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(247,247,244,.97); border-bottom: 1px solid var(--line); }
 .header-inner { min-height: 84px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--text); font-size: 23px; font-weight: 700; letter-spacing: -1px; text-decoration: none; }
-.brand-mark { width: 33px; height: 33px; display: grid; place-items: center; background: var(--text); color: white; font-size: 12px; letter-spacing: 0; }
+.brand-mark { display: block; width: 32px; height: 48px; object-fit: contain; }
 .back-link { display: inline-flex; align-items: center; gap: 10px; padding: 10px 0; color: var(--muted); font-size: 13px; text-decoration: none; }
 .back-link:hover { color: var(--accent); }
 .intro { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 80px; padding: 45px 0 38px; }

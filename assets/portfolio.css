@@ -99,14 +99,10 @@ a,button,input,textarea {
 }
 
 .brand-mark {
-    display:grid;
-    place-items:center;
-    width:33px;
-    height:33px;
-    background:var(--text);
-    color:#fff;
-    font-size:12px;
-    letter-spacing:0;
+    display:block;
+    width:32px;
+    height:48px;
+    object-fit:contain;
 }
 
 .brand-dot {
