@@ -98,11 +98,17 @@ a,button,input,textarea {
     letter-spacing:-1px;
 }
 
-.brand-mark {
+.brand-logo {
     display:block;
-    width:32px;
-    height:48px;
+    width:28px;
+    height:42px;
+    flex-shrink:0;
     object-fit:contain;
+    background:transparent;
+}
+
+.brand-name {
+    line-height:1;
 }
 
 .brand-dot {
