@@ -423,6 +423,15 @@ dd {
     gap:14px;
 }
 
+.project-links .text-link {
+    align-items:center;
+    gap:8px;
+}
+
+.brand-icon {
+    flex-shrink:0;
+}
+
 .contact-wrap {
     display:grid;
     grid-template-columns:1fr 1fr;
