@@ -8,4 +8,4 @@ Capturadas el 10 de septiembre de 2026. Son pantallas reales, sin interfaces gen
 
 Las apps iOS se ejecutaron desde sus instalaciones existentes; no se recompilaron ni se verificó su equivalencia con la última versión publicada en App Store. La hora de la barra del sistema se fijó en 9:41.
 
-La imagen de Polaris se conserva por indicación expresa del propietario.
+- **Kuentara**: captura de Inicio para iPhone, copiada de `Code/Kuentara/docs/store-assets/ios/iphone/01-inicio.png`. PNG nativo de 1320 × 2868. Incorporada al portfolio el 10 de septiembre de 2026; la pantalla muestra el 8 de septiembre.
