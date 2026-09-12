@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="focus_booster/styles.css?v=20260911-mobile-1">
-    <script src="focus_booster/app.js?v=20260911-mobile-1" defer></script>
+    <script src="focus_booster/app.js?v=20260911-labels-2" defer></script>
     <link rel="icon" type="image/svg+xml" href="/assets/brand/steevin-favicon.svg">
 </head>
 <body>
@@ -117,11 +117,12 @@
     <script>
         (async function loadTabs() {
             const tabs = ['calm-chamber', 'neuro-matrix', 'stroop-challenge', 'schulte-table'];
+            const assetVersion = '20260911-labels-2';
             const workspace = document.getElementById('workspace');
 
             try {
                 const htmlFragments = await Promise.all(tabs.map(async tab => {
-                    const response = await fetch(`focus_booster/tabs/${tab}.html`);
+                    const response = await fetch(`focus_booster/tabs/${tab}.html?v=${assetVersion}`);
                     if (!response.ok) throw new Error(`No se pudo cargar ${tab}`);
                     return response.text();
                 }));
