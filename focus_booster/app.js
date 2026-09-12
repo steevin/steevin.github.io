@@ -363,7 +363,10 @@ const difficultyLevels = {
     normal: { label: 'Intermedia', memoryLength: 3, memoryDelay: 650, grid: 4, stroopSeconds: 30, penalty: 2, mismatch: .75 },
     hard: { label: 'Avanzada', memoryLength: 4, memoryDelay: 500, grid: 5, stroopSeconds: 30, penalty: 3, mismatch: 1 }
 };
-const exerciseNames = { memory: 'Memoria', stroop: 'Stroop', schulte: 'Schulte', routine: 'Rutina' };
+const interfaceLanguage = safeStorage.getItem('steevin-language') === 'en' ? 'en' : 'es';
+const exerciseNames = interfaceLanguage === 'en'
+    ? { memory: 'Memory', stroop: 'Color Focus', schulte: 'Number Search', routine: 'Routine' }
+    : { memory: 'Memoria', stroop: 'Colores', schulte: 'Números', routine: 'Rutina' };
 let difficulty = 'normal';
 let activeSession = null;
 let trainingHistory = [];
@@ -372,7 +375,7 @@ let routineInterval = null;
 const routineSteps = [
     { tab: 'calm-chamber', label: 'Respiración', seconds: 60, hint: 'Sigue el círculo durante un minuto.' },
     { tab: 'neuro-matrix', label: 'Memoria', seconds: 120, hint: 'Repite las secuencias. El paso termina al fallar o al llegar a dos minutos.' },
-    { tab: 'stroop-challenge', label: 'Stroop', seconds: 120, hint: 'Responde al color de la tinta. Los errores pueden acortar el tiempo según la dificultad.' }
+    { tab: 'stroop-challenge', label: interfaceLanguage === 'en' ? 'Color Focus' : 'Colores', seconds: 120, hint: 'Responde al color de la tinta. Los errores pueden acortar el tiempo según la dificultad.' }
 ];
 const $ = id => document.getElementById(id);
 
@@ -395,7 +398,9 @@ function changeDifficulty(value) {
 function updateDifficultyUI() {
     $('difficulty').value = difficulty;
     const config = difficultyLevels[difficulty];
-    $('difficulty-hint').textContent = `${config.memoryLength} luces al empezar · Schulte ${config.grid}×${config.grid} · Stroop ${config.stroopSeconds ? '30 s' : 'sin reloj'}`;
+    $('difficulty-hint').textContent = interfaceLanguage === 'en'
+        ? `${config.memoryLength} lights to start · Number Search ${config.grid}×${config.grid} · Color Focus ${config.stroopSeconds ? '30 s' : 'untimed'}`
+        : `${config.memoryLength} luces al empezar · Números ${config.grid}×${config.grid} · Colores ${config.stroopSeconds ? '30 s' : 'sin reloj'}`;
     $('schulte-range').textContent = `1 al ${config.grid ** 2}`;
     if (!stroopGameActive) $('stroop-timer').textContent = config.stroopSeconds ? `${config.stroopSeconds}s` : 'Libre';
     if (!schulteGameActive) {
@@ -857,13 +862,19 @@ window.initializeFocusBooster = function() {
     if (focusBoosterInitialized) return;
     focusBoosterInitialized = true;
 
+    // Reuse the language selected on the portfolio for exercise names.
+    document.querySelectorAll('[data-es][data-en]').forEach(element => {
+        element.textContent = element.dataset[interfaceLanguage];
+        element.lang = interfaceLanguage;
+    });
+
     // Cargar tarea guardada
     const savedTask = safeStorage.getItem('cyber_zen_global_task');
     if (savedTask) {
         document.getElementById('global-task').value = savedTask;
     }
     trainingHistory = readTrainingHistory();
-    const legacy = [['memory', 'Memoria', 'niveles alcanzados'], ['stroop', 'Stroop', 'aciertos'], ['schulte', 'Schulte', 's']]
+    const legacy = [['memory', exerciseNames.memory, 'niveles alcanzados'], ['stroop', exerciseNames.stroop, 'aciertos'], ['schulte', exerciseNames.schulte, 's']]
         .map(([key, label, unit]) => {
             const raw = safeStorage.getItem(`cyber_zen_rec_${key}`);
             const value = Number(raw);

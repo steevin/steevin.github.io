@@ -47,7 +47,7 @@
 
         <section class="shell session-bar" aria-label="Configurar sesión">
             <div class="difficulty-field"><label for="difficulty">Dificultad</label><select id="difficulty" disabled onchange="changeDifficulty(this.value)"><option value="easy">Inicial</option><option value="normal" selected>Intermedia</option><option value="hard">Avanzada</option></select><p id="difficulty-hint"></p></div>
-            <div class="routine-card"><div><strong>Rutina guiada</strong><p>Hasta 5 min · Respiración → Memoria → Stroop</p></div><button class="gym-button primary" id="routine-start" onclick="startRoutine()" disabled>Empezar rutina</button></div>
+            <div class="routine-card"><div><strong>Rutina guiada</strong><p data-es="Hasta 5 min · Respiración → Memoria → Colores" data-en="Up to 5 min · Breathing → Memory → Color Focus">Hasta 5 min · Respiración → Memoria → Colores</p></div><button class="gym-button primary" id="routine-start" onclick="startRoutine()" disabled>Empezar rutina</button></div>
         </section>
         <section class="shell routine-progress" id="routine-progress" hidden aria-label="Rutina en curso">
             <div><strong id="routine-title" role="status"></strong><p id="routine-description"></p></div>
@@ -61,27 +61,27 @@
                 <div class="tab-list" role="tablist" aria-orientation="vertical">
                     <button type="button" role="tab" aria-selected="true" aria-controls="pane-calm-chamber" id="tab-btn-calm-chamber" class="training-tab is-active" onclick="switchTab('calm-chamber')">
                         <span class="tab-icon" aria-hidden="true">◌</span>
-                        <span><span class="tab-name">Calma</span><span class="tab-description">Respira y prepara el foco</span></span>
+                        <span><span class="tab-name" data-es="Calma" data-en="Calm">Calma</span><span class="tab-description" data-es="Respira y prepara el foco" data-en="Breathe and prepare to focus">Respira y prepara el foco</span></span>
                     </button>
                     <button type="button" role="tab" aria-selected="false" aria-controls="pane-neuro-matrix" id="tab-btn-neuro-matrix" class="training-tab" onclick="switchTab('neuro-matrix')">
                         <span class="tab-icon" aria-hidden="true">◇</span>
-                        <span><span class="tab-name">Memoria</span><span class="tab-description">Retención secuencial</span></span>
+                        <span><span class="tab-name" data-es="Memoria" data-en="Memory">Memoria</span><span class="tab-description" data-es="Retención secuencial" data-en="Sequence recall">Retención secuencial</span></span>
                     </button>
                     <button type="button" role="tab" aria-selected="false" aria-controls="pane-stroop-challenge" id="tab-btn-stroop-challenge" class="training-tab" onclick="switchTab('stroop-challenge')">
                         <span class="tab-icon" aria-hidden="true">Aa</span>
-                        <span><span class="tab-name">Stroop</span><span class="tab-description">Atención selectiva</span></span>
+                        <span><span class="tab-name" data-es="Colores" data-en="Color Focus">Colores</span><span class="tab-description" data-es="Atención selectiva" data-en="Selective attention">Atención selectiva</span></span>
                     </button>
                     <button type="button" role="tab" aria-selected="false" aria-controls="pane-schulte-table" id="tab-btn-schulte-table" class="training-tab" onclick="switchTab('schulte-table')">
                         <span class="tab-icon" aria-hidden="true">25</span>
-                        <span><span class="tab-name">Schulte</span><span class="tab-description">Velocidad visual</span></span>
+                        <span><span class="tab-name" data-es="Números" data-en="Number Search">Números</span><span class="tab-description" data-es="Búsqueda y velocidad visual" data-en="Visual search and speed">Búsqueda y velocidad visual</span></span>
                     </button>
                 </div>
 
                 <div class="records" aria-label="Récords personales">
                     <p class="nav-title" style="margin:0 0 2px">Marcas recientes · práctica</p>
-                    <div class="record-row"><span>Memoria</span><strong class="record-value" id="stat-memory-record">—</strong></div>
-                    <div class="record-row"><span>Stroop</span><strong class="record-value" id="stat-stroop-record">—</strong></div>
-                    <div class="record-row"><span>Schulte</span><strong class="record-value" id="stat-schulte-record">—</strong></div>
+                    <div class="record-row"><span data-es="Memoria" data-en="Memory">Memoria</span><strong class="record-value" id="stat-memory-record">—</strong></div>
+                    <div class="record-row"><span data-es="Colores" data-en="Color Focus">Colores</span><strong class="record-value" id="stat-stroop-record">—</strong></div>
+                    <div class="record-row"><span data-es="Números" data-en="Number Search">Números</span><strong class="record-value" id="stat-schulte-record">—</strong></div>
                 </div>
             </nav>
 
@@ -95,7 +95,7 @@
             <span class="eyebrow">Resultado de la sesión</span><h2 id="result-title"></h2><p id="result-detail"></p><p id="result-comparison"></p>
         </section>
         <section class="shell history-panel" aria-labelledby="history-title">
-            <div class="history-heading"><div><span class="eyebrow">Tu progreso</span><h2 id="history-title">Historial de sesiones</h2></div><label>Ejercicio <select id="history-filter" onchange="renderHistory()"><option value="all">Todos</option><option value="memory">Memoria</option><option value="stroop">Stroop</option><option value="schulte">Schulte</option><option value="routine">Rutina</option></select></label></div>
+            <div class="history-heading"><div><span class="eyebrow">Tu progreso</span><h2 id="history-title">Historial de sesiones</h2></div><label>Ejercicio <select id="history-filter" onchange="renderHistory()"><option value="all">Todos</option><option value="memory" data-es="Memoria" data-en="Memory">Memoria</option><option value="stroop" data-es="Colores" data-en="Color Focus">Colores</option><option value="schulte" data-es="Números" data-en="Number Search">Números</option><option value="routine" data-es="Rutina" data-en="Routine">Rutina</option></select></label></div>
             <p id="storage-note">Últimas 100 sesiones, guardadas solo en este navegador. Al salir de la página, la sesión se marca como interrumpida. Los resultados reflejan tu práctica en estos ejercicios.</p>
             <details id="legacy-records" hidden><summary>Marcas anteriores a las dificultades</summary><p id="legacy-values"></p><p>Se conservan como referencia, separadas de las sesiones nuevas.</p></details>
             <p id="history-summary" role="status"></p><div id="history-list"></div>
