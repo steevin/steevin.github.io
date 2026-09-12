@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="focus_booster/styles.css?v=20260910-brand-2">
+    <link rel="stylesheet" href="focus_booster/styles.css?v=20260911-mobile-1">
+    <script src="focus_booster/app.js?v=20260911-mobile-1" defer></script>
     <link rel="icon" type="image/svg+xml" href="/assets/brand/steevin-favicon.svg">
 </head>
 <body>
@@ -128,11 +128,8 @@
 
                 workspace.innerHTML = htmlFragments.join('\n');
 
-                const script = document.createElement('script');
-                script.src = 'focus_booster/app.js';
-                script.onload = () => window.initializeFocusBooster?.();
-                script.onerror = () => showLoadError();
-                document.body.appendChild(script);
+                await appReady();
+                window.initializeFocusBooster();
             } catch (error) {
                 showLoadError();
                 console.error('Error cargando los ejercicios:', error);
@@ -140,6 +137,19 @@
 
             function showLoadError() {
                 workspace.innerHTML = '<div class="loading-state"><div><p style="color:#fca5a5;font-weight:600">No pudimos cargar los ejercicios.</p><p style="margin-top:8px;font-size:.8rem">Recarga la página para intentarlo de nuevo.</p></div></div>';
+            }
+
+            function appReady() {
+                if (typeof window.initializeFocusBooster === 'function') return Promise.resolve();
+                return new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => reject(new Error('No se pudo cargar la aplicación')), 10000);
+                    document.addEventListener('DOMContentLoaded', () => {
+                        clearTimeout(timeout);
+                        typeof window.initializeFocusBooster === 'function'
+                            ? resolve()
+                            : reject(new Error('No se pudo iniciar la aplicación'));
+                    }, { once: true });
+                });
             }
         })();
     </script>

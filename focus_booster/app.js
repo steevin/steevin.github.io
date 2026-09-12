@@ -809,6 +809,16 @@ function switchTab(targetTabId, fromRoutine = false) {
     activeBtn.classList.add('is-active');
     activeBtn.setAttribute('aria-selected', 'true');
     activeBtn.setAttribute('tabindex', '0');
+
+    // En móvil, al cambiar desde un ejercicio largo, llevar el nuevo módulo
+    // al inicio para que sus instrucciones y controles queden visibles.
+    if (!fromRoutine && currentTab !== activeBtn.id && window.matchMedia('(max-width: 760px)').matches) {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        requestAnimationFrame(() => $('workspace').scrollIntoView({
+            behavior: reducedMotion ? 'auto' : 'smooth',
+            block: 'start'
+        }));
+    }
 }
 
 // Guardar Tarea Global en LocalStorage
