@@ -1,0 +1,53 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v6.0.0
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1.0.13
+        with:
+          source: ./
+          destination: ./_site
+          baseurl: ${{ steps.pages.outputs.base_path }}
+      - name: Verify required site files
+        run: |
+          test -s _site/index.html
+          test -s _site/CNAME
+          test -s _site/.well-known/apple-app-site-association
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: ./_site
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1
