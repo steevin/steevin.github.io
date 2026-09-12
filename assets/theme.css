@@ -1,0 +1,47 @@
+/* Shared palette: explicit choices override each page's system theme. */
+:root[data-theme="light"] {
+    --bg:#f7f7f4; --surface:#fff; --text:#202925; --muted:#626b66;
+    --line:#dce0da; --accent:#235b48; --accent-soft:#e4ebe2;
+    --theme-secondary:#eff1ec; --theme-link:#155dc0; --theme-on-action:#fff;
+    --green:#235b48; --purple:#65509a; --rose:#994a40; --orange:#8b5548; --blue:#155dc0;
+}
+:root[data-theme="dark"] {
+    --bg:#111815; --surface:#1b2520; --text:#edf3ee; --muted:#afbeb3;
+    --line:#3a4b40; --accent:#91d5b0; --accent-soft:#263d30;
+    --theme-secondary:#16201b; --theme-link:#9ec5ff; --theme-on-action:#111815;
+    --green:#91d5b0; --purple:#ccb5ff; --rose:#ffaba0; --orange:#efba91; --blue:#9ec5ff;
+}
+:root[data-theme] {
+    --primary-bg:var(--bg); --secondary-bg:var(--theme-secondary); --panel-bg:var(--surface);
+    --border-color:var(--line); --accent-color:var(--accent); --accent-hover:var(--accent-soft);
+    --text-main:var(--text); --text-muted:var(--muted); --text-bright:var(--text);
+    --panel:var(--surface); --ink:var(--text); --link:var(--theme-link);
+    --bg-color:var(--bg); --card-bg:var(--surface); --text-color:var(--text); --text-secondary:var(--muted);
+}
+html[data-theme] body { background:var(--bg); color:var(--text); padding-bottom:80px; }
+html[data-theme] .site-header, html[data-theme] body > nav { background:var(--bg); }
+html[data-theme] #proyectos { background:var(--theme-secondary); }
+html[data-theme] :is(.project-visual,.project-visual.mobile-screen,.phone-hero) { background:var(--theme-secondary); border-color:var(--line); }
+html[data-theme] :is(.contact-form,.screen-card,.field input,.field textarea,.goal-input,.gym-button,.session-bar select,.history-panel select,.history-panel tbody tr) { background:var(--surface); border-color:var(--line); }
+html[data-theme] :is(.button.primary,.gym-button.primary,.workspace button.bg-gradient-to-r,.toast,.skip-link,.btn-primary) { background:var(--text); color:var(--bg); border-color:var(--text); }
+html[data-theme] :is(.button.primary:hover,.gym-button.primary:hover,.workspace button.bg-gradient-to-r:hover,.btn-primary:hover) { background:var(--accent); color:var(--theme-on-action); }
+html[data-theme] .button:not(.primary):hover, html[data-theme] .training-tab:hover { background:var(--accent-soft); }
+html[data-theme] :is(.terminal-body,.terminal-demo,.vault-pane,.hub-tabs,.tree-view,.mcp-container) { background:var(--surface); }
+html[data-theme="dark"] .brand-logo { filter:invert(1); }
+html[data-theme] .workspace :is([class*="bg-slate-95"],[class*="bg-slate-90"]) { background:var(--surface); }
+html[data-theme] .workspace .grid-cell[class~="bg-slate-800/80"] { background:var(--theme-secondary); border-color:var(--line); }
+html[data-theme] .workspace .grid-cell[class~="bg-slate-800/80"]:enabled:hover { background:var(--accent-soft); }
+html[data-theme] .workspace :is(#breathing-ball,.schulte-cell:disabled) { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+html[data-theme="dark"] .workspace :is(.text-amber-400,.text-yellow-400,#stroop-word.text-yellow-400) { color:#f5cd57; }
+html[data-theme="dark"] .workspace :is(.text-blue-400,.text-blue-500,#stroop-word.text-blue-500) { color:#85b7ff; }
+html[data-theme="dark"] .workspace :is(.text-emerald-400,#stroop-word.text-emerald-400) { color:#74dba0; }
+html[data-theme="dark"] .workspace :is(.text-red-200,.text-red-300,.text-red-500,#stroop-word.text-red-500) { color:#ff9696; }
+html[data-theme] .theme-toggle {
+    position:fixed; left:max(16px,env(safe-area-inset-left)); bottom:calc(16px + env(safe-area-inset-bottom)); z-index:1500;
+    display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 16px;
+    border:1px solid var(--line); border-radius:24px; background:var(--surface); color:var(--text);
+    font:600 13px/1.4 system-ui,sans-serif; cursor:pointer; box-shadow:0 3px 16px #0002;
+}
+html[data-theme] .theme-toggle:hover { background:var(--accent-soft); }
+html[data-theme] .theme-toggle:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+@media print { .theme-toggle { display:none !important; } }
