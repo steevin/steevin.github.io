@@ -24,4 +24,16 @@
       <changefreq>yearly</changefreq>
       <priority>0.6</priority>
    </url>
+   <url>
+      <loc>https://steevin.com/memotempo/support.html</loc>
+      <lastmod>2026-09-19</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.6</priority>
+   </url>
+   <url>
+      <loc>https://steevin.com/memotempo/privacy-policy.html</loc>
+      <lastmod>2026-09-19</lastmod>
+      <changefreq>yearly</changefreq>
+      <priority>0.6</priority>
+   </url>
 </urlset>
