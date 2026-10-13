@@ -1,17 +1,19 @@
 :root {
-    --primary-bg:#f7f7f4;
-    --secondary-bg:#eff1ec;
-    --panel-bg:#fff;
-    --border-color:#dce0da;
-    --accent-color:#235b48;
-    --accent-hover:#e4e9e1;
-    --text-main:#29332d;
-    --text-muted:#626b66;
-    --text-bright:#202925;
-    --green:#235b48;
-    --purple:#4d6260;
-    --rose:#8b5548;
+    --primary-bg:#f8f5ee;
+    --secondary-bg:#f1ebe0;
+    --panel-bg:#fdfbf6;
+    --border-color:#d4cec3;
+    --accent-color:#b83b2f;
+    --accent-hover:#f2decc;
+    --text-main:#23231f;
+    --text-muted:#5e594f;
+    --text-bright:#23231f;
+    --green:#2f6a45;
+    --purple:#65509a;
+    --rose:#b83b2f;
     --orange:#8b5548;
+    --serif:"Source Serif 4","Iowan Old Style",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     color-scheme:light;
 }
 
@@ -21,7 +23,7 @@ html {
 }
 
 nav {
-    background:rgba(247,247,244,.97);
+    background:color-mix(in srgb, var(--primary-bg) 86%, transparent);
 }
 
 .cursor {
@@ -37,34 +39,45 @@ nav {
 }
 
 .hero h1 {
-    font-weight:500;
-    letter-spacing:-3px;
+    font-family:var(--serif);
+    font-weight:400;
+    letter-spacing:-.035em;
+    line-height:1;
 }
 
 .hero-subtitle,h2,.feature-card h3,.btn {
-    font-family:'Inter',system-ui,sans-serif;
+    font-family:var(--sans);
+}
+
+h2,.feature-card h3 {
+    font-family:var(--serif);
+    font-weight:400;
 }
 
 .hero-subtitle {
-    font-size:17px;
-    line-height:1.8;
+    font-size:18px;
+    line-height:1.7;
+    max-width:38rem;
 }
 
 .hero-badge {
     background:transparent;
     border-color:var(--border-color);
     color:var(--accent-color);
-    border-radius:3px;
+    border-radius:999px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
 }
 
 .btn {
-    border-radius:3px;
-    font-size:13px;
+    border-radius:999px;
+    font-size:16px;
+    min-height:52px;
 }
 
 .btn-primary {
-    background:#202925;
-    color:white;
+    background:var(--text-bright);
+    color:var(--primary-bg);
 }
 
 .btn-primary:hover {
@@ -78,11 +91,11 @@ nav {
 
 .phone-hero {
     max-width:295px;
-    background:#e4e8e0;
+    background:var(--future,#e7f0f0);
     border:1px solid var(--border-color);
     padding:12px;
     box-shadow:none;
-    border-radius:25px;
+    border-radius:28px;
 }
 
 .phone-hero img {
@@ -90,10 +103,10 @@ nav {
 }
 
 .screen-card {
-    background:#fff;
+    background:var(--panel-bg);
     border-color:var(--border-color);
     box-shadow:none;
-    border-radius:4px;
+    border-radius:22px;
 }
 
 .screen-card:hover,.feature-card:hover {
@@ -106,13 +119,13 @@ nav {
 }
 
 .screen-card figcaption {
-    font-family:'Inter',system-ui,sans-serif;
+    font-family:var(--sans);
     color:var(--text-main);
 }
 
 .feature-card {
-    border-radius:4px;
-    background:transparent;
+    border-radius:22px;
+    background:var(--panel-bg);
 }
 
 .feature-icon {
@@ -120,15 +133,15 @@ nav {
 }
 
 h2 {
-    font-weight:500;
-    letter-spacing:-1px;
+    font-weight:400;
+    letter-spacing:-.03em;
 }
 
 h2:before {
     content:none;
 }
 
-.cta-box {
+.cta-box,.cta-section {
     background:var(--secondary-bg);
     border-color:var(--border-color);
     box-shadow:none;

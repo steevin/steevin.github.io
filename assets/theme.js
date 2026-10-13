@@ -12,7 +12,7 @@
         root.dataset.theme = dark ? 'dark' : 'light';
         root.style.colorScheme = root.dataset.theme;
         document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
-            meta.content = dark ? '#111815' : '#f7f7f4';
+            meta.content = dark ? '#0e0d0c' : '#f8f5ee';
         });
         if (button) {
             const english = root.lang.startsWith('en');
