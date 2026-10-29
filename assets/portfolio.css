@@ -748,3 +748,13 @@ dd {
     }
 }
 
+
+/* Project decisions and direct professional contact. */
+.case-study { margin:22px 0 0; border-top:1px solid var(--line); }
+.case-study > div { padding:12px 0; border-bottom:1px solid var(--line); }
+.case-study dt { font-size:12px; font-weight:600; color:var(--accent); }
+.case-study dd { font-size:14px; font-weight:400; color:var(--muted); line-height:1.65; }
+.contact-links { display:flex; flex-wrap:wrap; align-items:start; gap:18px 24px; margin-top:24px; }
+.product-detail { max-width:760px; }
+.product-detail .project-visual { margin-top:32px; height:540px; }
+@media(max-width:650px) { .product-detail .project-visual { height:440px; } }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Daniel Steevin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemoTempo | Recuerda cuándo y qué sigue</title>
+    <meta name="description" content="MemoTempo es una app iOS local-first para recordar cuándo hiciste las pequeñas cosas y qué viene después. Escribes una frase y todo queda en el dispositivo.">
+    <meta name="keywords" content="MemoTempo, recuerdos, recordatorios, iOS, SwiftUI, SwiftData, local-first, App Store">
+    <link rel="canonical" href="https://steevin.com/memotempo.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; line-height: 1.65; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+        img { display: block; max-width: 100%; height: auto; }
+        .hero > * { min-width: 0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; }
+        .brand { display: flex; align-items: center; text-decoration: none; }
+        nav ul { display: flex; list-style: none; gap: 22px; margin: 0; padding: 0; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--muted); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; width: fit-content; padding: 6px 14px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: auto; padding: 14px 22px; text-decoration: none; white-space: nowrap; }
+        .hero { min-height: 78vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 340px); gap: 54px; align-items: center; padding: 80px 10%; }
+        .phone-hero { justify-self: end; width: min(100%, 320px); }
+        .phone-hero img { width: 100%; }
+        .hero-actions, .cta-section .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .cta-section .hero-actions { justify-content: center; }
+        section { padding: 90px 10%; }
+        h2 { text-align: center; margin: 0 0 28px; }
+        .screenshot-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 24px; }
+        .architecture { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 980px; margin: 0 auto; }
+        .arch-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+        .arch-list li { display: flex; gap: 10px; }
+        .stack-grid { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 860px; margin: 0 auto; }
+        .cta-section { text-align: center; }
+        footer { padding: 40px; text-align: center; }
+        footer a { text-decoration: none; }
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; min-height: auto; padding: 60px 7%; text-align: center; }
+            .hero-actions { justify-content: center; }
+            section { padding: 74px 7%; }
+            .architecture, .screenshot-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            nav { flex-direction: column; gap: 14px; }
+            .screenshot-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/product.css?v=20261013-editorial">
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/steevin-favicon.svg">
+    <link rel="stylesheet" href="assets/theme.css?v=20261013-editorial">
+    <script src="assets/theme.js?v=20261013-editorial"></script>
+</head>
+<body>
+    <nav>
+        <a href="/" class="brand" aria-label="Steevin, volver al inicio">
+            <img class="brand-logo" src="/assets/brand/steevin-s.svg" width="32" height="48" alt="">
+        </a>
+        <ul>
+            <li><a href="/">Volver al portafolio</a></li>
+            <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#funciones">Funciones</a></li>
+            <li><a href="https://apps.apple.com/us/app/id6814040861" target="_blank" rel="noopener noreferrer">App Store</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div>
+            <div class="hero-badge">
+                <i class="fab fa-apple" aria-hidden="true"></i>
+                <span>iOS · SwiftUI · Local-first</span>
+            </div>
+            <h1><span>Memo</span>Tempo</h1>
+            <p class="hero-subtitle">Un lugar tranquilo para las pequeñas cosas que ya hiciste y las que quieres hacer. Escribes una frase y MemoTempo la sitúa en tu pasado o en tus planes.</p>
+            <div class="hero-actions">
+                <a href="https://apps.apple.com/us/app/id6814040861" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fab fa-apple" aria-hidden="true"></i>
+                    <span>Ver en App Store</span>
+                </a>
+                <a href="#capturas" class="btn btn-secondary">
+                    <i class="fas fa-mobile-screen" aria-hidden="true"></i>
+                    <span>Ver capturas</span>
+                </a>
+            </div>
+        </div>
+        <div class="phone-hero">
+            <img src="assets/projects/current/memotempo-inicio.png" alt="Inicio de MemoTempo con planes, el presente y lo vivido" width="1320" height="2868">
+        </div>
+    </section>
+
+    <section id="capturas">
+        <h2>Capturas de la app</h2>
+        <p class="capture-note">Capturas reales de la app · Datos de demostración</p>
+        <div class="screenshot-grid">
+            <figure class="screen-card"><a href="assets/projects/current/memotempo-inicio.png"><img src="assets/projects/current/memotempo-inicio.png" alt="Tu tiempo en MemoTempo" width="1320" height="2868" loading="lazy"></a><figcaption>Tu tiempo</figcaption></figure>
+            <figure class="screen-card"><a href="assets/projects/current/memotempo-bienvenida.png"><img src="assets/projects/current/memotempo-bienvenida.png" alt="Bienvenida de MemoTempo" width="1320" height="2868" loading="lazy"></a><figcaption>Las pequeñas cosas</figcaption></figure>
+            <figure class="screen-card"><a href="assets/projects/current/memotempo-frase.png"><img src="assets/projects/current/memotempo-frase.png" alt="Captura en lenguaje natural de MemoTempo" width="1320" height="2868" loading="lazy"></a><figcaption>Escríbelo como lo dirías</figcaption></figure>
+            <figure class="screen-card"><a href="assets/projects/current/memotempo-ritmo.png"><img src="assets/projects/current/memotempo-ritmo.png" alt="Qué sigue y recordatorios en MemoTempo" width="1320" height="2868" loading="lazy"></a><figcaption>Qué sigue</figcaption></figure>
+        </div>
+    </section>
+
+    <section id="funciones">
+        <h2>Qué resuelve</h2>
+        <div class="feature-grid">
+            <article class="feature-card">
+                <i class="fas fa-quote-left feature-icon" aria-hidden="true"></i>
+                <h3>Una frase basta</h3>
+                <p>Escribes “Me corté el pelo ayer” o “Llamar a la abuela mañana”. La app distingue pasado y planes, y puedes corregir la fecha antes de guardar.</p>
+            </article>
+            <article class="feature-card">
+                <i class="fas fa-stream feature-icon" aria-hidden="true"></i>
+                <h3>Un hilo de tiempo</h3>
+                <p>Por venir, ahora y lo vivido en la misma pantalla. Completas un plan y pasa al historial, con el tiempo transcurrido a la vista.</p>
+            </article>
+            <article class="feature-card">
+                <i class="fas fa-bell feature-icon" aria-hidden="true"></i>
+                <h3>Recordatorios opcionales</h3>
+                <p>Los avisos se eligen. También puedes preguntarle a tu tiempo cuándo ocurrió algo y abrir el recuerdo que responde.</p>
+            </article>
+            <article class="feature-card">
+                <i class="fas fa-lock feature-icon" aria-hidden="true"></i>
+                <h3>Privada por diseño</h3>
+                <p>No pide cuenta ni envía tus recuerdos a un servidor. Las copias en iCloud, si las activas, viven en tu cuenta de Apple.</p>
+            </article>
+            <article class="feature-card">
+                <i class="fas fa-image feature-icon" aria-hidden="true"></i>
+                <h3>Fotos y ocasiones</h3>
+                <p>Cada ocasión puede guardar fotos, notas y personas. El primer ritmo personal es gratis; Plus añade protección, resumen anual y copias automáticas.</p>
+            </article>
+            <article class="feature-card">
+                <i class="fas fa-file-export feature-icon" aria-hidden="true"></i>
+                <h3>Tus datos, exportables</h3>
+                <p>Puedes crear una copia de recuperación y borrar recuerdos o todos los datos de la app desde Ajustes.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="arquitectura">
+        <h2>Arquitectura del proyecto</h2>
+        <div class="architecture">
+            <div class="arch-panel">
+                <h3>Producto</h3>
+                <ul class="arch-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>App iOS bilingüe para planes, recuerdos cotidianos, ritmos y un resumen del año.</span></li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>Captura en lenguaje natural, búsqueda, fotos por ocasión y recordatorios del sistema.</span></li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>MemoTempo Plus es una compra única opcional. Recordar lo esencial sigue siendo gratis.</span></li>
+                </ul>
+            </div>
+            <div class="arch-panel">
+                <h3>Implementación</h3>
+                <ul class="arch-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>SwiftUI y SwiftData en el dispositivo. Sin servidor del desarrollador ni analítica remota.</span></li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>Recordatorios, Spotlight, widgets y Atajos usan los servicios del sistema, sin salir del aparato.</span></li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i><span>StoreKit 2 para Plus y las copias opcionales de iCloud Drive en el contenedor privado de la app.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="stack">
+        <h2>Stack técnico</h2>
+        <div class="stack-grid">
+            <span class="stack-badge"><i class="fab fa-swift" aria-hidden="true"></i>SwiftUI</span>
+            <span class="stack-badge"><i class="fas fa-database" aria-hidden="true"></i>SwiftData</span>
+            <span class="stack-badge"><i class="fas fa-bell" aria-hidden="true"></i>Notificaciones</span>
+            <span class="stack-badge"><i class="fas fa-cloud" aria-hidden="true"></i>iCloud Drive</span>
+            <span class="stack-badge"><i class="fas fa-bag-shopping" aria-hidden="true"></i>StoreKit 2</span>
+            <span class="stack-badge"><i class="fas fa-mobile-screen" aria-hidden="true"></i>Widgets</span>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Disponible en App Store</h2>
+        <p>MemoTempo está publicada para iPhone y iPad. Recuerda lo cotidiano sin cuenta y sin enviar tus recuerdos a un servidor.</p>
+        <div class="hero-actions">
+            <a href="https://apps.apple.com/us/app/id6814040861" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-apple" aria-hidden="true"></i>
+                <span>Abrir App Store</span>
+            </a>
+            <a href="/memotempo/privacy-policy.html" class="btn btn-secondary">Privacidad</a>
+            <a href="/memotempo/support.html" class="btn btn-secondary">Soporte</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Steevin · <a href="/memotempo/privacy-policy.html">Privacidad</a> · <a href="/memotempo/support.html">Soporte</a></p>
+    </footer>
+</body>
+</html>
