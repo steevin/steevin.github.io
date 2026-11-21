@@ -5,7 +5,8 @@
       {
         "appID": "796D55574J.steevin.Vynce",
         "paths": [
-          "/vynce/invite/*"
+          "/vynce/invite/*",
+          "/vynce/pay/*"
         ]
       }
     ]

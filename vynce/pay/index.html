@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Cobro compartido · Vynce</title>
+  <!-- Never indexed: every visit is a private, per-person link. -->
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <!-- Generic preview: WhatsApp only sees this page, never the token (it lives after #). -->
+  <meta property="og:title" content="Tienes un cobro compartido en Vynce">
+  <meta property="og:description" content="Abre el link para ver lo que te corresponde y avisar cuando pagues.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vynce">
+  <meta property="og:image" content="https://steevin.com/icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src https://us-central1-vynce-app-2026.cloudfunctions.net; base-uri 'none'; form-action 'none'">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d10;
+      --panel: #171a21;
+      --text: #f6f7fb;
+      --muted: #a5abb8;
+      --line: #252a37;
+      --green: #2ee59d;
+      --blue: #3da8ff;
+      --orange: #ff8a00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(120% 60% at 50% -10%, #12324a 0%, var(--bg) 60%);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
+    }
+    main { max-width: 460px; margin: 0 auto; padding: 28px 16px 48px; }
+    .brand { display: flex; align-items: center; gap: 8px; color: var(--green); font-weight: 800; letter-spacing: .02em; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 22px; margin-top: 18px; }
+    .muted { color: var(--muted); font-size: .95rem; }
+    h1 { font-size: 1.35rem; margin: 6px 0 2px; }
+    .amount { font-size: 2.6rem; font-weight: 900; letter-spacing: -.02em; margin: 6px 0; font-variant-numeric: tabular-nums; }
+    .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+    .row:first-of-type { border-top: 0; }
+    .key { display: flex; align-items: center; gap: 10px; background: #0f1218; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+    .key code { flex: 1; font-size: 1.05rem; word-break: break-all; color: var(--text); }
+    button {
+      font: inherit; font-weight: 700; border: 0; border-radius: 14px; cursor: pointer;
+      min-height: 48px; padding: 0 16px;
+    }
+    button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+    .copy { background: #26303f; color: var(--text); min-height: 40px; }
+    .primary { width: 100%; margin-top: 18px; background: linear-gradient(90deg, #00c2a8, var(--green)); color: #08121f; font-size: 1.05rem; }
+    .primary[disabled] { opacity: .5; cursor: default; }
+    .status { display: flex; gap: 10px; align-items: flex-start; border-radius: 14px; padding: 12px 14px; margin-top: 16px; font-weight: 600; }
+    .status.ok { background: rgba(46,229,157,.12); color: var(--green); }
+    .status.wait { background: rgba(61,168,255,.12); color: var(--blue); }
+    .status.warn { background: rgba(255,138,0,.12); color: var(--orange); }
+    .safety { display: flex; gap: 8px; font-size: .85rem; color: var(--muted); margin-top: 16px; }
+    .install { display: block; text-align: center; margin-top: 22px; color: var(--muted); font-size: .9rem; }
+    .install a { color: var(--blue); text-decoration: none; font-weight: 600; }
+    [hidden] { display: none !important; }
+    @media (prefers-reduced-motion: no-preference) {
+      .card { animation: rise .35s ease-out both; }
+      @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand" aria-hidden="true">● Vynce</div>
+
+    <section id="loading" class="card" aria-live="polite">
+      <p class="muted" data-i18n="loading">Cargando tu cobro…</p>
+    </section>
+
+    <section id="error" class="card" hidden aria-live="assertive">
+      <h1 id="error-title" data-i18n="errorTitle">Este link no está disponible</h1>
+      <p id="error-text" class="muted"></p>
+    </section>
+
+    <section id="content" class="card" hidden>
+      <p class="muted" id="greeting"></p>
+      <h1 id="concept"></h1>
+      <div class="amount" id="amount" aria-describedby="amount-label"></div>
+      <p class="muted" id="amount-label" data-i18n="yourShare">Lo que te corresponde a ti.</p>
+
+      <div>
+        <div class="row"><span class="muted" data-i18n="chargedBy">Cobra</span><strong id="owner"></strong></div>
+        <div class="row" id="date-row"><span class="muted" data-i18n="date">Fecha</span><strong id="date"></strong></div>
+      </div>
+
+      <div id="key-block" hidden>
+        <p class="muted" style="margin:16px 0 0" data-i18n="payWith">Paga desde tu banco o billetera con esta Llave Bre-B:</p>
+        <div class="key">
+          <code id="key"></code>
+          <button class="copy" id="copy" type="button" data-i18n="copy">Copiar</button>
+        </div>
+        <p class="muted" id="key-label" style="margin:6px 2px 0"></p>
+      </div>
+
+      <div id="status" class="status" role="status" hidden></div>
+
+      <button class="primary" id="report" type="button" data-i18n="paid">Ya pagué</button>
+
+      <div class="safety">
+        <span aria-hidden="true">🔒</span>
+        <span data-i18n="safety">Vynce nunca te pide contraseñas ni códigos del banco. La Llave solo sirve para recibir dinero.</span>
+      </div>
+    </section>
+
+    <p class="install">
+      <span data-i18n="install">Lleva tus cuentas con Vynce.</span>
+      <a id="install-link" href="#" rel="noopener" data-i18n="get">Descárgala</a>
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      // TODO(owner): replace with the Vynce App Store URL (apps.apple.com/co/app/…/id…).
+      var APP_STORE_URL = "https://apps.apple.com/co/search?term=Vynce";
+      var API = "https://us-central1-vynce-app-2026.cloudfunctions.net/payLinkApi";
+
+      var en = (navigator.language || "es").toLowerCase().indexOf("en") === 0;
+      var T = en ? {
+        loading: "Loading your payment…", errorTitle: "This link isn't available",
+        yourShare: "Your share.", chargedBy: "Requested by", date: "Date",
+        payWith: "Pay from your bank or wallet with this Bre-B key:", copy: "Copy", copied: "Copied",
+        paid: "I paid", reporting: "Sending…", safety: "Vynce never asks for passwords or bank codes. The key can only be used to receive money.",
+        install: "Keep your shared costs in Vynce.", get: "Get it",
+        hello: function (n) { return "Hi " + n + " 👋"; },
+        invalid: "Check that you copied the whole link.", revoked: "The person who sent it turned it off. Ask them for a new one.",
+        expired: "This link expired or the expense is already settled.", rate: "Too many attempts. Try again in a few minutes.",
+        network: "We couldn't connect. Check your internet and try again.",
+        pending: null, reportedPaid: "Done! We let them know. They'll confirm when they see the money.",
+        confirmed: "Received. You're all set 🎉", disputed: "They haven't received it yet. Check your transfer and tap “I paid” again.",
+        confirmReport: "Did you already send the money?"
+      } : {
+        loading: "Cargando tu cobro…", errorTitle: "Este link no está disponible",
+        yourShare: "Lo que te corresponde a ti.", chargedBy: "Cobra", date: "Fecha",
+        payWith: "Paga desde tu banco o billetera con esta Llave Bre-B:", copy: "Copiar", copied: "Copiada",
+        paid: "Ya pagué", reporting: "Enviando…", safety: "Vynce nunca te pide contraseñas ni códigos del banco. La Llave solo sirve para recibir dinero.",
+        install: "Lleva tus cuentas con Vynce.", get: "Descárgala",
+        hello: function (n) { return "Hola " + n + " 👋"; },
+        invalid: "Revisa que hayas copiado el link completo.", revoked: "Quien te lo envió lo desactivó. Pídele uno nuevo.",
+        expired: "Este link venció o el gasto ya está saldado.", rate: "Demasiados intentos. Prueba de nuevo en unos minutos.",
+        network: "No pudimos conectarnos. Revisa tu internet e inténtalo de nuevo.",
+        pending: null, reportedPaid: "¡Listo! Ya le avisamos. Te confirmará cuando vea la plata.",
+        confirmed: "Recibido. Estás a paz y salvo 🎉", disputed: "Todavía no le llega. Revisa tu transferencia y vuelve a tocar “Ya pagué”.",
+        confirmReport: "¿Ya enviaste la plata?"
+      };
+
+      if (en) { document.documentElement.lang = "en"; }
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var value = T[el.getAttribute("data-i18n")];
+        if (typeof value === "string") { el.textContent = value; }
+      });
+      document.getElementById("install-link").href = APP_STORE_URL;
+
+      var token = (new URLSearchParams(location.hash.slice(1))).get("t") || "";
+      var $ = function (id) { return document.getElementById(id); };
+
+      function show(id) {
+        ["loading", "error", "content"].forEach(function (s) { $(s).hidden = s !== id; });
+      }
+
+      function fail(code) {
+        show("error");
+        $("error-text").textContent = T[code] || T.invalid;
+      }
+
+      function money(minor, currency) {
+        if (typeof minor !== "number") { return "—"; }
+        var cop = currency === "COP";
+        return new Intl.NumberFormat("es-CO", {
+          style: "currency", currency: currency || "COP",
+          minimumFractionDigits: cop ? 0 : 2, maximumFractionDigits: cop ? 0 : 2
+        }).format(cop ? minor : minor / 100);
+      }
+
+      function render(data) {
+        $("greeting").textContent = T.hello((data.payerName || "").split(" ")[0]);
+        $("concept").textContent = data.concept || "";
+        $("amount").textContent = money(data.amountMinor, data.currency);
+        $("owner").textContent = data.ownerName || "";
+        if (data.dueDate) {
+          $("date").textContent = new Intl.DateTimeFormat(en ? "en" : "es-CO", {day: "numeric", month: "long", year: "numeric", timeZone: "UTC"}).format(new Date(data.dueDate));
+        } else {
+          $("date-row").hidden = true;
+        }
+        if (data.key && data.key.value) {
+          $("key-block").hidden = false;
+          $("key").textContent = data.key.value;
+          $("key-label").textContent = data.key.label || "";
+        }
+        var message = T[data.state];
+        var status = $("status");
+        status.hidden = !message;
+        status.className = "status " + (data.state === "confirmed" ? "ok" : data.state === "disputed" ? "warn" : "wait");
+        status.textContent = message || "";
+        var report = $("report");
+        report.hidden = data.state === "confirmed" || data.state === "reportedPaid";
+        report.disabled = false;
+        report.textContent = T.paid;
+        show("content");
+      }
+
+      function call(action) {
+        return fetch(API, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({t: token, action: action}),
+          credentials: "omit",
+          cache: "no-store"
+        }).then(function (response) {
+          return response.json().catch(function () { return {}; }).then(function (data) {
+            if (!response.ok) { throw (data && data.error) || (response.status === 429 ? "rate" : "invalid"); }
+            return data;
+          });
+        }, function () { throw "network"; });
+      }
+
+      $("copy").addEventListener("click", function () {
+        var value = $("key").textContent;
+        var done = function () { $("copy").textContent = T.copied; setTimeout(function () { $("copy").textContent = T.copy; }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(value).then(done, function () {});
+        } else {
+          var range = document.createRange(); range.selectNodeContents($("key"));
+          var selection = getSelection(); selection.removeAllRanges(); selection.addRange(range);
+          try { document.execCommand("copy"); done(); } catch (e) {}
+        }
+      });
+
+      $("report").addEventListener("click", function () {
+        if (!window.confirm(T.confirmReport)) { return; }
+        var button = $("report");
+        button.disabled = true;
+        button.textContent = T.reporting;
+        call("report").then(render, function (code) {
+          button.disabled = false;
+          button.textContent = T.paid;
+          var status = $("status");
+          status.hidden = false;
+          status.className = "status warn";
+          status.textContent = T[code] || T.network;
+        });
+      });
+
+      if (!/^[A-Za-z0-9_-]{16,32}\.[A-Za-z0-9_-]{16,32}$/.test(token)) {
+        fail("invalid");
+        return;
+      }
+      call("view").then(render, fail);
+    })();
+  </script>
+</body>
+</html>
